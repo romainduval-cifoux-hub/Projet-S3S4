@@ -45,6 +45,7 @@
     overflow: hidden;
     width: 20vw;
     height: 50vh;
+    min-width: 320px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
