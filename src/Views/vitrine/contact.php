@@ -15,7 +15,10 @@
 
             <div class="step">
                 <div class="number">2</div>
-                <h3>Visite</h3>
+                <div>
+                    <h3>Visite</h3>
+                    <p>Nous nous déplaçons chez vous pour évaluer le projet et prendre des mesures.</p> 
+                </div>
             </div>
 
             <div class="step">
