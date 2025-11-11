@@ -1,26 +1,30 @@
-#main_realisation {
-    background-color: #FBFFE9;
+.realisations {
+    background-color: var(--bge);
     font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    position: relative;
     text-align: center;
+    min-height: 90vh;
 }
 
-#main_realisation h3 {
+/*color: #367048;*/
+.realisations h2 {
     color: #777;
-    font-size: 1rem;
+    font-size: 1.5rem;
+    display: block; 
     text-transform: uppercase;
     text-decoration: None;
+    padding-top: 30px;
+    margin: 0 0 40px 0; /*en haut, droite, bas, gauche*/
 }
 
-#main_realisation h2 {
+.realisations .highlight {
     color: #367048;
-    font-size: 45px;
-    text-transform: uppercase;
-    text-decoration: None;
-    margin-top: 2px; /*Je sais pas pourquoi mais ça s'écarte de fouuuuuuu*/
+    font-weight: bold;
+    font-size: 3rem;
+    display: block; 
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .container-realisation {
@@ -30,29 +34,30 @@
     gap: 2rem;
     flex-wrap: wrap;
     width: 100%;
+    padding-bottom: 10px;
     margin: 0 auto;
 }
 
 /* === CARTE === */
 .realisation-item {
-    background-color: #ffffff;
     border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 0.25rem 0.125rem rgba(0,0,0,0.08);
     overflow: hidden;
-    width: 320px;
+    width: 20vw;
+    height: 50vh;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .realisation-item:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2rem);
     box-shadow: 0 8px 18px rgba(0,0,0,0.12);
 }
+
 
 /* === IMAGE === */
 .realisation-image {
     width: 100%;
-    height: 400px;
-    overflow: hidden;
+    height: 100%;
     border-radius: 16px;
     position: relative;
 }
@@ -66,7 +71,7 @@
 }
 
 .realisation-item:hover .realisation-image img {
-    transform: scale(1.03);
+    transform: scale(1.10);
 }
 
 .realisation-commentaire {
@@ -82,7 +87,7 @@
     text-align: center;
     opacity: 0;
     transition: opacity 0.3s ease;
-    border-radius: 16px;
+    border-radius: 8px;
 }
 
 .realisation-item:hover .realisation-commentaire {
