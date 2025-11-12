@@ -144,7 +144,7 @@ CREATE TABLE planning_creneaux (
   date_jour DATE NOT NULL,
   heure_debut TIME NOT NULL,
   heure_fin TIME NOT NULL,
-  type_travail ENUM('travail','teletravail','pause','absence','formation') DEFAULT 'travail',
+  type_travail ENUM('travail','teletravail','congé','formation') DEFAULT 'travail',
   commentaire VARCHAR(255),
   CONSTRAINT fk_creneau_planning FOREIGN KEY (id_planning) REFERENCES plannings(id_planning) ON DELETE CASCADE,
   CONSTRAINT fk_creneau_salarie FOREIGN KEY (id_salarie) REFERENCES salaries(id_salarie) ON DELETE CASCADE,
