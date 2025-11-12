@@ -8,7 +8,7 @@ require_once __DIR__ . '/Controllers/LogoutController.php';
 
 $page = $_GET['page'] ?? 'home';
 
-$pagesPubliques = ['login', 'register', 'logout', 'home', 'contact'];
+$pagesPubliques = ['login', 'register', 'logout', 'home', 'contact', 'realisation']; /* Ajout de 'realisation' */
 
 if (!in_array($page, $pagesPubliques) && empty($_SESSION['user'])) {
 
@@ -46,6 +46,9 @@ switch ($page) {
         require_once __DIR__ . '/../src/Views/shared/contact.php';
     break;
 
+    case 'realisation':  /* Ajout de ce cas */
+        require_once __DIR__ . '/../src/Views/vitrine/page-realisation.php';
+        break;
         
     default:
         http_response_code(404);

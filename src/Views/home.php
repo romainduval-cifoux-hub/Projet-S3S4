@@ -17,6 +17,8 @@
     <link href="<?= BASE_URL ?>/public/assets/vitrine/css/avis/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/vitrine/css/avis/position.css" rel="stylesheet">
 
+    <link href="<?= BASE_URL ?>/public/assets/vitrine/css/page-realisation/style.css" rel="stylesheet">
+
     <link href="<?= BASE_URL ?>/public/assets/vitrine/css/realisation/style.css" rel="stylesheet">
 
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
@@ -61,18 +63,31 @@
         ]
     ];
 
+    /*Ajout des réalisations*/
+    $categories = [
+        'Aménagement paysager',
+        'Entretien de jardin',
+        'Plantation d\'arbres et arbustes',
+        'Installation de systèmes d\'irrigation',
+        'Création de terrasses et allées',
+        'Éclairage extérieur'
+    ];
+
     $realisation = [
         [
             'photo' => BASE_URL . '/public/assets/vitrine/img/realisation1.png',
-            'commentaire' => 'Aménagement paysager complet avec plantation d\'arbres et installation de décorations. Coin magnifique tah sah.'
+            'commentaire' => 'Aménagement paysager complet avec plantation d\'arbres et installation de décorations. Coin magnifique tah sah.',
+            'categorie' => 'Aménagement paysager'
         ],
         [
             'photo' => BASE_URL . '/public/assets/vitrine/img/realisation2.png',
-            'commentaire' => 'Pelouse verte, magnifique sah rien à dire.'
+            'commentaire' => 'Pelouse verte, magnifique sah rien à dire.',
+            'categorie' => 'Entretien de jardin'
         ],
         [
             'photo' => BASE_URL . '/public/assets/vitrine/img/realisation3.png',
-            'commentaire' => 'Aménagement d\'un jardin convivial autour d\'une terrasse familiale.\n Des allées et jardinières structurées pour un extérieur accueillant et lumineux'
+            'commentaire' => 'Aménagement d\'un jardin convivial autour d\'une terrasse familiale.\n Des allées et jardinières structurées pour un extérieur accueillant et lumineux',
+            'categorie' => 'Création de terrasses et allées'
         ]
     ];
 
