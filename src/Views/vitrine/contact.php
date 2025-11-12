@@ -3,7 +3,7 @@
     <section class="steps">
 
         
-        <h2>Vos envies en 4 étapes</h2>
+        <h2>Réalisation de votre projet en 4 étapes !</h2>
 
             <div class="step active">
                 <div class="number">1</div>
