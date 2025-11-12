@@ -1,13 +1,378 @@
--- Table users avec rôle
+-- Table users avec rôle (déjà donnée, reprise ici pour cohérence)
+-- =======================================
+-- 1️⃣  TABLE PRINCIPALE : USERS
+-- =======================================
+DROP TABLE IF EXISTS notification_destinataires, notifications, messages, document_lignes, documents, clients, salaries, users;
+
 CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    role ENUM('admin','client') NOT NULL DEFAULT 'client'
-);
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role ENUM('admin','client') NOT NULL DEFAULT 'client'
+) ENGINE=InnoDB;
+
+-- =======================================
+-- 2️⃣  TABLE SALARIÉS
+-- =======================================
+CREATE TABLE salaries (
+  id_salarie INT PRIMARY KEY,
+  nom_salarie VARCHAR(100) NOT NULL,
+  prenom_salarie VARCHAR(100) NOT NULL,
+  adresse_salarie VARCHAR(255),
+  ville_salarie VARCHAR(100),
+  code_postal_salarie VARCHAR(15),
+  salaire DECIMAL(10,2),
+  date_embauche DATE,
+  CONSTRAINT fk_salarie_user FOREIGN KEY (id_salarie) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- =======================================
+-- 3️⃣  TABLE CLIENTS
+-- =======================================
+CREATE TABLE clients (
+  id_client INT PRIMARY KEY,
+  nom_client VARCHAR(100) NOT NULL,
+  prenom_client VARCHAR(100) NOT NULL,
+  adresse_client VARCHAR(255),
+  ville_client VARCHAR(100),
+  code_postal_client VARCHAR(15),
+  siret_client VARCHAR(20),
+  CONSTRAINT fk_client_user FOREIGN KEY (id_client) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- =======================================
+-- 4️⃣  TABLE DOCUMENTS
+-- =======================================
+CREATE TABLE documents (
+  id_doc INT AUTO_INCREMENT PRIMARY KEY,
+  id_client INT NOT NULL,
+  nom_client VARCHAR(100),
+  prenom_client VARCHAR(100),
+  tel_client VARCHAR(30),
+  adresse_client VARCHAR(255),
+  ville_client VARCHAR(100),
+  codepostal_client VARCHAR(15),
+  siret_client VARCHAR(20),
+  date_creation_doc DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  type_doc ENUM('devis','commande','facture','avoir','autre') NOT NULL,
+  status_doc ENUM('brouillon','envoye','accepte','refuse','paye','annule') NOT NULL DEFAULT 'brouillon',
+  type_reglement_doc ENUM('cb','virement','cheque','especes','prelevement','autre'),
+  echeance_paiement_doc DATE,
+  nb_relance_doc INT DEFAULT 0,
+  CONSTRAINT fk_document_client FOREIGN KEY (id_client) REFERENCES clients(id_client) ON DELETE RESTRICT,
+  INDEX (id_client),
+  INDEX (status_doc),
+  INDEX (type_doc)
+) ENGINE=InnoDB;
+
+-- =======================================
+-- 5️⃣  TABLE DOCUMENT_LIGNES
+-- =======================================
+CREATE TABLE document_lignes (
+  id_ligne_doc INT AUTO_INCREMENT PRIMARY KEY,
+  id_doc INT NOT NULL,
+  designation_ligne VARCHAR(255) NOT NULL,
+  description_ligne TEXT,
+  unite_ligne VARCHAR(20),
+  quantite_ligne DECIMAL(12,3) NOT NULL DEFAULT 1,
+  prix_unitaire_ligne DECIMAL(12,2) NOT NULL DEFAULT 0,
+  CONSTRAINT fk_ligne_doc FOREIGN KEY (id_doc) REFERENCES documents(id_doc) ON DELETE CASCADE,
+  INDEX (id_doc)
+) ENGINE=InnoDB;
+
+-- =======================================
+-- 6️⃣  TABLE MESSAGES
+-- =======================================
+CREATE TABLE messages (
+  id_message INT AUTO_INCREMENT PRIMARY KEY,
+  id_expediteur INT NOT NULL,
+  id_destinataire INT NOT NULL,
+  message TEXT NOT NULL,
+  date_envoi DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_msg_sender FOREIGN KEY (id_expediteur) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_msg_recipient FOREIGN KEY (id_destinataire) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX (id_expediteur),
+  INDEX (id_destinataire),
+  INDEX (date_envoi)
+) ENGINE=InnoDB;
+
+-- =======================================
+-- 7️⃣  TABLE NOTIFICATIONS
+-- =======================================
+CREATE TABLE notifications (
+  id_notification INT AUTO_INCREMENT PRIMARY KEY,
+  id_expediteur INT NULL,
+  titre VARCHAR(200) NOT NULL,
+  message TEXT NOT NULL,
+  type ENUM('info','warning','success','error','autre') NOT NULL DEFAULT 'info',
+  date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_notif_sender FOREIGN KEY (id_expediteur) REFERENCES users(id) ON DELETE SET NULL,
+  INDEX (date_creation),
+  INDEX (type)
+) ENGINE=InnoDB;
+
+-- =======================================
+-- 8️⃣  TABLE NOTIFICATION_DESTINATAIRES
+-- =======================================
+CREATE TABLE notification_destinataires (
+  id_notification INT NOT NULL,
+  id_destinataire INT NOT NULL,
+  lu TINYINT(1) NOT NULL DEFAULT 0,
+  date_lu DATETIME NULL,
+  PRIMARY KEY (id_notification, id_destinataire),
+  CONSTRAINT fk_nd_notif FOREIGN KEY (id_notification) REFERENCES notifications(id_notification) ON DELETE CASCADE,
+  CONSTRAINT fk_nd_user FOREIGN KEY (id_destinataire) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX (lu)
+) ENGINE=InnoDB;
+
+CREATE TABLE plannings (
+  id_planning INT AUTO_INCREMENT PRIMARY KEY,
+  nom_planning VARCHAR(100) NOT NULL,               -- ex : "Semaine 46"
+  date_debut DATE NOT NULL,
+  date_fin DATE NOT NULL,
+  id_manager INT NOT NULL,                          -- user responsable
+  statut ENUM('brouillon','valide','publie') DEFAULT 'brouillon',
+  commentaire VARCHAR(255),
+  CONSTRAINT fk_planning_manager FOREIGN KEY (id_manager) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX (date_debut, date_fin)
+) ENGINE=InnoDB;
+
+CREATE TABLE planning_creneaux (
+  id_creneau INT AUTO_INCREMENT PRIMARY KEY,
+  id_planning INT NOT NULL,
+  id_salarie INT NOT NULL,
+  date_jour DATE NOT NULL,
+  heure_debut TIME NOT NULL,
+  heure_fin TIME NOT NULL,
+  type_travail ENUM('travail','teletravail','pause','absence','formation') DEFAULT 'travail',
+  commentaire VARCHAR(255),
+  CONSTRAINT fk_creneau_planning FOREIGN KEY (id_planning) REFERENCES plannings(id_planning) ON DELETE CASCADE,
+  CONSTRAINT fk_creneau_salarie FOREIGN KEY (id_salarie) REFERENCES salaries(id_salarie) ON DELETE CASCADE,
+  INDEX (id_salarie, date_jour),
+  INDEX (id_planning, date_jour)
+) ENGINE=InnoDB;
+
+CREATE TABLE planning_postes (
+  id_poste INT AUTO_INCREMENT PRIMARY KEY,
+  nom_poste VARCHAR(100) NOT NULL,
+  lieu VARCHAR(100),
+  description TEXT
+) ENGINE=InnoDB;
+
+ALTER TABLE planning_creneaux
+  ADD COLUMN id_poste INT NULL,
+  ADD CONSTRAINT fk_creneau_poste FOREIGN KEY (id_poste) REFERENCES planning_postes(id_poste) ON DELETE SET NULL;
+
 
 -- Exemple d'utilisateurs
 INSERT INTO users (username, password, role) VALUES 
 ('admin', MD5('password123'), 'admin'),
 ('a', MD5('b'), 'admin'),
 ('client1', MD5('clientpass'), 'client');
+
+-- =========================================
+-- INSERT DES 30 USERS CLIENTS
+-- =========================================
+INSERT INTO users (username, password, role) VALUES
+('client01', 'HASHEDPWD123', 'client'),
+('client02', 'HASHEDPWD123', 'client'),
+('client03', 'HASHEDPWD123', 'client'),
+('client04', 'HASHEDPWD123', 'client'),
+('client05', 'HASHEDPWD123', 'client'),
+('client06', 'HASHEDPWD123', 'client'),
+('client07', 'HASHEDPWD123', 'client'),
+('client08', 'HASHEDPWD123', 'client'),
+('client09', 'HASHEDPWD123', 'client'),
+('client10', 'HASHEDPWD123', 'client'),
+('client11', 'HASHEDPWD123', 'client'),
+('client12', 'HASHEDPWD123', 'client'),
+('client13', 'HASHEDPWD123', 'client'),
+('client14', 'HASHEDPWD123', 'client'),
+('client15', 'HASHEDPWD123', 'client'),
+('client16', 'HASHEDPWD123', 'client'),
+('client17', 'HASHEDPWD123', 'client'),
+('client18', 'HASHEDPWD123', 'client'),
+('client19', 'HASHEDPWD123', 'client'),
+('client20', 'HASHEDPWD123', 'client'),
+('client21', 'HASHEDPWD123', 'client'),
+('client22', 'HASHEDPWD123', 'client'),
+('client23', 'HASHEDPWD123', 'client'),
+('client24', 'HASHEDPWD123', 'client'),
+('client25', 'HASHEDPWD123', 'client'),
+('client26', 'HASHEDPWD123', 'client'),
+('client27', 'HASHEDPWD123', 'client'),
+('client28', 'HASHEDPWD123', 'client'),
+('client29', 'HASHEDPWD123', 'client'),
+('client30', 'HASHEDPWD123', 'client');
+
+-- =========================================
+-- INSERT DES 30 USERS SALARIÉS
+-- =========================================
+INSERT INTO users (username, password, role) VALUES
+('salarie01', 'HASHEDPWD123', 'admin'),
+('salarie02', 'HASHEDPWD123', 'admin'),
+('salarie03', 'HASHEDPWD123', 'salarie'),
+('salarie04', 'HASHEDPWD123', 'salarie'),
+('salarie05', 'HASHEDPWD123', 'salarie'),
+('salarie06', 'HASHEDPWD123', 'salarie'),
+('salarie07', 'HASHEDPWD123', 'salarie'),
+('salarie08', 'HASHEDPWD123', 'salarie'),
+('salarie09', 'HASHEDPWD123', 'salarie'),
+('salarie10', 'HASHEDPWD123', 'salarie'),
+('salarie11', 'HASHEDPWD123', 'salarie'),
+('salarie12', 'HASHEDPWD123', 'salarie'),
+('salarie13', 'HASHEDPWD123', 'salarie'),
+('salarie14', 'HASHEDPWD123', 'salarie'),
+('salarie15', 'HASHEDPWD123', 'salarie'),
+('salarie16', 'HASHEDPWD123', 'salarie'),
+('salarie17', 'HASHEDPWD123', 'salarie'),
+('salarie18', 'HASHEDPWD123', 'salarie'),
+('salarie19', 'HASHEDPWD123', 'salarie'),
+('salarie20', 'HASHEDPWD123', 'salarie'),
+('salarie21', 'HASHEDPWD123', 'salarie'),
+('salarie22', 'HASHEDPWD123', 'salarie'),
+('salarie23', 'HASHEDPWD123', 'salarie'),
+('salarie24', 'HASHEDPWD123', 'salarie'),
+('salarie25', 'HASHEDPWD123', 'salarie'),
+('salarie26', 'HASHEDPWD123', 'salarie'),
+('salarie27', 'HASHEDPWD123', 'salarie'),
+('salarie28', 'HASHEDPWD123', 'salarie'),
+('salarie29', 'HASHEDPWD123', 'salarie'),
+('salarie30', 'HASHEDPWD123', 'salarie');
+
+-- =========================================
+-- INSERT DES 30 CLIENTS (id = 1 à 30)
+-- =========================================
+INSERT INTO clients (id_client, nom_client, prenom_client, adresse_client, ville_client, code_postal_client, siret_client)
+VALUES
+(1, 'Durand', 'Alice', '12 rue des Lilas', 'Lyon', '69001', 'FR000001'),
+(2, 'Martin', 'Bob', '8 avenue Victor Hugo', 'Paris', '75008', 'FR000002'),
+(3, 'Lefevre', 'Claire', '14 rue Pasteur', 'Marseille', '13001', 'FR000003'),
+(4, 'Moreau', 'David', '6 rue du Parc', 'Nice', '06000', 'FR000004'),
+(5, 'Garcia', 'Emma', '18 rue de la Gare', 'Bordeaux', '33000', 'FR000005'),
+(6, 'Bernard', 'Lucas', '25 avenue Foch', 'Lille', '59000', 'FR000006'),
+(7, 'Petit', 'Nora', '3 place Bellecour', 'Lyon', '69002', 'FR000007'),
+(8, 'Robert', 'Hugo', '4 rue Nationale', 'Tours', '37000', 'FR000008'),
+(9, 'Richard', 'Zoé', '22 avenue République', 'Dijon', '21000', 'FR000009'),
+(10, 'Dubois', 'Léo', '10 chemin du Lac', 'Annecy', '74000', 'FR000010'),
+(11, 'Laurent', 'Sarah', '5 rue des Fleurs', 'Grenoble', '38000', 'FR000011'),
+(12, 'Simon', 'Paul', '45 avenue de la Liberté', 'Toulouse', '31000', 'FR000012'),
+(13, 'Michel', 'Eva', '7 rue Voltaire', 'Nantes', '44000', 'FR000013'),
+(14, 'Thomas', 'Olivier', '9 rue Carnot', 'Clermont-Ferrand', '63000', 'FR000014'),
+(15, 'Garnier', 'Inès', '11 avenue du Stade', 'Reims', '51100', 'FR000015'),
+(16, 'Faure', 'Louis', '2 rue des Peupliers', 'Caen', '14000', 'FR000016'),
+(17, 'Roux', 'Chloé', '17 rue du Moulin', 'Le Havre', '76600', 'FR000017'),
+(18, 'Fontaine', 'Maxime', '15 rue Lafayette', 'Rouen', '76000', 'FR000018'),
+(19, 'Chevalier', 'Lina', '28 rue des Écoles', 'Nancy', '54000', 'FR000019'),
+(20, 'Lambert', 'Noah', '30 rue République', 'Metz', '57000', 'FR000020'),
+(21, 'Bonnet', 'Jules', '13 rue St-Jean', 'Poitiers', '86000', 'FR000021'),
+(22, 'Francois', 'Ana', '8 rue St-Michel', 'Angers', '49000', 'FR000022'),
+(23, 'Renaud', 'Eliott', '4 rue des Alpes', 'Grenoble', '38000', 'FR000023'),
+(24, 'Morin', 'Camille', '6 rue de Paris', 'Chartres', '28000', 'FR000024'),
+(25, 'Renard', 'Tom', '19 rue de Lyon', 'Strasbourg', '67000', 'FR000025'),
+(26, 'Marchand', 'Léa', '7 rue de la Paix', 'Besançon', '25000', 'FR000026'),
+(27, 'Blanc', 'Nathan', '16 rue du Marché', 'Perpignan', '66000', 'FR000027'),
+(28, 'Guillaume', 'Emma', '2 rue du Pont', 'Avignon', '84000', 'FR000028'),
+(29, 'Henry', 'Victor', '8 rue Victor Hugo', 'Paris', '75009', 'FR000029'),
+(30, 'Masson', 'Julie', '10 rue du Rhône', 'Lyon', '69003', 'FR000030');
+
+-- =========================================
+-- INSERT DES 30 SALARIÉS (id = 31 à 60)
+-- =========================================
+INSERT INTO salaries (id_salarie, nom_salarie, prenom_salarie, adresse_salarie, ville_salarie, code_postal_salarie, salaire, date_embauche)
+VALUES
+(31, 'Dupont', 'Marie', '1 rue des Lilas', 'Lyon', '69001', 2800.00, '2018-03-15'),
+(32, 'Durand', 'Pierre', '2 rue des Roses', 'Paris', '75012', 3100.00, '2019-06-10'),
+(33, 'Bernard', 'Lucie', '3 avenue du Parc', 'Nice', '06000', 2900.00, '2017-09-25'),
+(34, 'Petit', 'Nicolas', '4 rue République', 'Marseille', '13001', 3300.00, '2016-11-05'),
+(35, 'Robert', 'Sophie', '5 avenue République', 'Bordeaux', '33000', 3400.00, '2020-01-12'),
+(36, 'Richard', 'Thomas', '6 rue des Alpes', 'Grenoble', '38000', 2700.00, '2021-05-22'),
+(37, 'Dubois', 'Pauline', '7 rue Nationale', 'Lille', '59000', 2600.00, '2015-02-01'),
+(38, 'Moreau', 'Adrien', '8 rue Victor Hugo', 'Toulouse', '31000', 2800.00, '2018-09-17'),
+(39, 'Laurent', 'Claire', '9 rue Lafayette', 'Dijon', '21000', 3000.00, '2016-12-01'),
+(40, 'Simon', 'Hugo', '10 rue du Stade', 'Lyon', '69002', 2900.00, '2017-07-30'),
+(41, 'Michel', 'Laura', '11 rue du Moulin', 'Strasbourg', '67000', 3500.00, '2019-11-21'),
+(42, 'Thomas', 'Julien', '12 rue du Pont', 'Rouen', '76000', 2950.00, '2018-04-19'),
+(43, 'Garnier', 'Camille', '13 rue de Paris', 'Caen', '14000', 3100.00, '2015-10-11'),
+(44, 'Faure', 'Louis', '14 rue des Peupliers', 'Nancy', '54000', 2700.00, '2021-02-15'),
+(45, 'Roux', 'Lina', '15 rue du Marché', 'Angers', '49000', 2600.00, '2017-06-07'),
+(46, 'Fontaine', 'Maxime', '16 rue Carnot', 'Metz', '57000', 3000.00, '2016-03-03'),
+(47, 'Chevalier', 'Chloé', '17 rue des Fleurs', 'Grenoble', '38000', 2850.00, '2018-10-22'),
+(48, 'Lambert', 'Noah', '18 rue du Lac', 'Annecy', '74000', 2950.00, '2019-12-09'),
+(49, 'Bonnet', 'Eva', '19 avenue Foch', 'Lille', '59000', 3100.00, '2020-08-25'),
+(50, 'Francois', 'Tom', '20 rue République', 'Clermont-Ferrand', '63000', 3300.00, '2017-01-14'),
+(51, 'Renaud', 'Emma', '21 rue des Écoles', 'Reims', '51100', 3000.00, '2015-05-20'),
+(52, 'Morin', 'Jules', '22 rue St-Jean', 'Poitiers', '86000', 2700.00, '2018-11-10'),
+(53, 'Renard', 'Ana', '23 rue St-Michel', 'Angers', '49000', 3200.00, '2019-03-28'),
+(54, 'Marchand', 'Nathan', '24 rue des Lilas', 'Nantes', '44000', 2850.00, '2020-06-05'),
+(55, 'Blanc', 'Victor', '25 rue Voltaire', 'Paris', '75009', 3000.00, '2016-09-16'),
+(56, 'Guillaume', 'Inès', '26 rue de Lyon', 'Strasbourg', '67000', 3100.00, '2021-07-23'),
+(57, 'Henry', 'Paul', '27 rue de la Paix', 'Besançon', '25000', 2900.00, '2019-01-31'),
+(58, 'Masson', 'Léa', '28 rue du Pont', 'Avignon', '84000', 2800.00, '2020-02-14'),
+(59, 'Charpentier', 'Olivier', '29 rue du Rhône', 'Lyon', '69003', 3400.00, '2018-06-09'),
+(60, 'Perrin', 'Julie', '30 rue Victor Hugo', 'Paris', '75008', 3500.00, '2017-12-12');
+
+
+-- PASSWORDS POUR LES 30 CLIENTS
+UPDATE users SET password = 'Client01$2025!' WHERE username = 'client01';
+UPDATE users SET password = 'Client02#R0cks' WHERE username = 'client02';
+UPDATE users SET password = 'Cl!ent03_9x' WHERE username = 'client03';
+UPDATE users SET password = 'C4-client04$' WHERE username = 'client04';
+UPDATE users SET password = 'Cli3nt05-Ok' WHERE username = 'client05';
+UPDATE users SET password = 'C06!secure' WHERE username = 'client06';
+UPDATE users SET password = 'client07_pass#' WHERE username = 'client07';
+UPDATE users SET password = 'C8*Purple!7' WHERE username = 'client08';
+UPDATE users SET password = '9client09$GO' WHERE username = 'client09';
+UPDATE users SET password = 'Client10@Home' WHERE username = 'client10';
+UPDATE users SET password = 'Cli#11-Blue' WHERE username = 'client11';
+UPDATE users SET password = 'C12_sunrise!' WHERE username = 'client12';
+UPDATE users SET password = 'client13^Tree' WHERE username = 'client13';
+UPDATE users SET password = 'Cl14!Moon' WHERE username = 'client14';
+UPDATE users SET password = 'C15-Delta$' WHERE username = 'client15';
+UPDATE users SET password = 'client16+Wave' WHERE username = 'client16';
+UPDATE users SET password = 'C17_River#' WHERE username = 'client17';
+UPDATE users SET password = 'client18?Star' WHERE username = 'client18';
+UPDATE users SET password = 'C19&Stone!' WHERE username = 'client19';
+UPDATE users SET password = 'client20=Leaf' WHERE username = 'client20';
+UPDATE users SET password = 'Cli21!Fox' WHERE username = 'client21';
+UPDATE users SET password = 'C22_Sky#' WHERE username = 'client22';
+UPDATE users SET password = 'client23+Oak' WHERE username = 'client23';
+UPDATE users SET password = 'C24*Mint!' WHERE username = 'client24';
+UPDATE users SET password = 'client25@Bee' WHERE username = 'client25';
+UPDATE users SET password = 'C26-Rain#' WHERE username = 'client26';
+UPDATE users SET password = 'client27$Peak' WHERE username = 'client27';
+UPDATE users SET password = 'C28!Echo' WHERE username = 'client28';
+UPDATE users SET password = 'client29#Bolt' WHERE username = 'client29';
+UPDATE users SET password = 'C30_Pearl!' WHERE username = 'client30';
+
+-- PASSWORDS POUR LES 30 SALARIÉS (salaries)
+UPDATE users SET password = 'Salarie01$Adm' WHERE username = 'salarie01';
+UPDATE users SET password = 'Sal02#Work' WHERE username = 'salarie02';
+UPDATE users SET password = 'S3_salarie!X' WHERE username = 'salarie03';
+UPDATE users SET password = 'Sal04@Team' WHERE username = 'salarie04';
+UPDATE users SET password = 'Salarie05%Go' WHERE username = 'salarie05';
+UPDATE users SET password = 'Sal06^Lead' WHERE username = 'salarie06';
+UPDATE users SET password = 'S07_salarie*' WHERE username = 'salarie07';
+UPDATE users SET password = 'Sal08!Done' WHERE username = 'salarie08';
+UPDATE users SET password = 'S09#Check' WHERE username = 'salarie09';
+UPDATE users SET password = 'Sal10$Plan' WHERE username = 'salarie10';
+UPDATE users SET password = 'S11-Manage' WHERE username = 'salarie11';
+UPDATE users SET password = 'Sal12+Ops' WHERE username = 'salarie12';
+UPDATE users SET password = 'S13_salarie?' WHERE username = 'salarie13';
+UPDATE users SET password = 'Sal14^Edge' WHERE username = 'salarie14';
+UPDATE users SET password = 'S15*Secure' WHERE username = 'salarie15';
+UPDATE users SET password = 'Sal16!Core' WHERE username = 'salarie16';
+UPDATE users SET password = 'S17#Root' WHERE username = 'salarie17';
+UPDATE users SET password = 'Sal18$Flow' WHERE username = 'salarie18';
+UPDATE users SET password = 'S19-Auth' WHERE username = 'salarie19';
+UPDATE users SET password = 'Sal20+Gate' WHERE username = 'salarie20';
+UPDATE users SET password = 'S21!Hash' WHERE username = 'salarie21';
+UPDATE users SET password = 'Sal22#Node' WHERE username = 'salarie22';
+UPDATE users SET password = 'S23$Sync' WHERE username = 'salarie23';
+UPDATE users SET password = 'Sal24^Task' WHERE username = 'salarie24';
+UPDATE users SET password = 'S25*Alert' WHERE username = 'salarie25';
+UPDATE users SET password = 'Sal26!salarie' WHERE username = 'salarie26';
+UPDATE users SET password = 'S27#Policy' WHERE username = 'salarie27';
+UPDATE users SET password = 'Sal28$Audit' WHERE username = 'salarie28';
+UPDATE users SET password = 'S29+OpsX' WHERE username = 'salarie29';
+UPDATE users SET password = 'Sal30!Final' WHERE username = 'salarie30';
