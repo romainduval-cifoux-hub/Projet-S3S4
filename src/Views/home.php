@@ -63,7 +63,8 @@
         ]
     ];
 
-    /*Ajout des réalisations*/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*Ajout des categories*/
     $categories = [
         'Aménagement paysager',
         'Entretien de jardin',
@@ -90,7 +91,7 @@
             'categorie' => 'Création de terrasses et allées'
         ]
     ];
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     require_once __DIR__ . '/vitrine/avis.php';
     require_once __DIR__ . '/vitrine/realisation.php';
     require_once __DIR__ . '/vitrine/contact.php';

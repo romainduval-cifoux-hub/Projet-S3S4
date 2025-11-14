@@ -10,9 +10,7 @@
                 <?php endforeach; ?>
             </ul>
         </nav>    
-    
+
         <a href="<?= $redirection ?>" class="btn_login"><?php echo($bouton)  ?></a>
     </div>
 </header>
-
-

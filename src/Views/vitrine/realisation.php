@@ -13,3 +13,10 @@
         <?php endforeach; ?>
     </div>
 </section>
+<div style="text-align: center; margin: 20px 0;">
+    <a href="index.php?page=realisation">
+        <button style="background-color: #367048; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+            Voir toutes les réalisations
+        </button>
+    </a>
+</div>
