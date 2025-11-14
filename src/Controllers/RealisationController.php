@@ -1,24 +1,40 @@
 <?php
 
+require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../Database/RealisationRepository.php';
 
 class RealisationController {
-    private RealisationRepository $repository;
 
-    public function __construct(PDO $pdo) {                              // On se connecte à la BDD
-        $this->repository = new RealisationRepository($pdo) ; 
+    private RealisationRepository $repo;
+
+    public function __construct() {
+        $pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS);
+        $this->repo = new RealisationRepository($pdo);
     }
 
-    public function affichage_realisations(): void {                     // Méthode pour afficher la page des réalisations*
-        $categories = $this->repository->getAllCategories() ;
-        $categoriesWithRealisations = [] ;
+    public function getFavorites(): array {
+        return $this->repo->getRealisationsFavorites();
+    }
+
+
+    public function affichage_realisations_favories():void {
+        $realisationFavorite = $this->repo->getRealisationsFavorites();
+        require_once __DIR__ . '/../Views/vitrine/realisation.php';
+
+    }
+
+
+    public function affichage_realisations(): void {
+        $categories = $this->repo->getAllCategories();
+        $categoriesWithRealisations = [];
 
         foreach ($categories as $category) {
             $categoriesWithRealisations[$category['id']] = [
                 'name' => $category['nom'],
-                'realisations' => $this->repository->getRealisationsByCategory($category['id'])
+                'realisations' => $this->repo->getRealisationsByCategory($category['id'])
             ];
         }
-        require_once __DIR__ . '/../Views/vitrine/page-realisation.php' ; // On affiche la page après avoir récupéré les données
+
+        require_once __DIR__ . '/../Views/vitrine/page-realisation.php';
     }
 }

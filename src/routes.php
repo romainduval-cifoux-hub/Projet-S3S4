@@ -16,18 +16,6 @@ if (!in_array($page, $pagesPubliques) && empty($_SESSION['user'])) {
     header('Location: ' . BASE_URL . '/public/index.php');
     exit;
 }
-                                        // Crée le PDO à partir des constantes définies dans config.php
-                                        try {
-                                            $pdo = new PDO(
-                                                "mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=utf8mb4",
-                                                DB_USER,
-                                                DB_PASS,
-                                                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-                                            );
-                                        } catch (PDOException $e) {
-                                            die('Erreur de connexion à la BDD : ' . $e->getMessage());
-                                        }
-
 
 switch ($page) {
     case 'login':
@@ -60,7 +48,7 @@ switch ($page) {
 
     case 'realisation':
         require_once __DIR__ . '/../src/Controllers/RealisationController.php';
-        $controller = new RealisationController($pdo); // passer le PDO créé dans config.php
+        $controller = new RealisationController(); // passer le PDO créé dans config.php
         $controller->affichage_realisations();        // appelle la méthode qui prépare la vue
         break;
 
