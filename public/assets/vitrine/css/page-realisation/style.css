@@ -58,7 +58,7 @@
 }
 
 .realisation-item:hover {
-    transform: translateY(-2rem);
+    transform: translateY(-1rem);
     box-shadow: 0 8px 18px rgba(0,0,0,0.12);
 }
 

@@ -16,12 +16,11 @@
             <p>Aucune réalisation favorite pour le moment.</p>
         <?php endif; ?>
     </div>
+    <div>
+        <a href="index.php?page=realisation">
+            <button>
+                Voir toutes les réalisations
+            </button>
+        </a>
+    </div>
 </section>
-
-<div style="text-align: center; margin: 20px 0;">
-    <a href="index.php?page=realisation">
-        <button style="background-color: #367048; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-            Voir toutes les réalisations
-        </button>
-    </a>
-</div>

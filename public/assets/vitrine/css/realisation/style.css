@@ -50,7 +50,7 @@
 }
 
 .realisation-item:hover {
-    transform: translateY(-2rem);
+    transform: translateY(-1rem);
     box-shadow: 0 8px 18px rgba(0,0,0,0.12);
 }
 
@@ -93,4 +93,24 @@
 
 .realisation-item:hover .realisation-commentaire {
     opacity: 1;
+}
+
+button {
+    background-color: #367048;
+    color: #fff;
+    padding: 20px 30px;
+    margin-top: 60px;
+    margin-bottom: 45px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #2d5e3e;
+    transform: translateY(-2px);
 }
