@@ -1,29 +1,27 @@
+:root {
+    --vert-fonce: #367048;   /* vert principal */
+    --bg: #E5F6EA; /* jaune */
+    --bge: #FBFFE9; /* beige clair */
+}
+
 .realisations {
     background-color: var(--bge);
     font-family: Arial, sans-serif;
     align-items: center;
     text-align: center;
+    padding-bottom: 80px;
 }
 
 /*color: #367048;*/
 .realisations h2 {
-    color: #777;
-    font-size: 1.5rem;
-    display: block; 
-    text-transform: uppercase;
-    text-decoration: None;
-    padding-top: 30px;
-    margin: 0 0 40px 0; /*en haut, droite, bas, gauche*/
-}
-
-.realisations .highlight {
     color: #367048;
     font-weight: bold;
     font-size: 3rem;
     display: block; 
     text-align: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 80px;
+    padding-bottom: 5px;
+    margin: 0 0 40px 0; /*en haut, droite, bas, gauche*/
 }
 
 .container-realisation {
@@ -36,7 +34,7 @@
     width: fit-content;
     max-width: 80%;
     padding: 25px 30px;
-    margin: 50px auto;
+    margin: 50px auto 0;
     border-radius: 20px;
 }
 
@@ -97,24 +95,4 @@
 
 .realisation-item:hover .realisation-commentaire {
     opacity: 1;
-}
-
-button {
-    background-color: #367048;
-    color: #fff;
-    padding: 20px 30px;
-    margin-top: 60px;
-    margin-bottom: 45px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    transition: background-color 0.25s ease, transform 0.2s ease;
-}
-
-button:hover {
-    background-color: #2d5e3e;
-    transform: translateY(-2px);
 }
