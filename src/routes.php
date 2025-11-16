@@ -48,6 +48,8 @@ switch ($page) {
 
     case 'realisation':
         require_once __DIR__ . '/../src/Controllers/RealisationController.php';
+        require_once __DIR__ . '/../src/Views/shared/header.php';
+
         $controller = new RealisationController(); // passer le PDO créé dans config.php
         $controller->affichage_realisations();        // appelle la méthode qui prépare la vue
         break;

@@ -34,12 +34,7 @@
 
 
     <?php
-    
-    $nav = $nav ?? ['Accueil', 'Avis', 'Nos réalisations', 'Contact']; 
-    $bouton = $bouton ?? "Se connecter";
-    $redirection = $redirection ?? BASE_URL . "/public/index.php?page=login";
     require_once __DIR__ . '/shared/header.php';
-
     require_once __DIR__ . '/vitrine/accueil.php';
 
     $avis = [
