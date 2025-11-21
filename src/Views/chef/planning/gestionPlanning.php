@@ -1,7 +1,3 @@
-<?php
-
-// ici, le controller a déjà fait : $employes, $joursAffiches, $slotsMatrix, $weekLabel, $prevMonday, $nextMonday, $pageTitle
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

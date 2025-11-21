@@ -6,6 +6,7 @@ require_once __DIR__ . '/Controllers/RegisterController.php';
 require_once __DIR__ . '/Controllers/DashboardController.php';
 require_once __DIR__ . '/Controllers/LogoutController.php';
 require_once __DIR__ . '/Controllers/PlanningController.php';
+require_once __DIR__ . '/Controllers/ChantierController.php';
 
 $page = $_GET['page'] ?? 'home';
 
@@ -48,6 +49,13 @@ switch ($page) {
         $controller = new PlanningController();
         $controller->handleRequest();
         break;
+
+    case 'chantier/create':
+        require_once __DIR__ . '/Database/ChantierRepository.php';
+        $controller = new ChantierController();
+        $controller->create();
+        break;
+
 
     
 
