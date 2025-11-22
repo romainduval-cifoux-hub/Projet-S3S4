@@ -1,0 +1,157 @@
+<?php
+
+/**
+ * Récupère la liste des salariés pour affecter un chantier.
+ */
+function ch_getSalaries(PDO $pdo): array
+{
+    $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
+            FROM salaries
+            ORDER BY nom_salarie, prenom_salarie";
+    $stmt = $pdo->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Récupère la liste des clients.
+ */
+function ch_getClients(PDO $pdo): array
+{
+    $sql = "SELECT id_client, nom_client, prenom_client
+            FROM clients
+            ORDER BY nom_client, prenom_client";
+    $stmt = $pdo->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Retourne "Prénom Nom" du client ou null.
+ */
+function ch_getClientFullName(PDO $pdo, int $id_client): ?string
+{
+    $st = $pdo->prepare("SELECT nom_client, prenom_client FROM clients WHERE id_client = ?");
+    $st->execute([$id_client]);
+    $row = $st->fetch(PDO::FETCH_ASSOC);
+    if (!$row) return null;
+
+    return $row['prenom_client'] . ' ' . $row['nom_client'];
+}
+
+/**
+ * Retourne l'id_planning pour la semaine de $dateJour (lundi–vendredi) et ce manager.
+ * Crée un planning s'il n'existe pas encore.
+ */
+function ch_getOrCreatePlanningForDate(PDO $pdo, int $managerId, string $dateJour, string $commentaireInitial = 'Planning généré automatiquement'): int
+{
+    $ts       = strtotime($dateJour);
+    $lundi    = date('Y-m-d', strtotime('monday this week', $ts));
+    $vendredi = date('Y-m-d', strtotime($lundi . ' +4 day'));
+
+    // Chercher un planning existant
+    $stPlan = $pdo->prepare("
+        SELECT id_planning 
+        FROM plannings
+        WHERE id_manager = :m
+          AND date_debut = :d
+          AND date_fin   = :f
+        LIMIT 1
+    ");
+    $stPlan->execute([
+        ':m' => $managerId,
+        ':d' => $lundi,
+        ':f' => $vendredi
+    ]);
+
+    $planning = $stPlan->fetch(PDO::FETCH_ASSOC);
+    if ($planning) {
+        return (int)$planning['id_planning'];
+    }
+
+    // Sinon on le crée
+    $nom_planning = "Semaine du " . date('d/m', strtotime($lundi)) . " au " . date('d/m', strtotime($vendredi));
+
+    $stInsertPlan = $pdo->prepare("
+        INSERT INTO plannings (nom_planning, date_debut, date_fin, id_manager, statut, commentaire)
+        VALUES (:nom, :d, :f, :m, 'brouillon', :com)
+    ");
+    $stInsertPlan->execute([
+        ':nom' => $nom_planning,
+        ':d'   => $lundi,
+        ':f'   => $vendredi,
+        ':m'   => $managerId,
+        ':com' => $commentaireInitial
+    ]);
+
+    return (int)$pdo->lastInsertId();
+}
+
+/**
+ * Crée un créneau de demi-journée pour un salarié à une date donnée.
+ *
+ * $periode = 'am' (matin 8–12) ou 'pm' (après-midi 13–17)
+ * $id_client optionnel → si fourni, on préfixe le commentaire avec "Chantier chez Prénom Nom".
+ *
+ * Gère aussi la création / récupération du planning de la semaine,
+ * et le tout est fait dans une transaction.
+ */
+function ch_createCreneauAvecPlanning(
+    PDO $pdo,
+    int $managerId,
+    int $id_salarie,
+    string $date_jour,
+    string $periode,
+    ?int $id_client = null,
+    string $commentaire = ''
+): bool {
+    // Normaliser la période
+    $periode = ($periode === 'pm') ? 'pm' : 'am';
+
+    // Déterminer le créneau horaire
+    if ($periode === 'am') {
+        $heure_debut = '08:00:00';
+        $heure_fin   = '12:00:00';
+    } else {
+        $heure_debut = '13:00:00';
+        $heure_fin   = '17:00:00';
+    }
+
+    // Si un client est précisé, préfixer le commentaire
+    if ($id_client !== null) {
+        $clientFullName = ch_getClientFullName($pdo, $id_client);
+        if ($clientFullName !== null) {
+            $prefix = "Chantier chez " . $clientFullName;
+            $commentaire = $prefix . ($commentaire ? " – " . $commentaire : "");
+        }
+    }
+
+    try {
+        $pdo->beginTransaction();
+
+        // 1) Récupérer / créer le planning de la bonne semaine
+        $id_planning = ch_getOrCreatePlanningForDate($pdo, $managerId, $date_jour);
+
+        // 2) Insérer le créneau
+        $stCreneau = $pdo->prepare("
+            INSERT INTO planning_creneaux
+                (id_planning, id_salarie, date_jour, heure_debut, heure_fin, type_travail, commentaire)
+            VALUES
+                (:plan, :sal, :jour, :hdeb, :hfin, 'travail', :com)
+        ");
+        $stCreneau->execute([
+            ':plan' => $id_planning,
+            ':sal'  => $id_salarie,
+            ':jour' => $date_jour,
+            ':hdeb' => $heure_debut,
+            ':hfin' => $heure_fin,
+            ':com'  => $commentaire
+        ]);
+
+        $pdo->commit();
+        return true;
+
+    } catch (Throwable $e) {
+        $pdo->rollBack();
+        // tu peux logger $e->getMessage() ici si besoin
+        return false;
+    }
+}

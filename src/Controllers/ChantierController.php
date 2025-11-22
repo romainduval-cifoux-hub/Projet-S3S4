@@ -98,6 +98,6 @@ class ChantierController
             ['label'=>'Éditer employé',  'href'=> BASE_URL.'/public/index.php?page=employe/list'],
         ];
 
-        require __DIR__ . '/../Views/chef/chantier/create.php';
+        require __DIR__ . '/../Views/chef/planning/create.php';
     }
 }
