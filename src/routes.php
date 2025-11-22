@@ -5,17 +5,19 @@ require_once __DIR__ . '/Controllers/LoginController.php';
 require_once __DIR__ . '/Controllers/RegisterController.php';
 require_once __DIR__ . '/Controllers/DashboardController.php';
 require_once __DIR__ . '/Controllers/LogoutController.php';
-require_once __DIR__ . '/Controllers/RealisationController.php';
+require_once __DIR__ . '/Controllers/PlanningController.php';
+require_once __DIR__ . '/Controllers/ChantierController.php';
 
 $page = $_GET['page'] ?? 'home';
 
-$pagesPubliques = ['login', 'register', 'logout', 'home', 'contact', 'realisation']; /* Ajout de 'realisation' */
+$pagesPubliques = ['login', 'register', 'logout', 'home'];
 
 if (!in_array($page, $pagesPubliques) && empty($_SESSION['user'])) {
 
     header('Location: ' . BASE_URL . '/public/index.php');
     exit;
 }
+
 
 switch ($page) {
     case 'login':
@@ -42,17 +44,22 @@ switch ($page) {
         $controller->handleRequest();
         break;
 
-    case 'contact':
-        require_once __DIR__ . '/../src/Views/shared/contact.php';
-    break;
-
-    case 'realisation':
-        require_once __DIR__ . '/../src/Controllers/RealisationController.php';
-        require_once __DIR__ . '/../src/Views/shared/header.php';
-
-        $controller = new RealisationController(); // passer le PDO créé dans config.php
-        $controller->affichage_realisations();        // appelle la méthode qui prépare la vue
+    case 'chef/planning':
+        
+        $controller = new PlanningController();
+        $controller->handleRequest();
         break;
+
+    case 'chantier/create':
+        require_once __DIR__ . '/Database/ChantierRepository.php';
+        $controller = new ChantierController();
+        $controller->create();
+        break;
+
+
+    
+
+
 
         
     default:

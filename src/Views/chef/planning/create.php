@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title><?= htmlspecialchars($pageTitle ?? 'Nouveau chantier') ?></title>
+
+    <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
+
+    <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
+
+    <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
+
+    <link href="<?= BASE_URL ?>/public/assets/chef/css/planning.css" rel="stylesheet"> 
+    <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
+
+    <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
+</head>
+<body>
+<div class="page">
+    <?php
+        
+        require __DIR__ . '/../../shared/header.php';
+    ?>
+
+    <div class="app">
+        <?php
+            
+            require __DIR__ . '/../../shared/aside.php';
+        ?>
+
+        <main class="main-content">
+            <section class="board" style="padding:20px;">
+                <h1>Nouveau chantier (créneau demi-journée)</h1>
+
+                <?php if (!empty($errors)): ?>
+                    <div class="alert alert-error">
+                        <ul>
+                            <?php foreach ($errors as $err): ?>
+                                <li><?= htmlspecialchars($err) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
+                <form method="post" class="form-chantier">
+                    <div class="form-row">
+                        <label for="date_jour">Date du chantier</label>
+                        <input type="date" id="date_jour" name="date_jour"
+                               value="<?= htmlspecialchars($date_jour) ?>" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="id_salarie">Salarié affecté</label>
+                        <select id="id_salarie" name="id_salarie" required>
+                            <option value="">-- Sélectionner un salarié --</option>
+                            <?php foreach ($salaries as $s): ?>
+                                <option value="<?= (int)$s['id_salarie'] ?>">
+                                    <?= htmlspecialchars($s['prenom_salarie'] . ' ' . $s['nom_salarie']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="periode">Période</label>
+                        <select id="periode" name="periode" required>
+                            <option value="am" <?= $periode === 'am' ? 'selected' : '' ?>>Matin (8h–12h)</option>
+                            <option value="pm" <?= $periode === 'pm' ? 'selected' : '' ?>>Après-midi (13h–17h)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="id_client">Client (optionnel)</label>
+                        <select id="id_client" name="id_client">
+                            <option value="">-- Aucun / interne --</option>
+                            <?php foreach ($clients as $c): ?>
+                                <option value="<?= (int)$c['id_client'] ?>">
+                                    <?= htmlspecialchars($c['prenom_client'] . ' ' . $c['nom_client']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="commentaire">Commentaire (optionnel)</label>
+                        <textarea id="commentaire" name="commentaire" rows="3"
+                                  placeholder="Détails du chantier, lieu précis, matériel à prévoir..."><?= htmlspecialchars($commentaire ?? '') ?></textarea>
+                    </div>
+
+                    <button type="submit" class="btn_login">Créer le créneau</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <?php require __DIR__ . '/../../shared/footer.php'; ?>
+</div>
+</body>
+</html>
