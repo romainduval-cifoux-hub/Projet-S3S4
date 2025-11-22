@@ -46,12 +46,12 @@
                 <div class="board__toolbar">
                     <div class="chip">
                         <a class="navbtn"
-                        href="<?= BASE_URL ?>/public/index.php?page=planning&date=<?= htmlspecialchars($prevMonday) ?>">
+                        href="<?= BASE_URL ?>/public/index.php?page=chef/planning&date=<?= htmlspecialchars($prevMonday) ?>">
                             ‹
                         </a>
 
                         <a class="navbtn"
-                        href="<?= BASE_URL ?>/public/index.php?page=planning&date=<?= htmlspecialchars($nextMonday) ?>">
+                        href="<?= BASE_URL ?>/public/index.php?page=chef/planning&date=<?= htmlspecialchars($nextMonday) ?>">
                             ›
                         </a>
 
@@ -111,7 +111,7 @@
                                         <?php foreach ($daySlots as $slot): 
                                             $hDeb = substr($slot['heure_debut'], 0, 5);
                                             $hFin = substr($slot['heure_fin'], 0, 5);
-                                            $label = $slot['nom_poste'] ?? $slot['commentaire'] ?? 'Intervention';
+                                            $label = $slot['label'];
                                         ?>
                                             <div class="slot">
                                                 <strong><?= htmlspecialchars($hDeb . '–' . $hFin) ?></strong>

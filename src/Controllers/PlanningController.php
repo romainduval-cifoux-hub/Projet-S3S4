@@ -24,9 +24,9 @@ class PlanningController {
             exit("Accès réservé au chef d'entreprise.");
         }
 
-        // -------------------------
-        // 1) Déterminer la semaine
-        // -------------------------
+        
+        //Déterminer la semaine
+        
         $refDate = $_GET['date'] ?? date('Y-m-d');
         $ts      = strtotime($refDate);
         $lundi   = date('Y-m-d', strtotime('monday this week', $ts));
@@ -36,24 +36,21 @@ class PlanningController {
             $joursAffiches[] = date('Y-m-d', strtotime("$lundi +$i day"));
         }
 
-        // Labels semaine
+        //Labels semaine
         $debutLabel = date('d/m/Y', strtotime($joursAffiches[0]));
         $finLabel   = date('d/m/Y', strtotime(end($joursAffiches)));
         $weekLabel  = "Semaine du $debutLabel au $finLabel";
 
-        // Semaine précédente / suivante
+        //Semaine précédente / suivante
         $prevMonday = date('Y-m-d', strtotime($lundi . ' -7 day'));
         $nextMonday = date('Y-m-d', strtotime($lundi . ' +7 day'));
 
-        // -------------------------
-        // 2) Charger données BDD
-        // -------------------------
+        //Charger données BDD
         $employes    = getSalaries($this->pdo);
         $slotsMatrix = getWeekMatrix($this->pdo, $lundi);
 
-        // -------------------------
-        // 3) Variables envoyées à la vue
-        // -------------------------
+ 
+        //Variables envoyées à la vue
         $pageTitle = "Planning – Team Jardin";
 
         // header
@@ -70,10 +67,7 @@ class PlanningController {
             ['label'=>'Ajouter employé', 'href'=> BASE_URL.'/public/index.php?page=employe/create'],
             ['label'=>'Éditer employé',  'href'=> BASE_URL.'/public/index.php?page=employe/list'],
         ];
-
-        // -------------------------
-        // 4) Appeler les vues dans le bon ordre
-        // -------------------------
+    
 
         
         require __DIR__ . '/../Views/chef/planning/gestionPlanning.php';
