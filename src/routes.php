@@ -38,6 +38,10 @@ switch ($page) {
         ShowHomeController(); 
         break;
 
+    case 'dashboard':
+        $controller = new DashboardController();
+        $controller->handleRequest();
+        break;
 
     case 'logout':
         $controller = new LogoutController();
@@ -50,18 +54,6 @@ switch ($page) {
         $controller->handleRequest();
         break;
 
-    case 'chef/dashboard':
-        $controller = new DashboardController();
-        $controller->handleRequest();
-        break;
-
-
-    case 'chef/facturation':
-        $controller = new FacturationController();
-        $controller->handleRequest();
-        break;
-
-
     case 'chantier/create':
         $controller = new ChantierController();
         $controller->create();
@@ -71,6 +63,11 @@ switch ($page) {
         
         $controller = new ChantierController();
         $controller->delete();
+    
+    case 'chef/facturation/dashboard':
+        
+        $controller = new FacturationController();
+        $controller->handleRequest();
         break;
 
         
