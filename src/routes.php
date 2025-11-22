@@ -8,6 +8,7 @@ require_once __DIR__ . '/Controllers/LogoutController.php';
 require_once __DIR__ . '/Controllers/PlanningController.php';
 require_once __DIR__ . '/Controllers/ChantierController.php';
 require_once __DIR__ . '/Controllers/FacturationController.php';
+require_once __DIR__ . '/Controllers/RealisationController.php';
 
 
 
@@ -70,6 +71,11 @@ switch ($page) {
         $controller->handleRequest();
         break;
 
+    case 'realisation':
+          
+        $controller = new RealisationController(); // passer le PDO créé dans config.php
+        $controller->affichage_realisations();        // appelle la méthode qui prépare la vue
+        break;
         
     default:
         http_response_code(404);
