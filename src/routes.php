@@ -55,6 +55,13 @@ switch ($page) {
         $controller = new ChantierController();
         $controller->create();
         break;
+        
+    case 'avis_add':
+    require_once __DIR__ . '/Controllers/AvisController.php';
+    $controller = new AvisController();
+    $controller->add();
+    break;
+    
 
 
     

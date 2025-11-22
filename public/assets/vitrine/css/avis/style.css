@@ -154,3 +154,65 @@
     background-color: #295c31;
     transform: translateY(-50%) scale(1.05);
 }
+
+/* ===== POPUP (MODAL) ===== */
+
+/* Overlay plein écran */
+.avis-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;   /* popup caché par défaut */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.avis-modal-overlay {
+    display: none;
+}
+
+
+/* Contenu du popup */
+.avis-modal {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    text-align: left;
+}
+
+/* Bouton de fermeture (croix) */
+.avis-modal-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Un peu de structure pour les champs */
+.avis-modal .form-group {
+    margin-bottom: 15px;
+}
+
+.avis-modal label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.avis-modal textarea,
+.avis-modal select {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.avis-modal form button {
+    display: block;
+    margin: 30px auto 0; /* auto = centre horizontalement */
+}
