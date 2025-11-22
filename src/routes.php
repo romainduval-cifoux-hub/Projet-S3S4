@@ -9,7 +9,6 @@ require_once __DIR__ . '/Controllers/PlanningController.php';
 require_once __DIR__ . '/Controllers/ChantierController.php';
 require_once __DIR__ . '/Controllers/FacturationController.php';
 
-
 $page = $_GET['page'] ?? 'home';
 
 $pagesPubliques = ['login', 'register', 'logout', 'home'];
@@ -36,6 +35,10 @@ switch ($page) {
         ShowHomeController(); 
         break;
 
+    case 'dashboard':
+        $controller = new DashboardController();
+        $controller->handleRequest();
+        break;
 
     case 'logout':
         $controller = new LogoutController();
@@ -48,27 +51,19 @@ switch ($page) {
         $controller->handleRequest();
         break;
 
-    case 'chef/dashboard':
-        $controller = new DashboardController();
-        $controller->handleRequest();
-        break;
-
-
-    case 'chef/facturation':
-        $controller = new FacturationController();
-        $controller->handleRequest();
-        break;
-
-
     case 'chantier/create':
         
         $controller = new ChantierController();
         $controller->create();
         break;
 
+    case 'chef/facturation/dashboard':
         
+        $controller = new FacturationController();
+        $controller->handleRequest();
+        break;
 
-
+        
     default:
         http_response_code(404);
         echo "404 - Page non trouvée";
