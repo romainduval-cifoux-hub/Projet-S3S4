@@ -1,52 +1,31 @@
+/* ==== CONTENEUR GLOBAL DES AVIS ==== */
 .avis_container {
     background-color: var(--bg);
     width: 100%;
-    height: 90vh;               
-    overflow: hidden;        
-    text-align: center;   
+    padding-bottom: 40px;
+    text-align: center;
     justify-items: center;
     justify-content: center;
 }
 
-.avis_container h2{
-font-size: xx-large;
-text-align: center;
-
-}
-
-#main-avis h2 .highlight {
-    color: var(--vert-fonce); 
-    display: block; 
+.avis_container h2 {
+    font-size: xx-large;
     text-align: center;
 }
 
-
+#main-avis h2 .highlight {
+    color: var(--vert-fonce);
+    display: block;
+    text-align: center;
+}
 
 #main-avis #logo-google {
-
     height: 100px;
 }
 
-#main-avis .container-avis-google {
-    display: flex;
-    flex-direction: row;         
-    width: 80%;
-    justify-content: space-between;
-    padding-top: 50px;
-
-
-}
-
-.container-avis-google {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-top: 30px;
-}
-
+/* ==== CARTES D'AVIS ==== */
 .avis-google {
-    background-color: white;
+    background-color: #ffffff;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     width: 350px;
@@ -110,4 +89,68 @@ text-align: center;
     color: #444;
     font-size: 0.95em;
     line-height: 1.4em;
+}
+
+/* ==== CARROUSEL (3 AVIS VISIBLES) ==== */
+
+/* Wrapper global : flèches + fenêtre + rail */
+.avis-slider-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 40px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fenêtre qui masque les cartes supplémentaires */
+.avis-slider-window {
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Rail des cartes */
+.avis-slider {
+    display: flex;
+    gap: 20px;                 /* doit correspondre au +20 dans le JS */
+    transition: transform 0.4s ease;
+}
+
+/* Une carte = un slide */
+.avis-slide {
+    flex: 0 0 auto;
+}
+
+/* Flèches de navigation */
+.avis-arrow {
+    position: absolute;
+    top: 15%;
+    transform: translateY(-50%);
+    background-color: #2f6f3a;
+    color: #fff;
+    border: none;
+    width: 55px;
+    height: 55px;
+    font-size: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    z-index: 20;
+}
+
+.avis-arrow-left {
+    left: -80px;   /* ajuste si tu veux les rapprocher/éloigner */
+}
+
+.avis-arrow-right {
+    right: -60px;
+}
+
+.avis-arrow:hover {
+    background-color: #295c31;
+    transform: translateY(-50%) scale(1.05);
 }
