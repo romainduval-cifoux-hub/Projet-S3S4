@@ -59,6 +59,15 @@ $sql = "
     }
     unset($item); 
 
+    $moyenne = 0;
+    if (count($avis) > 0) {
+        $totalNotes = 0;
+        foreach ($avis as $a) {
+            $totalNotes += (int)$a['note'];
+        }
+        $moyenne = round($totalNotes / count($avis)); // entier entre 1 et 5
+    }
+
 
     require_once __DIR__ . '/vitrine/avis.php';
     require_once __DIR__ . '/vitrine/realisation.php';
