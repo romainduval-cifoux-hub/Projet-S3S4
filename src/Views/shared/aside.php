@@ -1,17 +1,4 @@
 <?php
-$menuTitle1 = $menuTitle1 ?? 'Gestion des chantiers';
-$menuTitle2 = $menuTitle2 ?? 'Gestion Employé';
-
-$menu1 = $menu1 ?? [
-  ['label' => 'Nouveau chantier', 'href' => BASE_URL . '/public/index.php?page=chantier/create'],
-  ['label' => 'Éditer chantier',  'href' => BASE_URL . '/public/index.php?page=chantier/list'],
-];
-
-$menu2 = $menu2 ?? [
-  ['label' => 'Ajouter employé', 'href' => BASE_URL . '/public/index.php?page=employe/create'],
-  ['label' => 'Éditer employé',  'href' => BASE_URL . '/public/index.php?page=employe/list'],
-];
-
 $currentUrl = $_SERVER['REQUEST_URI'] ?? '';
 ?>
 

@@ -152,6 +152,19 @@ CREATE TABLE realisations (
         ON UPDATE CASCADE
 );
 
+CREATE TABLE avis (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    commentaire TEXT,
+    note INT CHECK (note >= 1 AND note <= 5),
+    date_commentaire DATE NOT NULL,
+
+    CONSTRAINT fk_avis_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+
 
 INSERT INTO users (username, password, role) VALUES 
 ('admin', MD5('password123'), 'admin'),
@@ -289,6 +302,18 @@ VALUES
 (58, 'Masson', 'Léa', '28 rue du Pont', 'Avignon', '84000', 2800.00, '2020-02-14'),
 (59, 'Charpentier', 'Olivier', '29 rue du Rhône', 'Lyon', '69003', 3400.00, '2018-06-09'),
 (60, 'Perrin', 'Julie', '30 rue Victor Hugo', 'Paris', '75008', 3500.00, '2017-12-12');
+
+INSERT INTO avis (user_id, commentaire, note, date_commentaire) VALUES
+(1, 'Travail impeccable, mon jardin a complètement changé d’allure !', 5, '2025-01-12'),
+(2, 'Très bon contact, équipe professionnelle et ponctuelle.', 5, '2025-01-18'),
+(3, 'Résultat satisfaisant mais quelques retards sur le chantier.', 3, '2025-02-03'),
+(4, 'Superbes plantations et finitions propres. Je recommande !', 4, '2025-02-10'),
+(5, 'Le projet ne correspond pas totalement à mes attentes.', 2, '2025-02-22'),
+(6, 'Excellent suivi du début à la fin, rien à redire.', 5, '2025-03-01'),
+(7, 'Beau rendu final mais devis révisé à la hausse en cours de route.', 3, '2025-03-05'),
+(8, 'Aménagement conforme, propre, mais un peu rapide sur les explications.', 4, '2025-03-12'),
+(9, 'Très déçu du résultat, la pelouse n’a pas pris correctement.', 1, '2025-03-20'),
+(10, 'Travail sérieux, équipe sympathique et bons conseils.', 4, '2025-03-25');
 
 
 UPDATE users SET password = 'Client01$2025!' WHERE username = 'client01';
