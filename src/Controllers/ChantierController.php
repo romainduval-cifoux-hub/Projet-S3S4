@@ -17,6 +17,8 @@ class ChantierController
         }
     }
 
+    
+
     public function create(): void
     {
         if (empty($_SESSION['user']) || ($_SESSION['role'] ?? '') !== 'admin') {
@@ -109,16 +111,34 @@ class ChantierController
             }
         }
 
+        
+
         // Variables pour la vue
         $pageTitle = "Nouveau chantier – Team Jardin";
         $nav = ["Tableau de bord", "Facturation", "Planning"];
         $bouton = "Déconnexion";
         $redirection = BASE_URL . "/public/index.php?page=logout";
 
-        
-
-        
 
         require __DIR__ . '/../Views/chef/planning/create.php';
     }
+
+    public function delete(): void
+    {
+        
+        if (empty($_SESSION['user']) || ($_SESSION['role'] ?? '') !== 'admin') {
+            http_response_code(403);
+            exit("Accès refusé");
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = (int)($_POST['id_creneau'] ?? 0);
+            if ($id > 0) {
+                ch_deleteCreneau($this->pdo, $id);
+            }
+        }
+        header('Location: ' . BASE_URL . '/public/index.php?page=chef/planning&date=' . $date_jour);
+    }
+
+    
 }

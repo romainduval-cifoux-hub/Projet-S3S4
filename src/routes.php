@@ -9,6 +9,9 @@ require_once __DIR__ . '/Controllers/PlanningController.php';
 require_once __DIR__ . '/Controllers/ChantierController.php';
 require_once __DIR__ . '/Controllers/FacturationController.php';
 
+
+
+
 $page = $_GET['page'] ?? 'home';
 
 $pagesPubliques = ['login', 'register', 'logout', 'home'];
@@ -52,11 +55,15 @@ switch ($page) {
         break;
 
     case 'chantier/create':
-        
         $controller = new ChantierController();
         $controller->create();
         break;
 
+    case 'chantier/delete':
+        
+        $controller = new ChantierController();
+        $controller->delete();
+    
     case 'chef/facturation/dashboard':
         
         $controller = new FacturationController();

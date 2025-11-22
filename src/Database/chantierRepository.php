@@ -1,8 +1,18 @@
 <?php
 
+
+function ch_deleteCreneau(PDO $pdo, int $id_creneau): bool
+{
+    $st = $pdo->prepare("DELETE FROM planning_creneaux WHERE id_creneau = ?");
+    return $st->execute([$id_creneau]);
+}
+
 /**
  * Récupère la liste des salariés pour affecter un chantier.
  */
+
+
+
 function ch_getSalaries(PDO $pdo): array
 {
     $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
@@ -157,6 +167,10 @@ function ch_createCreneauAvecPlanning(
 
 
 }
+
+
+
+
 
 
 

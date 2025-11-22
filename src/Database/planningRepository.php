@@ -24,13 +24,17 @@ function getWeekMatrix(PDO $pdo, string $monday): array
 
     // récupérer TOUS les créneaux des 5 jours
     $sql = "
-        SELECT 
+        SELECT
+            pc.id_creneau,
             pc.id_salarie,
             pc.date_jour,
             pc.heure_debut,
             pc.heure_fin,
-            pc.commentaire
+            pc.type_travail,
+            pc.commentaire,
+            pp.nom_poste
         FROM planning_creneaux pc
+        LEFT JOIN planning_postes pp ON pc.id_poste = pp.id_poste
         WHERE pc.date_jour BETWEEN :start AND :end
         ORDER BY pc.id_salarie, pc.date_jour, pc.heure_debut
     ";
@@ -44,17 +48,20 @@ function getWeekMatrix(PDO $pdo, string $monday): array
     $matrix = [];
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $idS  = (int)$row['id_salarie'];
+        $jour = $row['date_jour'];
 
-        $id_salarie = (int)$row['id_salarie'];
-        $date       = $row['date_jour'];
+        if (!isset($matrix[$idS][$jour])) {
+            $matrix[$idS][$jour] = [];
+        }
 
-        // Le label visible dans la cellule
-        $label = $row['commentaire'] ?: 'Intervention';
-
-        $matrix[$id_salarie][$date][] = [
-            'heure_debut' => $row['heure_debut'],
-            'heure_fin'   => $row['heure_fin'],
-            'label'       => $label
+        $matrix[$idS][$jour][] = [
+            'id_creneau'   => (int)$row['id_creneau'],
+            'heure_debut'  => $row['heure_debut'],
+            'heure_fin'    => $row['heure_fin'],
+            'type_travail' => $row['type_travail'],
+            'commentaire'  => $row['commentaire'],
+            'nom_poste'    => $row['nom_poste'],
         ];
     }
 
