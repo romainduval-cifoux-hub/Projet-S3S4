@@ -11,6 +11,7 @@
 .avis_container h2 {
     font-size: xx-large;
     text-align: center;
+    margin-top : 0;
 }
 
 #main-avis h2 .highlight {
