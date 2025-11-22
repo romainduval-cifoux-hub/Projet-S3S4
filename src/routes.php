@@ -61,14 +61,16 @@ switch ($page) {
 
 
     case 'chantier/create':
-        
         $controller = new ChantierController();
         $controller->create();
         break;
 
+    case 'chantier/delete':
+        $controller = new ChantierController();
+        $controller->delete();
+        break;
+
         
-
-
     default:
         http_response_code(404);
         echo "404 - Page non trouvée";

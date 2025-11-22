@@ -17,6 +17,25 @@ class ChantierController
         }
     }
 
+    public function delete(): void
+    {
+        if (empty($_SESSION['user']) || ($_SESSION['role'] ?? '') !== 'admin') {
+            http_response_code(403);
+            exit("Accès refusé");
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = (int)($_POST['id_creneau'] ?? 0);
+            if ($id > 0) {
+                ch_deleteCreneau($this->pdo, $id);
+            }
+        }
+
+        // Retour au planning
+        header('Location: ' . BASE_URL . '/public/index.php?page=chef/planning');
+        exit;
+    }
+
     public function create(): void
     {
         if (empty($_SESSION['user']) || ($_SESSION['role'] ?? '') !== 'admin') {
@@ -115,10 +134,9 @@ class ChantierController
         $bouton = "Déconnexion";
         $redirection = BASE_URL . "/public/index.php?page=logout";
 
-        
-
-        
 
         require __DIR__ . '/../Views/chef/planning/create.php';
     }
+
+    
 }
