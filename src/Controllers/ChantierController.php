@@ -63,6 +63,32 @@ class ChantierController
             }
 
             if (empty($errors)) {
+                // Créneaux déjà planifiés pour ce salarié ce jour-là
+                $existing = ch_getCreneauxJour($this->pdo, $id_salarie, $date_jour);
+
+                // 1) Limite de 2 créneaux (matin + après-midi max)
+                if (count($existing) >= 2) {
+                    $errors[] = "Ce salarié est déjà planifié sur la journée complète (2 demi-journées).";
+                } else {
+                    // 2) Empêcher de recréer la même demi-journée
+                    if ($periode === 'am') {
+                        $hDeb = '08:00:00';
+                        $hFin = '12:00:00';
+                    } else { // pm
+                        $hDeb = '13:00:00';
+                        $hFin = '17:00:00';
+                    }
+
+                    foreach ($existing as $slot) {
+                        if ($slot['heure_debut'] === $hDeb && $slot['heure_fin'] === $hFin) {
+                            $errors[] = "Ce salarié a déjà un créneau sur cette demi-journée.";
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (empty($errors)) {
                 $ok = ch_createCreneauAvecPlanning(
                     $this->pdo,
                     $managerId,
@@ -79,32 +105,6 @@ class ChantierController
                     exit;
                 } else {
                     $errors[] = "Erreur lors de la création du créneau.";
-                }
-            }
-            if (empty($errors)) {
-
-                // Tous les créneaux du salarié pour ce jour
-                $existing = ch_getCreneauxJour($this->pdo, $id_salarie, $date_jour);
-
-                // Limite de 2 créneaux / jour
-                if (count($existing) >= 2) {
-                    $errors[] = "Ce salarié est déjà planifié sur la journée complète (2 demi-journées).";
-                } else {
-                    // Empêcher la même demi-journée en double
-                    if ($periode === 'am') {
-                        $hDeb = '08:00:00';
-                        $hFin = '12:00:00';
-                    } else {
-                        $hDeb = '13:00:00';
-                        $hFin = '17:00:00';
-                    }
-
-                    foreach ($existing as $slot) {
-                        if ($slot['heure_debut'] === $hDeb && $slot['heure_fin'] === $hFin) {
-                            $errors[] = "Ce salarié a déjà un créneau sur cette demi-journée.";
-                            break;
-                        }
-                    }
                 }
             }
         }
