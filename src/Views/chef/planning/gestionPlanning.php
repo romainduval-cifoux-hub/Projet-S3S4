@@ -63,66 +63,67 @@
                         <button type="button">Vue Mensuelle</button>
                     </div>
                 </div>
-
-                <!-- Header colonnes (jours) -->
-                <?php
-                    // noms des jours
-                    $joursNoms = ['Monday'=>'Lundi','Tuesday'=>'Mardi','Wednesday'=>'Mercredi','Thursday'=>'Jeudi','Friday'=>'Vendredi','Saturday'=>'Samedi','Sunday'=>'Dimanche'];
-                ?>
-                <div class="col-header">
-                    <div class="hcell"></div>
-                    <?php foreach ($joursAffiches as $day): 
-                        $ts = strtotime($day);
-                        $num = date('d', $ts);
-                        $eng = date('l', $ts);
-                        $nomFr = $joursNoms[$eng] ?? $eng;
+                <div class="board-body">
+                    <!-- Header colonnes (jours) -->
+                    <?php
+                        // noms des jours
+                        $joursNoms = ['Monday'=>'Lundi','Tuesday'=>'Mardi','Wednesday'=>'Mercredi','Thursday'=>'Jeudi','Friday'=>'Vendredi','Saturday'=>'Samedi','Sunday'=>'Dimanche'];
                     ?>
-                        <div class="hcell">
-                            <?= htmlspecialchars($num) ?>
-                            <small><?= htmlspecialchars($nomFr) ?></small>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <!-- Grille -->
-                <div class="grid">
-                    <?php foreach ($employes as $emp): 
-                        $idS = (int)$emp['id_salarie'];
-                    ?>
-                        <div class="row">
-                            <!-- Colonne employé -->
-                            <div class="emp">
-                                <!-- avatar simple avec initiales -->
-                                <div class="avatar">
-                                    <?= htmlspecialchars(mb_substr($emp['prenom_salarie'], 0, 1) . mb_substr($emp['nom_salarie'], 0, 1)) ?>
-                                </div>
-                                <div class="emp-name">
-                                    <?= htmlspecialchars($emp['prenom_salarie'] . ' ' . $emp['nom_salarie']) ?>
-                                </div>
-                                <!-- bouton options -->
-                                <button class="dots" title="Options">⋮</button>
+                    <div class="col-header">
+                        <div class="hcell"></div>
+                        <?php foreach ($joursAffiches as $day): 
+                            $ts = strtotime($day);
+                            $num = date('d', $ts);
+                            $eng = date('l', $ts);
+                            $nomFr = $joursNoms[$eng] ?? $eng;
+                        ?>
+                            <div class="hcell">
+                                <?= htmlspecialchars($num) ?>
+                                <small><?= htmlspecialchars($nomFr) ?></small>
                             </div>
+                        <?php endforeach; ?>
+                    </div>
 
-                            <!-- Colonnes jours -->
-                            <?php foreach ($joursAffiches as $day): 
-                                $daySlots = $slotsMatrix[$idS][$day] ?? [];
-                            ?>
-                                <div class="cell">
-                                    <?php foreach ($daySlots as $slot): 
-                                        $hDeb = substr($slot['heure_debut'], 0, 5);
-                                        $hFin = substr($slot['heure_fin'], 0, 5);
-                                        $label = $slot['nom_poste'] ?? $slot['commentaire'] ?? 'Intervention';
-                                    ?>
-                                        <div class="slot">
-                                            <strong><?= htmlspecialchars($hDeb . '–' . $hFin) ?></strong>
-                                            <small><?= htmlspecialchars($label) ?></small>
-                                        </div>
-                                    <?php endforeach; ?>
+                    <!-- Grille -->
+                    <div class="grid">
+                        <?php foreach ($employes as $emp): 
+                            $idS = (int)$emp['id_salarie'];
+                        ?>
+                            <div class="row">
+                                <!-- Colonne employé -->
+                                <div class="emp">
+                                    <!-- avatar simple avec initiales -> On modifiera ensuite avec les photos de profil quand on les aura-->
+                                    <div class="avatar">
+                                        <?= htmlspecialchars(mb_substr($emp['prenom_salarie'], 0, 1) . mb_substr($emp['nom_salarie'], 0, 1)) ?>
+                                    </div>
+                                    <div class="emp-name">
+                                        <?= htmlspecialchars($emp['prenom_salarie'] . ' ' . $emp['nom_salarie']) ?>
+                                    </div>
+                                    <!-- bouton options -->
+                                    <button class="dots" title="Options">⋮</button>
                                 </div>
-                            <?php endforeach; ?>
 
-                        </div>
-                    <?php endforeach; ?>
+                                <!-- Colonnes jours -->
+                                <?php foreach ($joursAffiches as $day): 
+                                    $daySlots = $slotsMatrix[$idS][$day] ?? [];
+                                ?>
+                                    <div class="cell">
+                                        <?php foreach ($daySlots as $slot): 
+                                            $hDeb = substr($slot['heure_debut'], 0, 5);
+                                            $hFin = substr($slot['heure_fin'], 0, 5);
+                                            $label = $slot['nom_poste'] ?? $slot['commentaire'] ?? 'Intervention';
+                                        ?>
+                                            <div class="slot">
+                                                <strong><?= htmlspecialchars($hDeb . '–' . $hFin) ?></strong>
+                                                <small><?= htmlspecialchars($label) ?></small>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endforeach; ?>
+
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </section>
         </main>
