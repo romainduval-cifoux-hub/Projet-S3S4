@@ -21,9 +21,4 @@ require_once(__DIR__ . '/../../../Database/db.php');
 
 </head>
 
-    <?php
-    ?>
-
-    <div class="landing-main">
-        <img src="<?= BASE_URL ?>/public/assets/chef/img/dashboard.png" alt="dashboard">
-    </div>
+<h1>Oui</h1>
