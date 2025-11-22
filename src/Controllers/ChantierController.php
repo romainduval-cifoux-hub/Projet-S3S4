@@ -81,6 +81,32 @@ class ChantierController
                     $errors[] = "Erreur lors de la création du créneau.";
                 }
             }
+            if (empty($errors)) {
+
+                // Tous les créneaux du salarié pour ce jour
+                $existing = ch_getCreneauxJour($this->pdo, $id_salarie, $date_jour);
+
+                // Limite de 2 créneaux / jour
+                if (count($existing) >= 2) {
+                    $errors[] = "Ce salarié est déjà planifié sur la journée complète (2 demi-journées).";
+                } else {
+                    // Empêcher la même demi-journée en double
+                    if ($periode === 'am') {
+                        $hDeb = '08:00:00';
+                        $hFin = '12:00:00';
+                    } else {
+                        $hDeb = '13:00:00';
+                        $hFin = '17:00:00';
+                    }
+
+                    foreach ($existing as $slot) {
+                        if ($slot['heure_debut'] === $hDeb && $slot['heure_fin'] === $hFin) {
+                            $errors[] = "Ce salarié a déjà un créneau sur cette demi-journée.";
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         // Variables pour la vue
