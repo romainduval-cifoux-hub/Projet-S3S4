@@ -180,7 +180,7 @@ class ChantierController
             : BASE_URL . '/public/index.php?page=chantier/edit&id=' . (int)$creneau['id_creneau'];
 
         // on réutilise la même vue pour create + edit
-        require __DIR__ . '/../Views/chef/planning/create.php';
+        require __DIR__ . '/../Views/chef/planning/crudcreneau.php';
     }
 
     public function delete(): void
