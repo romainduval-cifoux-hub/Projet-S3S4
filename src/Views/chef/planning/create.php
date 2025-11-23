@@ -21,7 +21,7 @@
 <div class="page">
     <?php
         
-        require __DIR__ . '/../../shared/header.php';
+        require_once(__DIR__ . '/../shared/header_chef.php');
     ?>
 
     <div class="app">
