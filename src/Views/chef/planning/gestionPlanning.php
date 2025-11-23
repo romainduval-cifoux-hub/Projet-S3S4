@@ -153,7 +153,7 @@
                                                     <div class="slot-menu-panel">
                                                         <!-- Modifier -->
                                                         <a class="slot-menu-item"
-                                                        href="<?= BASE_URL ?>/public/index.php?page=chantier/edit&id=<?= (int)($slot['id_creneau'] ?? 0) ?>">
+                                                            href="<?= BASE_URL ?>/public/index.php?page=chantier/edit&id=<?= (int)($slot['id_creneau'] ?? 0) ?>">
                                                             Modifier
                                                         </a>
 

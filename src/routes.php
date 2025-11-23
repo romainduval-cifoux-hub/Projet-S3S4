@@ -64,6 +64,12 @@ switch ($page) {
         
         $controller = new ChantierController();
         $controller->delete();
+        break;
+
+    case 'chantier/edit':
+        $controller = new ChantierController();
+        $controller->edit();
+        break;
     
     case 'chef/facturation/dashboard':
         
