@@ -254,13 +254,19 @@ function ch_createCreneauAvecPlanning(
  */
 function ch_getCreneauxJour(PDO $pdo, int $id_salarie, string $date_jour): array
 {
-    $sql = "SELECT heure_debut, heure_fin
+    $sql = "SELECT 
+                id_creneau,
+                heure_debut,
+                heure_fin
             FROM planning_creneaux
-            WHERE id_salarie = :s AND date_jour = :d";
+            WHERE id_salarie = :s 
+              AND date_jour  = :d";
+    
     $st = $pdo->prepare($sql);
     $st->execute([
         ':s' => $id_salarie,
         ':d' => $date_jour
     ]);
+
     return $st->fetchAll(PDO::FETCH_ASSOC);
 }
