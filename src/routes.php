@@ -8,6 +8,9 @@ require_once __DIR__ . '/Controllers/LogoutController.php';
 require_once __DIR__ . '/Controllers/PlanningController.php';
 require_once __DIR__ . '/Controllers/ChantierController.php';
 require_once __DIR__ . '/Controllers/FacturationController.php';
+require_once __DIR__ . '/Controllers/FormEditBusinessInfoController.php';
+
+
 
 $page = $_GET['page'] ?? 'home';
 
@@ -57,11 +60,25 @@ switch ($page) {
         $controller->create();
         break;
 
+    case 'chef/facturation':
+        
+        $controller = new FacturationController();
+        $controller->handleRequest();
+        break;
+
+
     case 'chef/facturation/dashboard':
         
         $controller = new FacturationController();
         $controller->handleRequest();
         break;
+
+    case 'chef/facturation/EditBusinessInfo':
+        
+        $controller = new FormEditBusinessInfoController();
+        $controller->handleRequest();
+        break;
+
 
         
     default:

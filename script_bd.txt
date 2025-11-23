@@ -23,14 +23,16 @@ CREATE TABLE salaries (
 
 
 CREATE TABLE clients (
-  id_client INT PRIMARY KEY,
+  id_client INT AUTO_INCREMENT PRIMARY KEY,
   nom_client VARCHAR(100) NOT NULL,
   prenom_client VARCHAR(100) NOT NULL,
   adresse_client VARCHAR(255),
   ville_client VARCHAR(100),
   code_postal_client VARCHAR(15),
   siret_client VARCHAR(20),
-  CONSTRAINT fk_client_user FOREIGN KEY (id_client) REFERENCES users(id) ON DELETE CASCADE
+  user_id INT NULL,
+  UNIQUE(user_id), 
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 
@@ -166,6 +168,23 @@ CREATE TABLE avis (
 );
 
 
+CREATE TABLE entreprise (
+    nom VARCHAR(255) NOT NULL,
+    description TEXT,
+    telephone VARCHAR(20),
+    adresse VARCHAR(255),
+    siret VARCHAR(14)
+);
+
+
+INSERT INTO entreprise (nom, description, telephone, adresse, siret)
+VALUES (
+    'Team Jardin',
+    'Entretien d''espaces verts',
+    '0667788990',
+    '12 rue des Fleurs, La doua',
+    '12345678901234'
+);
 
 
 INSERT INTO users (username, password, role) VALUES 
