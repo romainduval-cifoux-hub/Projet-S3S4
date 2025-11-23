@@ -2,18 +2,25 @@
 /**
  * Récupère un créneau par son id
  */
-function ch_getCreneauById(PDO $pdo, int $id_creneau): ?array
+function ch_getCreneauById(PDO $pdo, int $id): ?array
 {
-    $st = $pdo->prepare("
-        SELECT id_creneau, date_jour
-        FROM planning_creneaux
-        WHERE id_creneau = ?
-        LIMIT 1
-    ");
-    $st->execute([$id_creneau]);
+    $sql = "SELECT 
+                id_creneau,
+                id_planning,
+                id_salarie,
+                date_jour,
+                heure_debut,
+                heure_fin,
+                type_travail,
+                commentaire
+            FROM planning_creneaux
+            WHERE id_creneau = ?";
+    $st = $pdo->prepare($sql);
+    $st->execute([$id]);
     $row = $st->fetch(PDO::FETCH_ASSOC);
     return $row ?: null;
 }
+
 /**
  * Supprime un créneau par son id
  */
@@ -22,6 +29,58 @@ function ch_deleteCreneau(PDO $pdo, int $id_creneau): bool
     $st = $pdo->prepare("DELETE FROM planning_creneaux WHERE id_creneau = ?");
     return $st->execute([$id_creneau]);
 }
+
+
+/**
+ * Met à jour un créneau selon les nouveau attributs
+ */
+function ch_updateCreneau(
+    PDO $pdo,
+    int $id_creneau,
+    int $id_salarie,
+    string $date_jour,
+    string $periode,
+    ?int $id_client,
+    string $commentaire
+): bool {
+
+    // périodes → heure
+    if ($periode === 'am') {
+        $hDeb = '08:00:00';
+        $hFin = '12:00:00';
+    } else {
+        $hDeb = '13:00:00';
+        $hFin = '17:00:00';
+    }
+
+    // Préfix client si présent
+    if ($id_client !== null) {
+        $client = ch_getClientFullName($pdo, $id_client);
+        if ($client) {
+            $commentaire = "Chantier chez $client" . ($commentaire ? " – $commentaire" : "");
+        }
+    }
+
+    $sql = "UPDATE planning_creneaux
+            SET id_salarie = :s,
+                date_jour = :d,
+                heure_debut = :h1,
+                heure_fin = :h2,
+                commentaire = :c
+            WHERE id_creneau = :id";
+
+    $st = $pdo->prepare($sql);
+
+    return $st->execute([
+        ':s' => $id_salarie,
+        ':d' => $date_jour,
+        ':h1'=> $hDeb,
+        ':h2'=> $hFin,
+        ':c' => $commentaire,
+        ':id'=> $id_creneau
+    ]);
+}
+
 
 /**
  * Récupère la liste des salariés pour affecter un chantier.
