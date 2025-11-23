@@ -45,11 +45,22 @@ class PlanningController {
         $prevMonday = date('Y-m-d', strtotime($lundi . ' -7 day'));
         $nextMonday = date('Y-m-d', strtotime($lundi . ' +7 day'));
 
+        // Label mois (en français)
+        $moisFr = [
+            1 => 'Janvier', 2 => 'Février', 3 => 'Mars', 4 => 'Avril',
+            5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août',
+            9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'
+        ];
+
+        $monthNum   = (int)date('n', strtotime($lundi)); // mois du lundi de la semaine
+        $year       = date('Y', strtotime($lundi));
+        $monthLabel = ($moisFr[$monthNum] ?? date('F', strtotime($lundi))) . ' ' . $year;
+
         //Charger données BDD
         $employes    = getSalaries($this->pdo);
         $slotsMatrix = getWeekMatrix($this->pdo, $lundi);
 
- 
+        
         //Variables envoyées à la vue
         $pageTitle = "Planning – Team Jardin";
 

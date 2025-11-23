@@ -71,6 +71,8 @@
                             ‹
                         </a>
 
+                        <strong><?= htmlspecialchars($monthLabel ?? '') ?></strong>
+
                         <a class="navbtn"
                         href="<?= BASE_URL ?>/public/index.php?page=chef/planning&date=<?= htmlspecialchars($nextMonday) ?>">
                             ›
