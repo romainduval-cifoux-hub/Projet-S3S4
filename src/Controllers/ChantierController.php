@@ -134,9 +134,18 @@ class ChantierController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = (int)($_POST['id_creneau'] ?? 0);
             if ($id > 0) {
-                ch_deleteCreneau($this->pdo, $id);
+                 $slot = ch_getCreneauById($this->pdo, $id);
+                if ($slot) {
+                    $date_jour = $slot['date_jour'];   // pour savoir sur quelle semaine revenir
+                    ch_deleteCreneau($this->pdo, $id);
+                }
             }
         }
+
+        if ($date_jour === null) {
+            $date_jour = date('Y-m-d');
+        }
+        
         header('Location: ' . BASE_URL . '/public/index.php?page=chef/planning&date=' . $date_jour);
     }
 

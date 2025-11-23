@@ -1,6 +1,22 @@
 <?php
-
-
+/**
+ * Récupère un créneau par son id
+ */
+function ch_getCreneauById(PDO $pdo, int $id_creneau): ?array
+{
+    $st = $pdo->prepare("
+        SELECT id_creneau, date_jour
+        FROM planning_creneaux
+        WHERE id_creneau = ?
+        LIMIT 1
+    ");
+    $st->execute([$id_creneau]);
+    $row = $st->fetch(PDO::FETCH_ASSOC);
+    return $row ?: null;
+}
+/**
+ * Supprime un créneau par son id
+ */
 function ch_deleteCreneau(PDO $pdo, int $id_creneau): bool
 {
     $st = $pdo->prepare("DELETE FROM planning_creneaux WHERE id_creneau = ?");
