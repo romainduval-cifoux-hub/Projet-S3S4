@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/RealisationRepository.php';
+require_once __DIR__ . '/../Database/realisationRepository.php';
 
 class RealisationController {
 
