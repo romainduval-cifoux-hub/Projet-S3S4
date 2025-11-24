@@ -45,8 +45,6 @@ require_once(__DIR__ . '/../../../Database/db.php');
 
         echo "Nombre de facture en attente : $nbFactureEnAttente <br>";
         echo "Montant en attente : $montantFactureEnAttente € <br>";
-        echo "Nombre de facture payées : $nbFacturePayee <br>";
-        echo "Chiffre d'affaires : $montantFacturePayee € <br>";
     ?>
 
     <!-- Chart Montant en attente -->
@@ -78,6 +76,12 @@ require_once(__DIR__ . '/../../../Database/db.php');
             }
         });
     </script>
+
+    <?php 
+    
+        echo "Nombre de facture payées : $nbFacturePayee <br>";
+        echo "Chiffre d'affaires : $montantFacturePayee € <br>";    
+    ?>
 
     <!-- Chart Montant payé -->
     <div style="width: 600px; height: 400px;">

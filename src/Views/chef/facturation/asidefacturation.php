@@ -9,9 +9,8 @@ $menuTitle2 = "Création document";
 
 $menu1 = [
   ['label'=>'Tableau de bord',  'href'=> BASE_URL.'/public/index.php?page=chef/facturation/dashboard'],
-  ['label'=>'Gestionnaire de facturation', 'href'=> BASE_URL.'/public/index.php?page=employe/create'],
-  ['label'=>"Informations de l'entreprise",  'href'=> BASE_URL.'/public/index.php?page=employe/list'],
-  ['label'=>'Nouveau client',  'href'=> BASE_URL.'/public/index.php?page=employe/list'],
+  ['label'=>'Gestionnaire de facturation', 'href'=> BASE_URL.'/public/index.php?page=chef/facturation/GestionFacturation'],
+  ['label'=>"Informations de l'entreprise",  'href'=> BASE_URL.'/public/index.php?page=chef/facturation/EditBusinessInfo'],
 ];
 
 $menu2 = [

@@ -29,7 +29,7 @@ class FacturationController {
 
             $montantPayeparMois = getMontantPayeeParMois($this->pdo);
             
-            require __DIR__ . '/../Views/chef/facturation/dashboard.php';
+            require_once __DIR__ . '/../Views/chef/facturation/dashboard.php';
         }
 
 }

@@ -8,6 +8,8 @@ require_once __DIR__ . '/Controllers/LogoutController.php';
 require_once __DIR__ . '/Controllers/PlanningController.php';
 require_once __DIR__ . '/Controllers/ChantierController.php';
 require_once __DIR__ . '/Controllers/FacturationController.php';
+require_once __DIR__ . '/Controllers/FormEditBusinessInfoController.php';
+require_once __DIR__ . '/Controllers/GestionnaireFacturationController.php';
 require_once __DIR__ . '/Controllers/RealisationController.php';
 
 
@@ -60,6 +62,13 @@ switch ($page) {
         $controller->create();
         break;
 
+    case 'chef/facturation':
+        
+        $controller = new FacturationController();
+        $controller->handleRequest();
+        break;
+
+
     case 'chantier/delete':
         
         $controller = new ChantierController();
@@ -74,6 +83,18 @@ switch ($page) {
     case 'chef/facturation/dashboard':
         
         $controller = new FacturationController();
+        $controller->handleRequest();
+        break;
+
+    case 'chef/facturation/EditBusinessInfo':
+        
+        $controller = new FormEditBusinessInfoController();
+        $controller->handleRequest();
+        break;
+
+    case 'chef/facturation/GestionFacturation':
+        
+        $controller = new GestionnaireFacturationController();
         $controller->handleRequest();
         break;
 

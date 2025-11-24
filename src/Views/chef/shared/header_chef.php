@@ -6,6 +6,8 @@
 
         <nav>
             <ul>
+                <li><a href="<?= BASE_URL ?>/public/index.php?page=chef/facturation/dashboard" >Facturation</a></li>
+                <li><a href="<?= BASE_URL ?>/public/index.php?page=chef/planning" >Planning</a></li>
                 <li><a href="<?= BASE_URL ?>/public/index.php?page=chef/facturation/dashboard">Facturation</a></li>
                 <li><a href="<?= BASE_URL ?>/public/index.php?page=chef/planning">Planning</a></li>
             </ul>
