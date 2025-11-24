@@ -9,7 +9,7 @@ require_once __DIR__ . '/Controllers/PlanningController.php';
 require_once __DIR__ . '/Controllers/ChantierController.php';
 require_once __DIR__ . '/Controllers/FacturationController.php';
 require_once __DIR__ . '/Controllers/FormEditBusinessInfoController.php';
-
+require_once __DIR__ . '/Controllers/GestionnaireFacturationController.php';
 
 
 $page = $_GET['page'] ?? 'home';
@@ -79,6 +79,11 @@ switch ($page) {
         $controller->handleRequest();
         break;
 
+    case 'chef/facturation/GestionFacturation':
+        
+        $controller = new GestionnaireFacturationController();
+        $controller->handleRequest();
+        break;
 
         
     default:

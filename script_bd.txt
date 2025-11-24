@@ -416,19 +416,52 @@ VALUES
 (11, 'Durand', '0600000000', '12 rue des Lilas', 'Lyon', '69001', 'FR000001', '2025-11-15', 'Facture', 'En attente', 'CB', NULL, 0, 1),
 (12, 'Martin', '0600000001', '8 avenue Victor Hugo', 'Paris', '75008', 'FR000002', '2025-12-20', 'Facture', 'Payé', 'Virement', '2025-12-22', 0, 2);
 
--- LIGNES DE FACTURES DetailDocument pour chaque facture
-INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire)
-VALUES
-(1, 'Service jardinage', 'Entretien jardin janvier', 'heure', 5, 50.00),
-(2, 'Service jardinage', 'Entretien jardin février', 'heure', 3, 60.00),
-(3, 'Service pelouse', 'Tonte pelouse mars', 'heure', 4, 45.00),
-(4, 'Service haie', 'Taille haie avril', 'heure', 6, 55.00),
-(5, 'Service arrosage', 'Arrosage mai', 'heure', 2, 40.00),
-(6, 'Service nettoyage', 'Nettoyage juin', 'heure', 3, 65.00),
-(7, 'Service jardinage', 'Entretien juillet', 'heure', 5, 50.00),
-(8, 'Service pelouse', 'Tonte août', 'heure', 4, 45.00),
-(9, 'Service haie', 'Taille septembre', 'heure', 6, 55.00),
-(10, 'Service arrosage', 'Arrosage octobre', 'heure', 2, 40.00),
-(11, 'Service nettoyage', 'Nettoyage novembre', 'heure', 3, 65.00),
-(12, 'Service jardinage', 'Entretien décembre', 'heure', 4, 50.00);
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(1, 'Mise en état du jardin', 'Nettoyage complet', 'heure', 2, 40.00),
+(1, 'Plantation saisonnière', 'Ajout de plantes', 'unité', 5, 8.50);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(2, 'Tonte pelouse', 'Tonte complète terrain', 'm²', 150, 0.15),
+(2, 'Évacuation déchets verts', 'Transport déchetterie', 'forfait', 1, 20.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(3, 'Taille haies', 'Taille haies extérieures', 'mètre', 20, 2.00),
+(3, 'Soufflage', 'Nettoyage terrasse', 'heure', 1, 35.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(4, 'Taille haies', 'Haies hautes', 'mètre', 30, 2.50),
+(4, 'Ramassage feuilles', 'Ramassage + sacs', 'heure', 1, 25.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(5, 'Arrosage massif', 'Arrosage complet', 'heure', 1, 40.00),
+(5, 'Engrais', 'Engrais plantes fleuries', 'kg', 2, 12.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(6, 'Nettoyage terrasse', 'Nettoyage haute pression', 'heure', 2, 65.00),
+(6, 'Déblayage', 'Déblayage zone passage', 'heure', 1, 30.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(7, 'Désherbage', 'Jardin complet', 'heure', 3, 45.00),
+(7, 'Arrosage', 'Arrosage manuel massif', 'heure', 1, 35.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(8, 'Tonte pelouse', 'Terrain complet', 'm²', 200, 0.18),
+(8, 'Soufflage', 'Nettoyage final', 'heure', 1, 30.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(9, 'Taille haies lourde', 'Haies très épaisses', 'mètre', 40, 3.00),
+(9, 'Évacuation déchets', 'Transport et traitement', 'forfait', 1, 25.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(10, 'Arrosage manuel', 'Massifs fleuris', 'heure', 1, 40.00),
+(10, 'Anti-mousse', 'Traitement pelouse', 'litre', 2, 15.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(11, 'Nettoyage feuilles', 'Ramassage feuilles', 'heure', 2, 30.00),
+(11, 'Déblayage', 'Zone entrée maison', 'heure', 1, 25.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(12, 'Entretien massif', 'Préparation hiver', 'heure', 3, 50.00),
+(12, 'Engrais hiver', 'Engrais spécial hiver', 'kg', 1, 18.00);
+
 

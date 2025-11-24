@@ -32,7 +32,7 @@ class FormEditBusinessInfoController {
 
 
         require_once __DIR__ . '/../Views/chef/shared/header_chef.php';
-        require __DIR__ . '/../Views/chef/facturation/formEditBusinessInfo.php';
+        require_once __DIR__ . '/../Views/chef/facturation/formEditBusinessInfo.php';
     }
 
 }

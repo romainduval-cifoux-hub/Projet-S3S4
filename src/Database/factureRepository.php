@@ -40,5 +40,49 @@ function updateEntreprise(PDO $pdo, array $data) {
 }
 
 
+function getAllFactures(PDO $pdo) {
+    $sql = "SELECT * FROM Document ORDER BY dateDoc ASC";
+    $stmt = $pdo->query($sql);
+
+    $factures = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!$factures) {
+        return [];
+    }
+
+    // Récupérer les lignes de chaque facture
+    foreach ($factures as &$facture) {
+        $facture['lignes'] = getLignesFacture($pdo, $facture['idDoc']);
+    }
+
+    return $factures;
+}
+
+function getFactureById(PDO $pdo, int $idDoc) {
+    $sql = "SELECT * FROM Document WHERE idDoc = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$idDoc]);
+
+    $facture = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$facture) {
+        return null;
+    }
+
+
+    $facture['lignes'] = getLignesFacture($pdo, $idDoc);
+
+    return $facture;
+}
+
+function getLignesFacture(PDO $pdo, int $idDoc) {
+    $sql = "SELECT * FROM DetailDocument WHERE idDoc = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$idDoc]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 
 ?>

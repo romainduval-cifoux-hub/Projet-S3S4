@@ -119,6 +119,6 @@ class ChantierController
 
         
 
-        require __DIR__ . '/../Views/chef/planning/create.php';
+        require_once __DIR__ . '/../Views/chef/planning/create.php';
     }
 }
