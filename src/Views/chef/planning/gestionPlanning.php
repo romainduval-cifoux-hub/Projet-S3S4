@@ -15,6 +15,29 @@
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
 </head>
+<script>
+    document.addEventListener('click', function (e) {
+        // Si on clique sur le bouton "trois points"
+        const toggle = e.target.closest('.slot-menu-toggle');
+        const menus  = document.querySelectorAll('.slot-menu');
+
+        if (toggle) {
+            const menu = toggle.closest('.slot-menu');
+
+            // Fermer tous les autres
+            menus.forEach(m => {
+                if (m !== menu) m.classList.remove('open');
+            });
+
+            // Toggle celui-ci
+            menu.classList.toggle('open');
+            return;
+        }
+
+        // Si on clique en dehors des menus → tout fermer
+        menus.forEach(m => m.classList.remove('open'));
+    });
+</script>
 <body>
 <div class="page">
     <?php
@@ -47,6 +70,8 @@
                         href="<?= BASE_URL ?>/public/index.php?page=chef/planning&date=<?= htmlspecialchars($prevMonday) ?>">
                             ‹
                         </a>
+
+                        <strong><?= htmlspecialchars($monthLabel ?? '') ?></strong>
 
                         <a class="navbtn"
                         href="<?= BASE_URL ?>/public/index.php?page=chef/planning&date=<?= htmlspecialchars($nextMonday) ?>">
@@ -109,11 +134,39 @@
                                         <?php foreach ($daySlots as $slot): 
                                             $hDeb = substr($slot['heure_debut'], 0, 5);
                                             $hFin = substr($slot['heure_fin'], 0, 5);
-                                            $label = $slot['label'];
+
+                                            // Construire le label du créneau
+                                            if (!empty($slot['nom_poste'])) {
+                                                $label = $slot['nom_poste'];
+                                            } elseif (!empty($slot['commentaire'])) {
+                                                $label = $slot['commentaire'];
+                                            } else {
+                                                $label = 'Intervention';
+                                            }
                                         ?>
                                             <div class="slot">
-                                                <strong><?= htmlspecialchars($hDeb . '–' . $hFin) ?></strong>
-                                                <small><?= htmlspecialchars($label) ?></small>
+                                                <div class="slot-main">
+                                                    <strong><?= htmlspecialchars($hDeb . '–' . $hFin) ?></strong>
+                                                    <small><?= htmlspecialchars($label) ?></small>
+                                                </div>
+                                                <div class="slot-menu js-slot-menu">
+                                                    <div class="slot-menu-panel">
+                                                        <!-- Modifier -->
+                                                        <a class="slot-menu-item"
+                                                            href="<?= BASE_URL ?>/public/index.php?page=chantier/edit&id=<?= (int)($slot['id_creneau'] ?? 0) ?>">
+                                                            Modifier
+                                                        </a>
+
+                                                        <!-- Supprimer -->
+                                                        <form method="post"
+                                                            action="<?= BASE_URL ?>/public/index.php?page=chantier/delete">
+                                                            <input type="hidden" name="id_creneau" value="<?= (int)($slot['id_creneau'] ?? 0) ?>">
+                                                            <button type="submit" class="slot-menu-item slot-menu-danger">
+                                                                Supprimer
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
                                         <?php endforeach; ?>
                                     </div>

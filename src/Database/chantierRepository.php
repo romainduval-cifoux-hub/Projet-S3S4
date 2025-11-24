@@ -1,8 +1,93 @@
 <?php
+/**
+ * Récupère un créneau par son id
+ */
+function ch_getCreneauById(PDO $pdo, int $id): ?array
+{
+    $sql = "SELECT 
+                id_creneau,
+                id_planning,
+                id_salarie,
+                date_jour,
+                heure_debut,
+                heure_fin,
+                type_travail,
+                commentaire
+            FROM planning_creneaux
+            WHERE id_creneau = ?";
+    $st = $pdo->prepare($sql);
+    $st->execute([$id]);
+    $row = $st->fetch(PDO::FETCH_ASSOC);
+    return $row ?: null;
+}
+
+/**
+ * Supprime un créneau par son id
+ */
+function ch_deleteCreneau(PDO $pdo, int $id_creneau): bool
+{
+    $st = $pdo->prepare("DELETE FROM planning_creneaux WHERE id_creneau = ?");
+    return $st->execute([$id_creneau]);
+}
+
+
+/**
+ * Met à jour un créneau selon les nouveau attributs
+ */
+function ch_updateCreneau(
+    PDO $pdo,
+    int $id_creneau,
+    int $id_salarie,
+    string $date_jour,
+    string $periode,
+    ?int $id_client,
+    string $commentaire
+): bool {
+
+    // périodes → heure
+    if ($periode === 'am') {
+        $hDeb = '08:00:00';
+        $hFin = '12:00:00';
+    } else {
+        $hDeb = '13:00:00';
+        $hFin = '17:00:00';
+    }
+
+    // Préfix client si présent
+    if ($id_client !== null) {
+        $client = ch_getClientFullName($pdo, $id_client);
+        if ($client) {
+            $commentaire = "Chantier chez $client" . ($commentaire ? " – $commentaire" : "");
+        }
+    }
+
+    $sql = "UPDATE planning_creneaux
+            SET id_salarie = :s,
+                date_jour = :d,
+                heure_debut = :h1,
+                heure_fin = :h2,
+                commentaire = :c
+            WHERE id_creneau = :id";
+
+    $st = $pdo->prepare($sql);
+
+    return $st->execute([
+        ':s' => $id_salarie,
+        ':d' => $date_jour,
+        ':h1'=> $hDeb,
+        ':h2'=> $hFin,
+        ':c' => $commentaire,
+        ':id'=> $id_creneau
+    ]);
+}
+
 
 /**
  * Récupère la liste des salariés pour affecter un chantier.
  */
+
+
+
 function ch_getSalaries(PDO $pdo): array
 {
     $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
@@ -160,18 +245,28 @@ function ch_createCreneauAvecPlanning(
 
 
 
+
+
+
+
 /**
  * Retourne tous les créneaux d'un salarié pour un jour donné.
  */
 function ch_getCreneauxJour(PDO $pdo, int $id_salarie, string $date_jour): array
 {
-    $sql = "SELECT heure_debut, heure_fin
+    $sql = "SELECT 
+                id_creneau,
+                heure_debut,
+                heure_fin
             FROM planning_creneaux
-            WHERE id_salarie = :s AND date_jour = :d";
+            WHERE id_salarie = :s 
+              AND date_jour  = :d";
+    
     $st = $pdo->prepare($sql);
     $st->execute([
         ':s' => $id_salarie,
         ':d' => $date_jour
     ]);
+
     return $st->fetchAll(PDO::FETCH_ASSOC);
 }

@@ -10,6 +10,9 @@ require_once __DIR__ . '/Controllers/ChantierController.php';
 require_once __DIR__ . '/Controllers/FacturationController.php';
 require_once __DIR__ . '/Controllers/FormEditBusinessInfoController.php';
 require_once __DIR__ . '/Controllers/GestionnaireFacturationController.php';
+require_once __DIR__ . '/Controllers/RealisationController.php';
+
+
 
 
 $page = $_GET['page'] ?? 'home';
@@ -55,7 +58,6 @@ switch ($page) {
         break;
 
     case 'chantier/create':
-        
         $controller = new ChantierController();
         $controller->create();
         break;
@@ -67,6 +69,17 @@ switch ($page) {
         break;
 
 
+    case 'chantier/delete':
+        
+        $controller = new ChantierController();
+        $controller->delete();
+        break;
+
+    case 'chantier/edit':
+        $controller = new ChantierController();
+        $controller->edit();
+        break;
+    
     case 'chef/facturation/dashboard':
         
         $controller = new FacturationController();
@@ -85,6 +98,11 @@ switch ($page) {
         $controller->handleRequest();
         break;
 
+    case 'realisation':
+          
+        $controller = new RealisationController(); // passer le PDO créé dans config.php
+        $controller->affichage_realisations();        // appelle la méthode qui prépare la vue
+        break;
         
     default:
         http_response_code(404);
