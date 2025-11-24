@@ -11,6 +11,9 @@ require_once __DIR__ . '/Controllers/FacturationController.php';
 require_once __DIR__ . '/Controllers/FormEditBusinessInfoController.php';
 require_once __DIR__ . '/Controllers/GestionnaireFacturationController.php';
 require_once __DIR__ . '/Controllers/RealisationController.php';
+require_once __DIR__ . '/Controllers/EmployeController.php';
+require_once __DIR__ . '/Controllers/PlanningEmployeController.php';
+
 
 
 
@@ -79,6 +82,22 @@ switch ($page) {
         $controller = new ChantierController();
         $controller->edit();
         break;
+    
+    case 'employe/create':
+        $controller = new EmployeController();
+        $controller->create();
+        break;
+
+    case 'employe/list':
+        $controller = new EmployeController();
+        $controller->liste();
+        break;
+
+    case 'employe/planning':
+        $controller = new PlanningEmployeController();
+        $controller->handleRequest();
+        break;
+
     
     case 'chef/facturation/dashboard':
         
