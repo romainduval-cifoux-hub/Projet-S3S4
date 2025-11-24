@@ -18,7 +18,7 @@ class AvisController {
             exit;
         }
 
-        $pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS);
+        $pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
 
         $userId = $_SESSION['user_id']; 
         $note = (int)$_POST['note'];
