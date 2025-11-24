@@ -21,4 +21,4 @@ define('DB_NAME', getenv('DB_NAME') ?: ($config['database']['name'] ?? 'teamjard
 define('DB_USER', getenv('DB_USER') ?: ($config['database']['user'] ?? 'root'));
 define('DB_PASS', getenv('DB_PASS') ?: ($config['database']['pass'] ?? ''));
 
-define('BASE_URL', $config['app']['base_url'] ?? '/SAE/Projet-S3S4');
+define('BASE_URL', $config['app']['base_url'] ?? '');
