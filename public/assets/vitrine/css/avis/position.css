@@ -1,3 +1,9 @@
 #main-avis {
     scroll-margin-top: 100px; /* hauteur de ton header */
 }
+
+.avis-leave-review {
+    margin-top: 25px;   /* espace au-dessus */
+    text-align: center; /* centre horizontalement */
+}
+

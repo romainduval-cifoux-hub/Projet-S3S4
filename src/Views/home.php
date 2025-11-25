@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/../../src/config.php'; 
 require_once __DIR__ . '/../../src/Database/db.php';
-$pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS);
+$pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
 ?>
 
 <!DOCTYPE html>

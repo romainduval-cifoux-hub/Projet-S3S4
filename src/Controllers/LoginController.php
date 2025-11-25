@@ -29,12 +29,19 @@ class LoginController {
 
             if ($user) {
 
-                // Session
+                // Création de la session
                 $_SESSION['user'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
-                $_SESSION['user_id'] = $user['id']; // Très utile plus tard !
+                $_SESSION['user_id'] = $user['id'];
 
-                // Redirection selon rôle
+                // 🔥 PRIORITÉ : redirection forcée si paramètre redirect présent
+                if (!empty($_GET['redirect'])) {
+                    $redirect = urlencode($_GET['redirect']);
+                    header('Location: ' . BASE_URL . '/public/index.php?page=' . $redirect);
+                    exit;
+                }
+
+                // Sinon : redirections normales selon rôle
                 switch ($user['role']) {
 
                     case 'admin':
