@@ -17,7 +17,7 @@ class PlanningEmployeController {
 
     public function handleRequest(): void
     {
-        // Sécurité : seulement salariés
+        //Sécurité : seulement salariés
         if (empty($_SESSION['user']) || ($_SESSION['role'] ?? '') !== 'salarie') {
             http_response_code(403);
             exit("Accès réservé aux employés.");
@@ -29,10 +29,10 @@ class PlanningEmployeController {
             exit("Utilisateur non identifié.");
         }
 
-        // Un salarié a id_salarie = id dans users
+        //Un salarié a id_salarie = id dans users
         $idSalarie = $idUser;
 
-        // 1) Semaine
+        //Semaine
         $refDate = $_GET['date'] ?? date('Y-m-d');
         $ts      = strtotime($refDate);
         $lundi   = date('Y-m-d', strtotime('monday this week', $ts));
@@ -45,7 +45,19 @@ class PlanningEmployeController {
         $prevMonday = date('Y-m-d', strtotime($lundi . ' -7 day'));
         $nextMonday = date('Y-m-d', strtotime($lundi . ' +7 day'));
 
-        // 2) Charger les slots de CET employé pour la semaine
+        //pour avoir le mois 
+        
+        $moisFr = [
+            1 => 'Janvier', 2 => 'Février', 3 => 'Mars', 4 => 'Avril',
+            5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août',
+            9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'
+        ];
+
+        $monthNum   = (int)date('n', strtotime($lundi)); // mois du lundi de la semaine
+        $year       = date('Y', strtotime($lundi));
+        $monthLabel = ($moisFr[$monthNum] ?? date('F', strtotime($lundi))) . ' ' . $year;
+
+        //Charger les slots de CET employé pour la semaine
         $slotsMatrix = getWeekMatrix($this->pdo, $lundi);
 
         $slotsPerso = $slotsMatrix[$idSalarie] ?? [];

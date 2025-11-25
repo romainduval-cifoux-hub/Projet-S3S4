@@ -10,7 +10,7 @@
         <nav>
             <ul>
                 <?php foreach ($nav as $item): ?>
-                    <li><a href="#" target="_blank"><?= htmlspecialchars($item) ?></a></li>
+                    <li><a href="#"><?= htmlspecialchars($item) ?></a></li>
                 <?php endforeach; ?>
             </ul>
         </nav>    
