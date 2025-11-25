@@ -21,13 +21,24 @@
 <div class="page">
     <?php
         
-        require __DIR__ . '/../../shared/header.php';
+        require_once(__DIR__ . '/../shared/header_chef.php');
     ?>
 
     <div class="app">
         <?php
+
+            $menuTitle1 = $menuTitle1 ?? 'Gestion des chantiers';
+            $menuTitle2 = $menuTitle2 ?? 'Gestion Employé'; 
+
+            $menu1 = [
+              ['label'=>'Nouveau chantier', 'href'=> BASE_URL.'/public/index.php?page=chantier/create'],
+            ];
+            $menu2 = [
+              ['label'=>'Ajouter employé', 'href'=> BASE_URL.'/public/index.php?page=employe/create'],
+            ];
+            require_once(__DIR__ . '/../../shared/aside.php');
             
-            require __DIR__ . '/../../shared/aside.php';
+
         ?>
 
         <main class="main-content">

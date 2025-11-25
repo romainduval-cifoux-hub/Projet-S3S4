@@ -52,8 +52,9 @@ class LoginController {
                         header('Location: ' . BASE_URL . '/public/index.php?page=dashboard');
                         break;
 
-                    case 'salarie':
-                        header('Location: ' . BASE_URL . '/public/index.php?page=dashboard');
+                    case 'salarie': 
+                        
+                        header('Location: ' . BASE_URL . '/public/index.php?page=employe/planning');
                         break;
 
                     default:

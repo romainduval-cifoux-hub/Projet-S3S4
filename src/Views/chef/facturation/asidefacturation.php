@@ -1,4 +1,23 @@
 <?php
+
+require_once(__DIR__ . '/../../../config.php'); 
+require_once(__DIR__ . '/../../../Database/db.php');     
+
+
+$menuTitle1 = "Gestion entreprise";
+$menuTitle2 = "Création document";
+
+$menu1 = [
+  ['label'=>'Tableau de bord',  'href'=> BASE_URL.'/public/index.php?page=chef/facturation/dashboard'],
+  ['label'=>'Gestionnaire de facturation', 'href'=> BASE_URL.'/public/index.php?page=chef/facturation/GestionFacturation'],
+  ['label'=>"Informations de l'entreprise",  'href'=> BASE_URL.'/public/index.php?page=chef/facturation/EditBusinessInfo'],
+];
+
+$menu2 = [
+  ['label'=>'Nouvelle facture', 'href'=> BASE_URL.'/public/index.php?page=chantier/create'],
+  ['label'=>'Nouveau devis',  'href'=> BASE_URL.'/public/index.php?page=chantier/list'],
+];
+
 $currentUrl = $_SERVER['REQUEST_URI'] ?? '';
 ?>
 

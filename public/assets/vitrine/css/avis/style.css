@@ -11,6 +11,7 @@
 .avis_container h2 {
     font-size: xx-large;
     text-align: center;
+    margin-top : 0;
 }
 
 #main-avis h2 .highlight {
@@ -113,6 +114,7 @@
 .avis-slider {
     display: flex;
     gap: 20px;                 /* doit correspondre au +20 dans le JS */
+    flex-direction: row;
     transition: transform 0.4s ease;
 }
 

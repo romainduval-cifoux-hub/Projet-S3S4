@@ -7,6 +7,16 @@ require_once __DIR__ . '/Controllers/DashboardController.php';
 require_once __DIR__ . '/Controllers/LogoutController.php';
 require_once __DIR__ . '/Controllers/PlanningController.php';
 require_once __DIR__ . '/Controllers/ChantierController.php';
+require_once __DIR__ . '/Controllers/FacturationController.php';
+require_once __DIR__ . '/Controllers/FormEditBusinessInfoController.php';
+require_once __DIR__ . '/Controllers/GestionnaireFacturationController.php';
+require_once __DIR__ . '/Controllers/RealisationController.php';
+require_once __DIR__ . '/Controllers/EmployeController.php';
+require_once __DIR__ . '/Controllers/PlanningEmployeController.php';
+
+
+
+
 
 $page = $_GET['page'] ?? 'home';
 
@@ -51,7 +61,6 @@ switch ($page) {
         break;
 
     case 'chantier/create':
-        require_once __DIR__ . '/Database/chantierRepository.php';
         $controller = new ChantierController();
         $controller->create();
         break;
@@ -63,11 +72,63 @@ switch ($page) {
     break;
     
 
+    case 'chef/facturation':
+        
+        $controller = new FacturationController();
+        $controller->handleRequest();
+        break;
+
+
+    case 'chantier/delete':
+        
+        $controller = new ChantierController();
+        $controller->delete();
+        break;
+
+    case 'chantier/edit':
+        $controller = new ChantierController();
+        $controller->edit();
+        break;
+    
+    case 'employe/create':
+        $controller = new EmployeController();
+        $controller->create();
+        break;
+
+    case 'employe/list':
+        $controller = new EmployeController();
+        $controller->liste();
+        break;
+
+    case 'employe/planning':
+        $controller = new PlanningEmployeController();
+        $controller->handleRequest();
+        break;
 
     
+    case 'chef/facturation/dashboard':
+        
+        $controller = new FacturationController();
+        $controller->handleRequest();
+        break;
 
+    case 'chef/facturation/EditBusinessInfo':
+        
+        $controller = new FormEditBusinessInfoController();
+        $controller->handleRequest();
+        break;
 
+    case 'chef/facturation/GestionFacturation':
+        
+        $controller = new GestionnaireFacturationController();
+        $controller->handleRequest();
+        break;
 
+    case 'realisation':
+          
+        $controller = new RealisationController(); // passer le PDO créé dans config.php
+        $controller->affichage_realisations();        // appelle la méthode qui prépare la vue
+        break;
         
     default:
         http_response_code(404);

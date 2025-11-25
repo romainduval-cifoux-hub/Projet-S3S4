@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS notification_destinataires, notifications, messages, document_lignes, documents, clients, salaries, plannings, planning_creneaux, planning_postes, realisations, categories, users;
+DROP TABLE IF EXISTS notification_destinataires, notifications, messages, document_lignes, documents, detaildocument, document, clients, salaries, plannings, planning_creneaux, planning_postes, realisations, categories, users;
 
 
 CREATE TABLE users (
@@ -23,46 +23,49 @@ CREATE TABLE salaries (
 
 
 CREATE TABLE clients (
-  id_client INT PRIMARY KEY,
+  id_client INT AUTO_INCREMENT PRIMARY KEY,
   nom_client VARCHAR(100) NOT NULL,
   prenom_client VARCHAR(100) NOT NULL,
   adresse_client VARCHAR(255),
   ville_client VARCHAR(100),
   code_postal_client VARCHAR(15),
   siret_client VARCHAR(20),
-  CONSTRAINT fk_client_user FOREIGN KEY (id_client) REFERENCES users(id) ON DELETE CASCADE
+  user_id INT NULL,
+  UNIQUE(user_id), 
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 
-CREATE TABLE documents (
-  id_doc INT AUTO_INCREMENT PRIMARY KEY,
-  id_client INT NOT NULL,
-  nom_client VARCHAR(100),
-  prenom_client VARCHAR(100),
-  tel_client VARCHAR(30),
-  adresse_client VARCHAR(255),
-  ville_client VARCHAR(100),
-  codepostal_client VARCHAR(15),
-  siret_client VARCHAR(20),
-  date_creation_doc DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  type_doc ENUM('devis','commande','facture','avoir','autre') NOT NULL,
-  status_doc ENUM('brouillon','envoye','accepte','refuse','paye','annule') NOT NULL DEFAULT 'brouillon',
-  type_reglement_doc ENUM('cb','virement','cheque','especes','prelevement','autre'),
-  echeance_paiement_doc DATE,
-  nb_relance_doc INT DEFAULT 0,
-  CONSTRAINT fk_document_client FOREIGN KEY (id_client) REFERENCES clients(id_client) ON DELETE RESTRICT
+CREATE TABLE Document (
+    idDoc INT AUTO_INCREMENT PRIMARY KEY,
+    num INT,
+    nomClient VARCHAR(100),
+    telClient VARCHAR(50),
+    addrClient VARCHAR(255),
+    villeClient VARCHAR(100),
+    codePostalClient VARCHAR(20),
+    siretClient VARCHAR(20),
+    dateDoc DATETIME,
+    typeDoc VARCHAR(50),
+    statusDoc VARCHAR(50),
+    reglementDoc VARCHAR(50),
+    datePaiement DATETIME,
+    nbRelance INT,
+    idCli INT,
+    FOREIGN KEY (idCli) REFERENCES clients(id_client)  
 );
 
 
-CREATE TABLE document_lignes (
-  id_ligne_doc INT AUTO_INCREMENT PRIMARY KEY,
-  id_doc INT NOT NULL,
-  designation_ligne VARCHAR(255) NOT NULL,
-  description_ligne TEXT,
-  unite_ligne VARCHAR(20),
-  quantite_ligne DECIMAL(12,3) NOT NULL DEFAULT 1,
-  prix_unitaire_ligne DECIMAL(12,2) NOT NULL DEFAULT 0,
-  CONSTRAINT fk_ligne_doc FOREIGN KEY (id_doc) REFERENCES documents(id_doc) ON DELETE CASCADE
+
+CREATE TABLE DetailDocument (
+    idLigneDoc INT AUTO_INCREMENT PRIMARY KEY,
+    idDoc INT,
+    designation VARCHAR(255),
+    description VARCHAR(255),
+    unite VARCHAR(50),
+    quantite INT,
+    prixUnitaire DECIMAL(10,2),
+    FOREIGN KEY (idDoc) REFERENCES Document(idDoc)
 );
 
 
@@ -164,6 +167,24 @@ CREATE TABLE avis (
         ON DELETE CASCADE
 );
 
+
+CREATE TABLE entreprise (
+    nom VARCHAR(255) NOT NULL,
+    description TEXT,
+    telephone VARCHAR(20),
+    adresse VARCHAR(255),
+    siret VARCHAR(14)
+);
+
+
+INSERT INTO entreprise (nom, description, telephone, adresse, siret)
+VALUES (
+    'Team Jardin',
+    'Entretien d''espaces verts',
+    '0667788990',
+    '12 rue des Fleurs, La doua',
+    '12345678901234'
+);
 
 
 INSERT INTO users (username, password, role) VALUES 
@@ -377,3 +398,70 @@ UPDATE users SET password = 'S27#Policy' WHERE username = 'salarie27';
 UPDATE users SET password = 'Sal28$Audit' WHERE username = 'salarie28';
 UPDATE users SET password = 'S29+OpsX' WHERE username = 'salarie29';
 UPDATE users SET password = 'Sal30!Final' WHERE username = 'salarie30';
+
+
+-- FACTURES Document pour toute l'année
+INSERT INTO Document (num, nomClient, telClient, addrClient, villeClient, codePostalClient, siretClient, dateDoc, typeDoc, statusDoc, reglementDoc, datePaiement, nbRelance, idCli)
+VALUES
+(1, 'Durand', '0600000000', '12 rue des Lilas', 'Lyon', '69001', 'FR000001', '2025-01-10', 'Facture', 'En attente', 'CB', NULL, 0, 1),
+(2, 'Martin', '0600000001', '8 avenue Victor Hugo', 'Paris', '75008', 'FR000002', '2025-02-12', 'Facture', 'Payé', 'Virement', '2025-02-15', 0, 2),
+(3, 'Durand', '0600000000', '12 rue des Lilas', 'Lyon', '69001', 'FR000001', '2025-03-05', 'Facture', 'En attente', 'CB', NULL, 0, 1),
+(4, 'Martin', '0600000001', '8 avenue Victor Hugo', 'Paris', '75008', 'FR000002', '2025-04-18', 'Facture', 'Payé', 'Virement', '2025-04-20', 0, 2),
+(5, 'Durand', '0600000000', '12 rue des Lilas', 'Lyon', '69001', 'FR000001', '2025-05-08', 'Facture', 'En attente', 'CB', NULL, 0, 1),
+(6, 'Martin', '0600000001', '8 avenue Victor Hugo', 'Paris', '75008', 'FR000002', '2025-06-14', 'Facture', 'Payé', 'Virement', '2025-06-17', 0, 2),
+(7, 'Durand', '0600000000', '12 rue des Lilas', 'Lyon', '69001', 'FR000001', '2025-07-03', 'Facture', 'En attente', 'CB', NULL, 0, 1),
+(8, 'Martin', '0600000001', '8 avenue Victor Hugo', 'Paris', '75008', 'FR000002', '2025-08-21', 'Facture', 'Payé', 'Virement', '2025-08-23', 0, 2),
+(9, 'Durand', '0600000000', '12 rue des Lilas', 'Lyon', '69001', 'FR000001', '2025-09-11', 'Facture', 'En attente', 'CB', NULL, 0, 1),
+(10, 'Martin', '0600000001', '8 avenue Victor Hugo', 'Paris', '75008', 'FR000002', '2025-10-09', 'Facture', 'Payé', 'Virement', '2025-10-12', 0, 2),
+(11, 'Durand', '0600000000', '12 rue des Lilas', 'Lyon', '69001', 'FR000001', '2025-11-15', 'Facture', 'En attente', 'CB', NULL, 0, 1),
+(12, 'Martin', '0600000001', '8 avenue Victor Hugo', 'Paris', '75008', 'FR000002', '2025-12-20', 'Facture', 'Payé', 'Virement', '2025-12-22', 0, 2);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(1, 'Mise en état du jardin', 'Nettoyage complet', 'heure', 2, 40.00),
+(1, 'Plantation saisonnière', 'Ajout de plantes', 'unité', 5, 8.50);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(2, 'Tonte pelouse', 'Tonte complète terrain', 'm²', 150, 0.15),
+(2, 'Évacuation déchets verts', 'Transport déchetterie', 'forfait', 1, 20.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(3, 'Taille haies', 'Taille haies extérieures', 'mètre', 20, 2.00),
+(3, 'Soufflage', 'Nettoyage terrasse', 'heure', 1, 35.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(4, 'Taille haies', 'Haies hautes', 'mètre', 30, 2.50),
+(4, 'Ramassage feuilles', 'Ramassage + sacs', 'heure', 1, 25.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(5, 'Arrosage massif', 'Arrosage complet', 'heure', 1, 40.00),
+(5, 'Engrais', 'Engrais plantes fleuries', 'kg', 2, 12.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(6, 'Nettoyage terrasse', 'Nettoyage haute pression', 'heure', 2, 65.00),
+(6, 'Déblayage', 'Déblayage zone passage', 'heure', 1, 30.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(7, 'Désherbage', 'Jardin complet', 'heure', 3, 45.00),
+(7, 'Arrosage', 'Arrosage manuel massif', 'heure', 1, 35.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(8, 'Tonte pelouse', 'Terrain complet', 'm²', 200, 0.18),
+(8, 'Soufflage', 'Nettoyage final', 'heure', 1, 30.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(9, 'Taille haies lourde', 'Haies très épaisses', 'mètre', 40, 3.00),
+(9, 'Évacuation déchets', 'Transport et traitement', 'forfait', 1, 25.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(10, 'Arrosage manuel', 'Massifs fleuris', 'heure', 1, 40.00),
+(10, 'Anti-mousse', 'Traitement pelouse', 'litre', 2, 15.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(11, 'Nettoyage feuilles', 'Ramassage feuilles', 'heure', 2, 30.00),
+(11, 'Déblayage', 'Zone entrée maison', 'heure', 1, 25.00);
+
+INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
+(12, 'Entretien massif', 'Préparation hiver', 'heure', 3, 50.00),
+(12, 'Engrais hiver', 'Engrais spécial hiver', 'kg', 1, 18.00);
+
+
