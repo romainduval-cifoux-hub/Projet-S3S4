@@ -19,7 +19,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
   <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
 
   <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
-  <link href="<?= BASE_URL ?>/public/assets/chef/css/style.css" rel="stylesheet">
+  <link href="<?= BASE_URL ?>/public/assets/chef/gestionFacture/style.css" rel="stylesheet">
 
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
@@ -47,6 +47,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
 
 <div class="facture">
     <h2>Facture n°<?= $facture['num'] ?></h2>
+    <hr>
     <p><strong>Client :</strong> <?= $facture['nomClient'] ?></p>
     <p><strong>Date :</strong> <?= date('d/m/Y', strtotime($facture['dateDoc'])) ?></p>
     <p><strong>Status :</strong> <?= $facture['statusDoc'] ?></p>
@@ -66,9 +67,8 @@ require_once(__DIR__ . '/../../../Database/db.php');
             </li>
         <?php endforeach; ?>
     </ul>
-
-    <p><strong>Total :</strong> <?= $total ?> €</p>
     <hr>
+    <p><strong>Total :</strong> <?= $total ?> €</p>
 </div>
 
 <?php endforeach; ?>

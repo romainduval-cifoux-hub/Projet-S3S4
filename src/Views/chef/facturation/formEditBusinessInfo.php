@@ -19,7 +19,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
   <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
 
   <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
-  <link href="<?= BASE_URL ?>/public/assets/chef/css/style.css" rel="stylesheet">
+  <link href="<?= BASE_URL ?>/public/assets/chef/css/formEditBusinessInfo/style.css" rel="stylesheet">
 
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
@@ -43,27 +43,30 @@ require_once(__DIR__ . '/../../../Database/db.php');
     <form action="" method="post">
 
         <h2>Modifier les informations de l'entreprise</h2>
+        <div class="container">
+            <div class="gauche">
+                <label>Nom de l'entreprise</label><br>
+                <input type="text" name="nom" value="<?php echo htmlspecialchars($dataBusiness['nom']); ?>" required>
+                <br><br>
 
-        <label>Nom de l'entreprise</label><br>
-        <input type="text" name="nom" value="<?php echo htmlspecialchars($dataBusiness['nom']); ?>" required>
-        <br><br>
+                <label>Description</label><br>
+                <textarea name="description" rows="4"><?php echo htmlspecialchars($dataBusiness['description']); ?></textarea>
+                <br><br>
+            </div>
+            <div class="droite">
+                <label>Téléphone</label><br>
+                <input type="text" name="telephone" value="<?php echo htmlspecialchars($dataBusiness['telephone']); ?>">
+                <br><br>
 
-        <label>Description</label><br>
-        <textarea name="description" rows="4"><?php echo htmlspecialchars($dataBusiness['description']); ?></textarea>
-        <br><br>
+                <label>Adresse</label><br>
+                <input type="text" name="adresse" value="<?php echo htmlspecialchars($dataBusiness['adresse']); ?>">
+                <br><br>
 
-        <label>Téléphone</label><br>
-        <input type="text" name="telephone" value="<?php echo htmlspecialchars($dataBusiness['telephone']); ?>">
-        <br><br>
-
-        <label>Adresse</label><br>
-        <input type="text" name="adresse" value="<?php echo htmlspecialchars($dataBusiness['adresse']); ?>">
-        <br><br>
-
-        <label>SIRET</label><br>
-        <input type="text" name="siret" value="<?php echo htmlspecialchars($dataBusiness['siret']); ?>">
-        <br><br>
-
+                <label>SIRET</label><br>
+                <input type="text" name="siret" value="<?php echo htmlspecialchars($dataBusiness['siret']); ?>">
+                <br><br>
+            </div>
+        </div>
         <button type="submit">Enregistrer</button>
 
         <?php if (!empty($successMessage)): ?>

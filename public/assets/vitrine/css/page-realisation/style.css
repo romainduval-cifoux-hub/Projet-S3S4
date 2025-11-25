@@ -8,14 +8,11 @@
     background-color: var(--bge);
     font-family: Arial, sans-serif;
     align-items: center;
-    text-align: center;
     padding-bottom: 80px;
 }
 
-/*color: #367048;*/
 .realisations h2 {
     color: #367048;
-    font-weight: bold;
     font-size: 3rem;
     display: block; 
     text-align: center;

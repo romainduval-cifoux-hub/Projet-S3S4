@@ -1,0 +1,54 @@
+main {
+    background-color: var(--bge);
+    margin-inline: 2%;
+    padding-inline: 5%;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 16px;
+}
+
+h2 {
+    text-align: center;
+    color: white ;
+    font-size: 30px;
+    margin: 2em 20% 3em 20% ;
+    padding-block: 1em;
+    background-color: var(--vert-fonce);
+    border-radius: 8px ;
+}
+
+.container {
+    display: flex ;
+    justify-content: space-evenly;
+}
+
+label {
+    background-color: var(--bg);
+    font-size: 20px;
+    padding: 5px;
+    border: 2px solid black ;
+    border-radius: 6px ;
+    margin-top: 30px ;
+    padding-inline: 2%;
+}
+
+input {
+    margin-block: 20px ;
+    padding: 5px ;
+    border: 2px solid black;
+    border-radius: 4px;
+}
+
+textarea {
+    margin-block: 20px;
+}
+
+button {
+    align-items: center;
+    color: white;
+    font-size: 20px ;
+    background-color: var(--vert-fonce) ;
+    border-radius: 8px;
+    padding-inline: 5% ;
+    margin-inline: 40%;
+}
