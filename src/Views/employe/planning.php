@@ -9,20 +9,38 @@
     <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/chef/css/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
 </head>
 <body>
-<div class="page">
+
+    
+
+<section class="page">
     <?php
-        // header simplifié “employé”
-        $nav = ['Mon planning'];
+        $nav = ['Espace Personnel', 'Messagerie','Mon planning'];
         $bouton = 'Déconnexion';
         $redirection = BASE_URL . '/public/index.php?page=logout';
         require __DIR__ . '/../shared/header.php';
     ?>
 
     <div class="app">
+
+        <?php
+            $menuTitle1 = 'Mon planning';
+            $menu1 = [
+                ['label' => 'Semaine en cours', 'href' => BASE_URL . '/public/index.php?page=employe/planning'],
+                ['label' => 'Demande de congé', 'href' => BASE_URL . '/public/index.php?page=employe/conge']
+            ];
+
+            $menuTitle2 = 'Mon compte';
+            $menu2 = [
+                ['label' => 'Mes informations', 'href' => BASE_URL . '/public/index.php?page=employe/profil'],
+
+            ];
+            require __DIR__ . '/../shared/aside.php';
+        ?>
         <main class="main-content">
             <section class="board">
 
@@ -32,7 +50,7 @@
                            href="<?= BASE_URL ?>/public/index.php?page=employe/planning&date=<?= htmlspecialchars($prevMonday) ?>">
                             ‹
                         </a>
-
+                            <strong><?= htmlspecialchars($monthLabel ?? '') ?></strong>
                         <a class="navbtn"
                            href="<?= BASE_URL ?>/public/index.php?page=employe/planning&date=<?= htmlspecialchars($nextMonday) ?>">
                             ›
@@ -96,6 +114,6 @@
     </div>
 
     <?php require __DIR__ . '/../shared/footer.php'; ?>
-</div>
+</section>
 </body>
 </html>
