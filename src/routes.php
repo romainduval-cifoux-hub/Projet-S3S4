@@ -14,6 +14,11 @@ require_once __DIR__ . '/Controllers/RealisationController.php';
 require_once __DIR__ . '/Controllers/EmployeController.php';
 require_once __DIR__ . '/Controllers/PlanningEmployeController.php';
 
+require_once __DIR__ . '/Controllers/ClientController.php';
+
+
+require_once __DIR__ . '/Controllers/AvisController.php';
+
 
 
 
@@ -66,10 +71,10 @@ switch ($page) {
         break;
         
     case 'avis_add':
-    require_once __DIR__ . '/Controllers/AvisController.php';
-    $controller = new AvisController();
-    $controller->add();
-    break;
+    
+        $controller = new AvisController();
+        $controller->add();
+        break;
     
 
     case 'chef/facturation':
@@ -122,6 +127,16 @@ switch ($page) {
         
         $controller = new GestionnaireFacturationController();
         $controller->handleRequest();
+        break;
+
+    case 'client/profil':
+        $controller = new ClientController();
+        $controller->profil();
+        break;
+
+    case 'client/save':
+        $controller = new ClientController();
+        $controller->save();
         break;
 
     case 'realisation':
