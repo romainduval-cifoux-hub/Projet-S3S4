@@ -19,7 +19,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
   <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
 
   <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
-  <link href="<?= BASE_URL ?>/public/assets/chef/css/formEditBusinessInfo/style.css" rel="stylesheet">
+  <link href="<?= BASE_URL ?>/public/assets/chef/formEditBusinessInfo/style.css" rel="stylesheet">
 
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
