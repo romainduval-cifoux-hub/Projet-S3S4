@@ -10,9 +10,7 @@ class LoginController {
     private PDO $pdo;
 
     public function __construct() {
-    error_log('LOGIN: __construct AVANT PDO');
     $this->pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
-    error_log('LOGIN: __construct APRES PDO');
 }
 
 
