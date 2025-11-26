@@ -336,6 +336,47 @@ INSERT INTO avis (user_id, commentaire, note, date_commentaire) VALUES
 (9, 'Très déçu du résultat, la pelouse n’a pas pris correctement.', 1, '2025-03-20'),
 (10, 'Travail sérieux, équipe sympathique et bons conseils.', 4, '2025-03-25');
 
+INSERT INTO categories (nom) VALUES
+('Aménagement paysager'),
+('Entretien de jardin'),
+('Plantation d\'arbres et arbustes'),
+('Installation de systèmes d\'irrigation'),
+('Création de terrasses et allées'),
+('Éclairage extérieur');
+
+INSERT INTO realisations (photo, commentaire, categorie_id) VALUES
+('/public/assets/realisation/img/amenagement1.png',
+ 'Création complète d\'un jardin avec massifs, allées et gazon. Transformation totale d\'un extérieur brut en un espace harmonieux.',
+ 1),
+
+('/public/assets/realisation/img/amenagement2.png',
+ 'Installation d\'une terrasse moderne entourée de plantations structurées et éclairage d\'ambiance.',
+ 1),
+
+('/public/assets/realisation/img/entretien1.png',
+ 'Tonte complète, désherbage, taille des arbustes et remise en état d\'un jardin laissé à l\'abandon.',
+ 2),
+
+('/public/assets/realisation/img/entretien2.png',
+ 'Entretien régulier d\'un jardin : pelouse, massifs, haies et nettoyage complet.',
+ 2),
+
+('/public/assets/realisation/img/plantation1.png',
+ 'Plantation d\'arbres et d\'arbustes pour créer un espace naturel structuré.',
+ 3),
+
+('/public/assets/realisation/img/irrigation1.png',
+ 'Installation d\'un système d\'arrosage automatique optimisé pour réduire la consommation d\'eau.',
+ 4),
+
+('/public/assets/realisation/img/terrasse1.png',
+ 'Création d\'une allée pavée et d\'une terrasse en bois pour un espace extérieur chaleureux.',
+ 5),
+
+('/public/assets/realisation/img/eclairage1.png',
+ 'Installation d\'un éclairage LED extérieur pour mettre en valeur le jardin la nuit.',
+ 6);
+
 
 UPDATE users SET password = 'Client01$2025!' WHERE username = 'client01';
 UPDATE users SET password = 'Client02#R0cks' WHERE username = 'client02';
