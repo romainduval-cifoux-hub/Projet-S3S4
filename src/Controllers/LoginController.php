@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../Database/db.php';
 require_once __DIR__ . '/../Database/userRepository.php';
+require_once __DIR__ . '/../Database/clientRepository.php';
 
 class LoginController {
 
@@ -34,7 +35,7 @@ class LoginController {
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['user_id'] = $user['id'];
 
-                // 🔥 PRIORITÉ : redirection forcée si paramètre redirect présent
+                
                 if (!empty($_GET['redirect'])) {
                     $redirect = urlencode($_GET['redirect']);
                     header('Location: ' . BASE_URL . '/public/index.php?page=' . $redirect);
@@ -49,8 +50,14 @@ class LoginController {
                         break;
 
                     case 'client':
-                        header('Location: ' . BASE_URL . '/public/index.php?page=dashboard');
+
+                        if (!clientExists($this->pdo, (int)$user['id'])) {
+                            header('Location: ' . BASE_URL . '/public/index.php?page=client/profil');
+                        } else {
+                            header('Location: ' . BASE_URL . '/public/index.php?page=home');
+                        }
                         break;
+                        
 
                     case 'salarie': 
                         
