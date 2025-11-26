@@ -19,7 +19,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
   <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
 
   <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
-  <link href="<?= BASE_URL ?>/public/assets/chef/css/style.css" rel="stylesheet">
+  <link href="<?= BASE_URL ?>/public/assets/chef/dashboard/style.css" rel="stylesheet">
 
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
@@ -40,77 +40,82 @@ require_once(__DIR__ . '/../../../Database/db.php');
 
 <main>
     <h1>Tableau de bord de l'année <?php echo($annee)?></h1>
+    <div class="container">
+        <div class="en-attente">
+            <?php
 
-    <?php
+                echo "Nombre de facture en attente : $nbFactureEnAttente <br>";
+                echo "Montant en attente : $montantFactureEnAttente € <br>";
+            ?>
 
-        echo "Nombre de facture en attente : $nbFactureEnAttente <br>";
-        echo "Montant en attente : $montantFactureEnAttente € <br>";
-    ?>
+            <!-- Chart Montant en attente -->
+            <div style="width: 600px; height: 400px; margin-bottom: 30px;">
+                <canvas id="facturesChart"></canvas>
+            </div>
 
-    <!-- Chart Montant en attente -->
-    <div style="width: 600px; height: 400px; margin-bottom: 30px;">
-        <canvas id="facturesChart"></canvas>
-    </div>
+            <script>
+                const labelsMois = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
+                const montantsParMois = <?php echo json_encode(array_values($montantsParMois)); ?>;
 
-    <script>
-        const labelsMois = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
-        const montantsParMois = <?php echo json_encode(array_values($montantsParMois)); ?>;
+                new Chart(document.getElementById('facturesChart').getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: labelsMois,
+                        datasets: [{
+                            label: 'Montant en attente (€)',
+                            data: montantsParMois,
+                            backgroundColor: 'rgba(66, 66, 66, 0.6)',
+                            borderColor: 'rgba(43, 43, 43, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            </script>
+        </div>
 
-        new Chart(document.getElementById('facturesChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: labelsMois,
-                datasets: [{
-                    label: 'Montant en attente (€)',
-                    data: montantsParMois,
-                    backgroundColor: 'rgba(66, 66, 66, 0.6)',
-                    borderColor: 'rgba(43, 43, 43, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true }
-                }
-            }
-        });
-    </script>
+        <div class="paye">
+            <?php 
+            
+                echo "Nombre de facture payées : $nbFacturePayee <br>";
+                echo "Chiffre d'affaires : $montantFacturePayee € <br>";    
+            ?>
 
-    <?php 
-    
-        echo "Nombre de facture payées : $nbFacturePayee <br>";
-        echo "Chiffre d'affaires : $montantFacturePayee € <br>";    
-    ?>
+            <!-- Chart Montant payé -->
+            <div style="width: 600px; height: 400px;">
+                <canvas id="facturesPayeesChart"></canvas>
+            </div>
 
-    <!-- Chart Montant payé -->
-    <div style="width: 600px; height: 400px;">
-        <canvas id="facturesPayeesChart"></canvas>
-    </div>
+            <script>
+                const montantsPayesParMois = <?php echo json_encode(array_values($montantPayeparMois)); ?>;
 
-    <script>
-        const montantsPayesParMois = <?php echo json_encode(array_values($montantPayeparMois)); ?>;
-
-        new Chart(document.getElementById('facturesPayeesChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: labelsMois,
-                datasets: [{
-                    label: 'Montant payé (€)',
-                    data: montantsPayesParMois,
-                    backgroundColor: 'rgba(4, 134, 0, 0.6)',
-                    borderColor: 'rgba(0, 90, 12, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true }
-                }
-            }
-        });
-    </script>
+                new Chart(document.getElementById('facturesPayeesChart').getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: labelsMois,
+                        datasets: [{
+                            label: 'Montant payé (€)',
+                            data: montantsPayesParMois,
+                            backgroundColor: 'rgba(4, 134, 0, 0.6)',
+                            borderColor: 'rgba(0, 90, 12, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div> 
 </main>
     </div>
 

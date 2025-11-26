@@ -25,7 +25,7 @@ require_once __DIR__ . '/Controllers/AvisController.php';
 
 $page = $_GET['page'] ?? 'home';
 
-$pagesPubliques = ['login', 'register', 'logout', 'home'];
+$pagesPubliques = ['login', 'register', 'logout', 'home', 'realisation'];
 
 if (!in_array($page, $pagesPubliques) && empty($_SESSION['user'])) {
 
