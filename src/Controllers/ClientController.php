@@ -24,7 +24,7 @@ class ClientController {
         $client = client_getByUserId($this->pdo, $_SESSION['user_id']);
 
         $pageTitle = "Mon profil client";
-        require __DIR__ . '/../Views/client/profil.php';
+        require __DIR__ . '/../Views/client/formprofil.php';
     }
 
     public function save(): void {
