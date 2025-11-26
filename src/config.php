@@ -20,5 +20,5 @@ define('DB_PORT', getenv('DB_PORT') ?: ($config['database']['port'] ?? '3306'));
 define('DB_NAME', getenv('DB_NAME') ?: ($config['database']['name'] ?? 'teamjardin'));
 define('DB_USER', getenv('DB_USER') ?: ($config['database']['user'] ?? 'root'));
 define('DB_PASS', getenv('DB_PASS') ?: ($config['database']['pass'] ?? ''));
+define('BASE_URL', getenv('BASE_URL') ?: ($config['app']['base_url'] ?? ''));
 
-define('BASE_URL', $config['app']['base_url'] ?? '');
