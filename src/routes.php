@@ -140,9 +140,10 @@ switch ($page) {
         break;
 
     case 'realisation':
-          
-        $controller = new RealisationController(); // passer le PDO créé dans config.php
-        $controller->affichage_realisations();        // appelle la méthode qui prépare la vue
+        require_once __DIR__ . '/Views/shared/header.php';  
+        $controller = new RealisationController();
+        $controller->affichage_realisations();
+        require_once __DIR__ . '/Views/shared/footer.php' ;
         break;
         
     default:
