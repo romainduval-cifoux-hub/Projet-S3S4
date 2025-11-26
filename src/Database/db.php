@@ -11,10 +11,18 @@ function getPDO(
     $dsn = "mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4";
 
     try {
-        $pdo = new PDO($dsn, $user, $pass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_TIMEOUT            => 5,
+        ];
+
+        $pdo = new PDO($dsn, $user, $pass, $options);
         return $pdo;
+
     } catch (PDOException $e) {
-        die('Erreur de connexion : ' . $e->getMessage());
+        error_log('Erreur de connexion PDO : ' . $e->getMessage());
+        http_response_code(500);
+        exit('Erreur de connexion à la base de données.');
     }
 }
