@@ -1,5 +1,9 @@
 
 /* --- Conteneur principal --- */
+#main-contact {
+    scroll-margin-top: 100px;
+}
+
 .contact-container {
     display: flex;
     justify-content: space-between;

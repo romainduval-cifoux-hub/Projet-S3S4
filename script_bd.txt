@@ -463,5 +463,3 @@ INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, pr
 INSERT INTO DetailDocument (idDoc, designation, description, unite, quantite, prixUnitaire) VALUES
 (12, 'Entretien massif', 'Préparation hiver', 'heure', 3, 50.00),
 (12, 'Engrais hiver', 'Engrais spécial hiver', 'kg', 1, 18.00);
-
-
