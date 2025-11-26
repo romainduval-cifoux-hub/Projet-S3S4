@@ -4,7 +4,7 @@ html {
 }
 
 .background_img_container {
-    background-image: url("/public/assets/vitrine/img/background_pelouse.png");
+    background-image: url("/assets/vitrine/img/background_pelouse.png");
     width: 100%;
     height: 90vh;               
     overflow: hidden;           
