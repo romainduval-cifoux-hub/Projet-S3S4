@@ -22,10 +22,10 @@ function client_create(
     int $userId,
     string $nom,
     string $prenom,
-    string $adresse = null,
-    string $ville = null,
-    string $codePostal = null,
-    string $siret = null
+    ?string $adresse,
+    ?string $ville,
+    ?string $codePostal,
+    ?string $siret 
 ): bool {
     $sql = "INSERT INTO clients (
                 id_client,

@@ -4,8 +4,7 @@ html {
 }
 
 .background_img_container {
-    background-image: url("team-jardin-m6fq2.ondigitalocean.app/public/assets/vitrine/img/background_pelouse.png"); /* tant que l'arbo interne ne change pas l'image s'affiche*/
-
+    background-image: url("/public/assets/vitrine/img/background_pelouse.png");
     width: 100%;
     height: 90vh;               
     overflow: hidden;           
