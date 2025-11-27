@@ -19,7 +19,3 @@ Voici le chemin dans l'explorateur de fichier windows :
 C:\wamp64\www\Projet-S3S4\config.ini
 Donc on écrit dans config.ini à la ligne 2 :
 define('BASE_URL', '/Projet-S3S4'); 
-
-(Armin)
-C:\wamp64\www\PHP\Projet-S3S4\config.ini
-define('BASE_URL', '/PHP/Projet-S3S4'); 
