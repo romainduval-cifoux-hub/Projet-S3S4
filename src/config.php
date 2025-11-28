@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-ini_set('display_errors', 1);          // en prod: 0
-ini_set('display_startup_errors', 1);  // en prod: 0
+ini_set('display_errors', 1);          
+ini_set('display_startup_errors', 1);  
 error_reporting(E_ALL);
 
 // Lecture éventuelle de config.ini (local)
@@ -20,5 +20,11 @@ define('DB_PORT', getenv('DB_PORT') ?: ($config['database']['port'] ?? '3306'));
 define('DB_NAME', getenv('DB_NAME') ?: ($config['database']['name'] ?? 'teamjardin'));
 define('DB_USER', getenv('DB_USER') ?: ($config['database']['user'] ?? 'root'));
 define('DB_PASS', getenv('DB_PASS') ?: ($config['database']['pass'] ?? ''));
-define('BASE_URL', getenv('BASE_URL') ?: ($config['app']['base_url'] ?? ''));
 
+
+$envBaseUrl  = getenv('BASE_URL');
+$fileBaseUrl = $config['app']['base_url'] ?? '';
+
+
+$baseUrl = $envBaseUrl !== false ? rtrim($envBaseUrl, '/') : rtrim($fileBaseUrl, '/');
+define('BASE_URL', $baseUrl);
