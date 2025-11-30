@@ -83,73 +83,53 @@ function getLignesFacture(PDO $pdo, int $idDoc) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function createFacture(PDO $pdo, array $factureData, array $lignes) {
+function createFacture(PDO $pdo, Facture $facture) {
+    // 1. Insérer la facture dans la table Document
+    $stmt = $pdo->prepare("
+        INSERT INTO Document 
+        (num, nomClient, telClient, addrClient, villeClient, codePostalClient, siretClient, dateDoc, typeDoc, statusDoc, reglementDoc, datePaiement, nbRelance, idCli)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ");
 
-    try {
-        // Début transaction
-        $pdo->beginTransaction();
+    $stmt->execute([
+        $facture->num,
+        $facture->client,
+        $facture->telephone,
+        $facture->adresse,
+        $facture->ville,
+        $facture->codePostal,
+        $facture->siret,
+        $facture->date,
+        $facture->type,
+        $facture->status,
+        $facture->reglement,
+        $facture->datePaiement,
+        $facture->nbRelance,
+        $facture->idCli ?? null // si tu as un id client lié
+    ]);
 
-        $sqlDoc = "INSERT INTO Document (
-                        num, nomClient, telClient, addrClient, villeClient, 
-                        codePostalClient, siretClient, dateDoc, typeDoc, statusDoc, 
-                        reglementDoc, datePaiement, nbRelance, idCli
-                   ) VALUES (
-                        :num, :nomClient, :telClient, :addrClient, :villeClient,
-                        :codePostalClient, :siretClient, :dateDoc, :typeDoc, :statusDoc,
-                        :reglementDoc, :datePaiement, :nbRelance, :idCli
-                   )";
+    $factureId = $pdo->lastInsertId();
 
-        $stmt = $pdo->prepare($sqlDoc);
+    // 2. Insérer les lignes dans DetailDocument
+    $stmtLigne = $pdo->prepare("
+        INSERT INTO DetailDocument 
+        (idDoc, designation, description, unite, quantite, prixUnitaire)
+        VALUES (?, ?, ?, ?, ?, ?)
+    ");
 
-        $stmt->execute([
-            ':num' => $factureData['num'] ?? generateNextNumeroFacture($pdo),
-            ':nomClient'         => $factureData['nomClient'] ?? null,
-            ':telClient'         => $factureData['telClient'] ?? null,
-            ':addrClient'        => $factureData['addrClient'] ?? null,
-            ':villeClient'       => $factureData['villeClient'] ?? null,
-            ':codePostalClient'  => $factureData['codePostalClient'] ?? null,
-            ':siretClient'       => $factureData['siretClient'] ?? null,
-            ':dateDoc'           => $factureData['dateDoc'] ?? date('Y-m-d H:i:s'),
-            ':typeDoc'           => $factureData['typeDoc'] ?? 'FACTURE',
-            ':statusDoc'         => $factureData['statusDoc'] ?? 'En attente',
-            ':reglementDoc'      => $factureData['reglementDoc'] ?? null,
-            ':datePaiement'      => $factureData['datePaiement'] ?? null,
-            ':nbRelance'         => $factureData['nbRelance'] ?? 0,
-            ':idCli'             => $factureData['idCli'] ?? null
+    foreach ($facture->lignes as $ligne) {
+        $stmtLigne->execute([
+            $factureId,
+            $ligne->designation,
+            $ligne->description,
+            $ligne->unite,
+            $ligne->quantite,
+            $ligne->prix
         ]);
-
-        $idDoc = $pdo->lastInsertId();
-
-        $sqlLig = "INSERT INTO DetailDocument (
-                        idDoc, designation, description, unite, quantite, prixUnitaire
-                   ) VALUES (
-                        :idDoc, :designation, :description, :unite, :quantite, :prixUnitaire
-                   )";
-
-        $stmtLig = $pdo->prepare($sqlLig);
-
-        foreach ($lignes as $ligne) {
-            $stmtLig->execute([
-                ':idDoc'        => $idDoc,
-                ':designation'  => $ligne['designation'] ?? '',
-                ':description'  => $ligne['description'] ?? '',
-                ':unite'        => $ligne['unite'] ?? '',
-                ':quantite'     => $ligne['quantite'] ?? 0,
-                ':prixUnitaire' => $ligne['prixUnitaire'] ?? 0.00
-            ]);
-        }
-
-        $pdo->commit();
-
-        return $idDoc;
-
-    } catch (Exception $e) {
-
-        // Rollback en cas d’erreur
-        $pdo->rollBack();
-        throw new Exception("Erreur lors de la création de la facture : " . $e->getMessage());
     }
 }
+
+
 
 
 
