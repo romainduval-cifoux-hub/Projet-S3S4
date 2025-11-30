@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../../config.php';
 require_once __DIR__ . '/../../../Database/db.php';
 require_once __DIR__ . '/../../../Database/factureRepository.php'; 
 
-class GestionnaireFacturationController {
+class CreationDocumentController {
 
     private PDO $pdo;
 
@@ -14,14 +14,23 @@ class GestionnaireFacturationController {
 
     public function handleRequest() {
 
+        $numFacture = generateNextNumeroFacture($this->pdo);
+        $clients = loadClients($this->pdo);
+        $clientData = null;
 
-        require_once __DIR__ . '/../../../Views/chef/shared/header_chef.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $action = $_POST['action'] ?? '';
 
-        $factures = getAllFactures($this->pdo);
-        require_once __DIR__ . '/../../../Views/chef/facturation/gestionFacture.php';
+            if ($action === 'selectClient' && !empty($_POST['client'])) {
+                $idCli = intval($_POST['client']);
+                $clientData = getClientById($this->pdo, $idCli);
+            }
 
+            if ($action === 'createFacture') {
+                // Ici tu récupères toutes les infos POST et tu crées la facture
+            }
+        }
 
-
+        require_once __DIR__ . '/../../../Views/chef/facturation/createDocument.php';
     }
-
 }
