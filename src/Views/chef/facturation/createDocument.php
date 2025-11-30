@@ -31,7 +31,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
 
 <main>
 
-    <h1><?= $numFacture ?></h1>
+    <h1> Numéro de facture : <?= $numFacture ?></h1>
 
     <h2>Créer une nouvelle facture</h2>
 
