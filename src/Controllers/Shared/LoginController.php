@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/db.php';
-require_once __DIR__ . '/../Database/userRepository.php';
-require_once __DIR__ . '/../Database/clientRepository.php';
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../Database/db.php';
+require_once __DIR__ . '/../../Database/userRepository.php';
+require_once __DIR__ . '/../../Database/clientRepository.php';
 
 class LoginController {
 
@@ -77,6 +77,6 @@ class LoginController {
             }
         }
 
-        require __DIR__ . '/../Views/shared/login.php';
+        require __DIR__ . '/../../Views/shared/login.php';
     }
 }

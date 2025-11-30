@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/db.php';
-require_once __DIR__ . '/../Database/employeRepository.php';
+require_once __DIR__ . '/../../../config.php';
+require_once __DIR__ . '/../../../Database/db.php';
+require_once __DIR__ . '/../../../Database/employeRepository.php';
 
 class EmployeController
 {
@@ -63,7 +63,7 @@ class EmployeController
 
         // Variables pour la vue
         $pageTitle = "Ajouter un employé";
-        require __DIR__ . '/../Views/chef/planning/crudemploye.php';
+        require __DIR__ . '/../../../Views/chef/planning/crudemploye.php';
     }
 
     public function liste(): void
@@ -75,6 +75,6 @@ class EmployeController
 
         $salaries = emp_getAllSalaries($this->pdo);
         $pageTitle = "Liste des employés";
-        require __DIR__ . '/../Views/chef/planning/listemploye.php';
+        require __DIR__ . '/../../../Views/chef/planning/listemploye.php';
     }
 }

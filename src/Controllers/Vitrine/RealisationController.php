@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/db.php';
-require_once __DIR__ . '/../Database/realisationRepository.php';
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../Database/db.php';
+require_once __DIR__ . '/../../Database/realisationRepository.php';
 
 class RealisationController {
 
@@ -20,7 +20,7 @@ class RealisationController {
 
     public function affichage_realisations_favories():void {
         $realisationFavorite = $this->repo->getRealisationsFavorites();
-        require_once __DIR__ . '/../Views/vitrine/realisation.php';
+        require_once __DIR__ . '/../../Views/vitrine/realisation.php';
 
     }
 
@@ -36,6 +36,6 @@ class RealisationController {
             ];
         }
 
-        require_once __DIR__ . '/../Views/vitrine/page-realisation.php';
+        require_once __DIR__ . '/../../Views/vitrine/page-realisation.php';
     }
 }

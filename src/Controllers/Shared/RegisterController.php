@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/db.php';
-require_once __DIR__ . '/../Database/userRepository.php';
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../Database/db.php';
+require_once __DIR__ . '/../../Database/userRepository.php';
 
 class RegisterController {
 
@@ -38,6 +38,6 @@ class RegisterController {
             }
         }
 
-        require __DIR__ . '/../Views/shared/register.php';
+        require __DIR__ . '/../../Views/shared/register.php';
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/db.php';
-require_once __DIR__ . '/../Database/planningRepository.php';
+require_once __DIR__ . '/../../../config.php';
+require_once __DIR__ . '/../../../Database/db.php';
+require_once __DIR__ . '/../../../Database/planningRepository.php';
 
 class PlanningController {
 
@@ -81,7 +81,7 @@ class PlanningController {
     
 
         
-        require __DIR__ . '/../Views/chef/planning/gestionPlanning.php';
+        require __DIR__ . '/../../../Views/chef/planning/gestionPlanning.php';
         
     }
 }

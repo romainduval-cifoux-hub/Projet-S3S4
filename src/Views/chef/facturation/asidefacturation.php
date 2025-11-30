@@ -14,8 +14,8 @@ $menu1 = [
 ];
 
 $menu2 = [
-  ['label'=>'Nouvelle facture', 'href'=> BASE_URL.'/public/index.php?page=chantier/create'],
-  ['label'=>'Nouveau devis',  'href'=> BASE_URL.'/public/index.php?page=chantier/list'],
+  ['label'=>'Nouvelle facture', 'href'=> BASE_URL.'/public/index.php?page=chef/facturation/createFacture'],
+  ['label'=>'Nouveau devis',  'href'=> BASE_URL.'/public/index.php?page=chef/facturation/createDevis'],
 ];
 
 $currentUrl = $_SERVER['REQUEST_URI'] ?? '';
