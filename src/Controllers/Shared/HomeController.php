@@ -20,8 +20,8 @@ function ShowHomeController() {
         $redirection = BASE_URL . '/public/index.php?page=login';
     }
 
-    require_once __DIR__ . '/../Controllers/RealisationController.php';
+    require_once __DIR__ . '/../Vitrine/RealisationController.php';
     $realisationController = new RealisationController();
     $realisationFavorite = $realisationController->getFavorites();
-    require __DIR__ . '/../Views/home.php';
+    require __DIR__ . '/../../Views/home.php';
 }

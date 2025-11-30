@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/db.php';
-require_once __DIR__ . '/../Database/clientRepository.php';
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../Database/db.php';
+require_once __DIR__ . '/../../Database/clientRepository.php';
 
 class ClientController {
 
@@ -24,7 +24,7 @@ class ClientController {
         $client = client_getByUserId($this->pdo, $_SESSION['user_id']);
 
         $pageTitle = "Mon profil client";
-        require __DIR__ . '/../Views/client/formprofil.php';
+        require __DIR__ . '/../../Views/client/formprofil.php';
     }
 
     public function save(): void {
@@ -51,7 +51,7 @@ class ClientController {
         if (!empty($errors)) {
             $client = [];
             $pageTitle = "Mon profil client";
-            require __DIR__ . '/../Views/client/profil.php';
+            require __DIR__ . '/../../Views/client/profil.php';
             return;
         }
 

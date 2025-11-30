@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/db.php';
-require_once __DIR__ . '/../Database/planningRepository.php';
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../Database/db.php';
+require_once __DIR__ . '/../../Database/planningRepository.php';
 
 class PlanningEmployeController {
 
@@ -64,6 +64,6 @@ class PlanningEmployeController {
 
         $pageTitle = "Mon planning – Team Jardin";
 
-        require __DIR__ . '/../Views/employe/planning.php';
+        require __DIR__ . '/../../Views/employe/planning.php';
     }
 }

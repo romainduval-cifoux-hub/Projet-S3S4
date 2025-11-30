@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/db.php';
-require_once __DIR__ . '/../Database/chantierRepository.php';
+require_once __DIR__ . '/../../../config.php';
+require_once __DIR__ . '/../../../Database/db.php';
+require_once __DIR__ . '/../../../Database/chantierRepository.php';
 
 class ChantierController
 {
@@ -181,7 +181,7 @@ class ChantierController
 
         
         // on réutilise la même vue pour create + edit
-        require __DIR__ . '/../Views/chef/planning/crudcreneau.php';
+        require __DIR__ . '/../../../Views/chef/planning/crudcreneau.php';
     }
 
     public function delete(): void

@@ -1,25 +1,32 @@
 <?php
 require_once __DIR__ . '/../src/config.php';
-require_once __DIR__ . '/Controllers/HomeController.php';
-require_once __DIR__ . '/Controllers/LoginController.php';
-require_once __DIR__ . '/Controllers/RegisterController.php';
-require_once __DIR__ . '/Controllers/DashboardController.php';
-require_once __DIR__ . '/Controllers/LogoutController.php';
-require_once __DIR__ . '/Controllers/PlanningController.php';
-require_once __DIR__ . '/Controllers/ChantierController.php';
-require_once __DIR__ . '/Controllers/FacturationController.php';
-require_once __DIR__ . '/Controllers/FormEditBusinessInfoController.php';
-require_once __DIR__ . '/Controllers/GestionnaireFacturationController.php';
-require_once __DIR__ . '/Controllers/RealisationController.php';
-require_once __DIR__ . '/Controllers/EmployeController.php';
-require_once __DIR__ . '/Controllers/PlanningEmployeController.php';
 
-require_once __DIR__ . '/Controllers/ClientController.php';
+//Shared
+require_once __DIR__ . '/Controllers/Shared/HomeController.php';
+require_once __DIR__ . '/Controllers/Shared/LoginController.php';
+require_once __DIR__ . '/Controllers/Shared/RegisterController.php';
+require_once __DIR__ . '/Controllers/Shared/LogoutController.php';
 
+//Vitrine
+require_once __DIR__ . '/Controllers/Vitrine/AvisController.php';
+require_once __DIR__ . '/Controllers/Vitrine/RealisationController.php';
 
-require_once __DIR__ . '/Controllers/AvisController.php';
+//Chef
+    //Planning
+require_once __DIR__ . '/Controllers/Chef/Planning/PlanningController.php';
+require_once __DIR__ . '/Controllers/Chef/Planning/ChantierController.php';
+require_once __DIR__ . '/Controllers/Chef/Planning/EmployeController.php';
+    //Facturation
+require_once __DIR__ . '/Controllers/Chef/Facturation/FacturationController.php';
+require_once __DIR__ . '/Controllers/Chef/Facturation/FormEditBusinessInfoController.php';
+require_once __DIR__ . '/Controllers/Chef/Facturation/GestionnaireFacturationController.php';
+    //Realisation
 
+//Employe
+require_once __DIR__ . '/Controllers/Employe/PlanningEmployeController.php';
 
+//Client
+require_once __DIR__ . '/Controllers/Client/ClientController.php';
 
 
 
@@ -35,6 +42,7 @@ if (!in_array($page, $pagesPubliques) && empty($_SESSION['user'])) {
 
 
 switch ($page) {
+    //commun
     case 'login':
         $loginController = new LoginController();
         $loginController->handleRequest();
@@ -49,16 +57,26 @@ switch ($page) {
         ShowHomeController(); 
         break;
 
-    case 'dashboard':
-        $controller = new DashboardController();
-        $controller->handleRequest();
-        break;
-
     case 'logout':
         $controller = new LogoutController();
         $controller->handleRequest();
         break;
 
+    case 'avis_add':
+    
+        $controller = new AvisController();
+        $controller->add();
+        break;
+
+    case 'realisation':
+        require_once __DIR__ . '/Views/shared/header.php';  
+        $controller = new RealisationController();
+        $controller->affichage_realisations();
+        require_once __DIR__ . '/Views/shared/footer.php' ;
+        break;
+
+    //Chef
+        //Planning
     case 'chef/planning':
         
         $controller = new PlanningController();
@@ -69,13 +87,6 @@ switch ($page) {
         $controller = new ChantierController();
         $controller->create();
         break;
-        
-    case 'avis_add':
-    
-        $controller = new AvisController();
-        $controller->add();
-        break;
-    
 
     case 'chef/facturation':
         
@@ -110,7 +121,7 @@ switch ($page) {
         $controller->handleRequest();
         break;
 
-    
+        //Facturation
     case 'chef/facturation/dashboard':
         
         $controller = new FacturationController();
@@ -129,6 +140,12 @@ switch ($page) {
         $controller->handleRequest();
         break;
 
+    case 'chef/facturation/createFacture':
+        $controller = new GestionnaireFacturationController();
+        $controller->handleRequest();
+        break;
+
+    //Client
     case 'client/profil':
         $controller = new ClientController();
         $controller->profil();
@@ -139,12 +156,6 @@ switch ($page) {
         $controller->save();
         break;
 
-    case 'realisation':
-        require_once __DIR__ . '/Views/shared/header.php';  
-        $controller = new RealisationController();
-        $controller->affichage_realisations();
-        require_once __DIR__ . '/Views/shared/footer.php' ;
-        break;
         
     default:
         http_response_code(404);

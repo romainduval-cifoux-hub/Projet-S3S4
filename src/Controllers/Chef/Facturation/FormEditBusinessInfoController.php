@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/db.php';
-require_once __DIR__ . '/../Database/factureRepository.php'; 
+require_once __DIR__ . '/../../../config.php';
+require_once __DIR__ . '/../../../Database/db.php';
+require_once __DIR__ . '/../../../Database/factureRepository.php'; 
 
 class FormEditBusinessInfoController {
 
@@ -31,8 +31,8 @@ class FormEditBusinessInfoController {
         $dataBusiness = getEntrepriseInfo($this->pdo);
 
 
-        require_once __DIR__ . '/../Views/chef/shared/header_chef.php';
-        require_once __DIR__ . '/../Views/chef/facturation/formEditBusinessInfo.php';
+        require_once __DIR__ . '/../../../Views/chef/shared/header_chef.php';
+        require_once __DIR__ . '/../../../Views/chef/facturation/formEditBusinessInfo.php';
     }
 
 }

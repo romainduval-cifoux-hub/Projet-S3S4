@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../Database/db.php';
-require_once __DIR__ . '/../Database/dashboardRepository.php';
+require_once __DIR__ . '/../../../config.php';
+require_once __DIR__ . '/../../../Database/db.php';
+require_once __DIR__ . '/../../../Database/dashboardRepository.php';
 
 class FacturationController {
 
@@ -15,7 +15,7 @@ class FacturationController {
     public function handleRequest() {
 
             
-            require_once __DIR__ . '/../Views/chef/shared/header_chef.php';
+            require_once __DIR__ . '/../../../Views/chef/shared/header_chef.php';
             $annee = date('Y'); 
 
 
@@ -29,7 +29,7 @@ class FacturationController {
 
             $montantPayeparMois = getMontantPayeeParMois($this->pdo);
             
-            require_once __DIR__ . '/../Views/chef/facturation/dashboard.php';
+            require_once __DIR__ . '/../../../Views/chef/facturation/dashboard.php';
         }
 
 }
