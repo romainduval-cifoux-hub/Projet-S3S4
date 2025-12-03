@@ -1,10 +1,15 @@
+<?php
+header("Content-Type: text/css");
+
+$base = getenv('BASE_URL') ?: '';
+?>
 
 html {
     scroll-behavior: smooth;
 }
 
 .background_img_container {
-    background-image: url("/Projet-S3S4/public/assets/vitrine/img/backgroundpelouse.png");
+    background-image: url("../../img/backgroundpelouse.png");
     width: 100%;
     height: 90vh;               
     overflow: hidden;           
