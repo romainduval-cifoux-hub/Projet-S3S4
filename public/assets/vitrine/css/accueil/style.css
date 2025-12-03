@@ -1,9 +1,3 @@
-<?php
-header("Content-Type: text/css");
-
-$base = getenv('BASE_URL') ?: '';
-?>
-
 html {
     scroll-behavior: smooth;
 }
