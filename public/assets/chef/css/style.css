@@ -54,6 +54,20 @@
   }
   .btn-logout:hover{ filter:brightness(.95); }
 
+
+  .emp-search {
+  margin-left: 16px;
+  }
+
+  .emp-search input[type="text"] {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    min-width: 180px;
+  }
+
+
   /* Layout main */
   .layout{
     max-width:1400px; margin:18px auto; padding:0 20px;

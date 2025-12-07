@@ -88,26 +88,94 @@ function ch_updateCreneau(
 
 
 
-function ch_getSalaries(PDO $pdo): array
+function ch_getSalaries(PDO $pdo, ?string $search = null): array
 {
-    $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
-            FROM salaries
-            ORDER BY nom_salarie, prenom_salarie";
-    $stmt = $pdo->query($sql);
+    if ($search) {
+        $search = trim($search);
+        $parts  = preg_split('/\s+/', $search);
+
+        if (count($parts) >= 2) {
+            
+            $p1 = '%' . $parts[0] . '%';
+            $p2 = '%' . $parts[1] . '%';
+
+            $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
+                    FROM salaries
+                    WHERE (prenom_salarie LIKE :p1 AND nom_salarie LIKE :p2)
+                       OR (prenom_salarie LIKE :p2 AND nom_salarie LIKE :p1)
+                    ORDER BY nom_salarie, prenom_salarie";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':p1' => $p1,
+                ':p2' => $p2,
+            ]);
+        } else {
+            
+            $like = '%' . $search . '%';
+            $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
+                    FROM salaries
+                    WHERE nom_salarie LIKE :q
+                       OR prenom_salarie LIKE :q
+                    ORDER BY nom_salarie, prenom_salarie";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':q' => $like]);
+        }
+
+    } else {
+        //si il n'ya pas de recherche on affiche tous les salaries
+        $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
+                FROM salaries
+                ORDER BY nom_salarie, prenom_salarie";
+        $stmt = $pdo->query($sql);
+    }
+
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 /**
  * Récupère la liste des clients.
  */
-function ch_getClients(PDO $pdo): array
+function ch_getClients(PDO $pdo, ?string $search = null): array
 {
-    $sql = "SELECT id_client, nom_client, prenom_client
-            FROM clients
-            ORDER BY nom_client, prenom_client";
-    $stmt = $pdo->query($sql);
+    if ($search) {
+        $search = trim($search);
+        $parts  = preg_split('/\s+/', $search);
+
+        if (count($parts) >= 2) {
+            // On essaie "prenom nom" dans les deux sens
+            $p1 = '%' . $parts[0] . '%';
+            $p2 = '%' . $parts[1] . '%';
+
+            $sql = "SELECT id_client, nom_client, prenom_client
+                    FROM clients
+                    WHERE (prenom_client LIKE :p1 AND nom_client LIKE :p2)
+                       OR (prenom_client LIKE :p2 AND nom_client LIKE :p1)
+                    ORDER BY nom_client, prenom_client";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':p1' => $p1, ':p2' => $p2]);
+        } else {
+            // Un seul mot : on cherche dans nom OU prénom
+            $like = '%' . $search . '%';
+            $sql = "SELECT id_client, nom_client, prenom_client
+                    FROM clients
+                    WHERE nom_client LIKE :q
+                       OR prenom_client LIKE :q
+                    ORDER BY nom_client, prenom_client";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':q' => $like]);
+        }
+    } else {
+        // Pas de recherche, tous les clients
+        $sql = "SELECT id_client, nom_client, prenom_client
+                FROM clients
+                ORDER BY nom_client, prenom_client";
+        $stmt = $pdo->query($sql);
+    }
+
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 /**
  * Retourne "Prénom Nom" du client ou null.

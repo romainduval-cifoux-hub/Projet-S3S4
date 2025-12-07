@@ -85,6 +85,19 @@
                         <button type="button" class="active">Vue Hebdo</button>
                         <button type="button">Vue Mensuelle</button>
                     </div>
+
+                    <!-- Formulaire de recherche d’employé -->
+                    <form method="get" class="emp-search">
+                        <!-- on force la page pour rester sur le planning -->
+                        <input type="hidden" name="page" value="chef/planning">
+                        <!-- on garde la semaine courante -->
+                        <input type="hidden" name="date" value="<?= htmlspecialchars($refDate ?? $joursAffiches[0]) ?>">
+
+                        <input type="text"
+                            name="emp"
+                            placeholder="Rechercher un employé..."
+                            value="<?= htmlspecialchars($searchEmp ?? '') ?>">
+                    </form>
                 </div>
                 <div class="board-body">
                     <!-- Header colonnes (jours) -->

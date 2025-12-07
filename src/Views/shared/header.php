@@ -12,6 +12,7 @@
                 <li><a href="<?= BASE_URL ?>/public/index.php#main-avis">Avis</a></li>
                 <li><a href="<?= BASE_URL ?>/public/index.php#main-realisation" >Réalisations</a></li>
                 <li><a href="<?= BASE_URL ?>/public/index.php#main-contact">Contact</a></li>
+                <li><a href="<?= BASE_URL ?>/public/index.php#">Contact</a></li>
             </ul>
         </nav>
 

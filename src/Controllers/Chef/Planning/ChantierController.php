@@ -62,8 +62,12 @@ class ChantierController
             exit("Manager non identifié dans la session.");
         }
 
-        $salaries = ch_getSalaries($this->pdo);
-        $clients  = ch_getClients($this->pdo);
+        // recherche employé pour limiter la liste
+        $searchEmp = trim($_GET['emp'] ?? '');
+        $salaries  = ch_getSalaries($this->pdo, $searchEmp);
+
+        $searchClient = trim($_GET['cli'] ?? '');
+        $clients  = ch_getClients($this->pdo, $searchClient);
 
         $errors = [];
 
