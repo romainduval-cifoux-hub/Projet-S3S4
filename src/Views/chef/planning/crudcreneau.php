@@ -55,13 +55,41 @@
                     </div>
                 <?php endif; ?>
 
+                <!--Formulaire de filtres-->
+
+                <form method="get" class="form-filter-emp">
+                    <input type="hidden" name="page" value="chantier/create">
+
+                    <div class="form-row">
+                        <label for="filter_emp">Rechercher un salarié</label>
+                        <input type="text"
+                            id="filter_emp"
+                            name="emp"
+                            placeholder="Ex : Marie Dupont"
+                            value="<?= htmlspecialchars($searchEmp ?? '') ?>">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="filter_client">Rechercher un client</label>
+                        <input type="text"
+                            id="filter_client"
+                            name="cli"
+                            placeholder="Ex : Alice Durand"
+                            value="<?= htmlspecialchars($searchClient ?? '') ?>">
+                    </div>
+
+                    <button type="submit" class="btn_login">Filtrer</button>
+                </form>
+
                 <form method="post" class="form-chantier">
                     <div class="form-row">
                         <label for="date_jour">Date du chantier</label>
                         <input type="date" id="date_jour" name="date_jour"
                                value="<?= htmlspecialchars($date_jour) ?>" required>
                     </div>
-
+                    
+                    
+                    
                     <div class="form-row">
                         <label for="id_salarie">Salarié affecté</label>
                         <select id="id_salarie" name="id_salarie" required>
@@ -81,6 +109,8 @@
                             <option value="pm" <?= $periode === 'pm' ? 'selected' : '' ?>>Après-midi (13h–17h)</option>
                         </select>
                     </div>
+                    
+                    
 
                     <div class="form-row">
                         <label for="id_client">Client (optionnel)</label>

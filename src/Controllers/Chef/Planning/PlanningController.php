@@ -56,8 +56,12 @@ class PlanningController {
         $year       = date('Y', strtotime($lundi));
         $monthLabel = ($moisFr[$monthNum] ?? date('F', strtotime($lundi))) . ' ' . $year;
 
+
+        $searchEmp = trim($_GET['emp'] ?? '');
+
+
         //Charger données BDD
-        $employes    = getSalaries($this->pdo);
+        $employes    = getSalaries($this->pdo, $searchEmp);
         $slotsMatrix = getWeekMatrix($this->pdo, $lundi);
 
         

@@ -1,15 +1,56 @@
 <?php
 
 /**
- * Retourne la liste des salariés (pour les lignes du planning)
+ * Retourne la liste des salariés pour tous les employés et selon la recherche (pour les lignes du planning)
  */
-function getSalaries(PDO $pdo): array {
-    $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
-            FROM salaries
-            ORDER BY nom_salarie, prenom_salarie";
-    $st = $pdo->query($sql);
-    return $st->fetchAll(PDO::FETCH_ASSOC);
+function getSalaries(PDO $pdo, ?string $search = null): array
+{
+    if ($search) {
+        $search = trim($search);
+        $parts  = preg_split('/\s+/', $search);
+
+        // Si il y a le prenom et le nom dans la recherche ou inversement
+
+        if (count($parts) >= 2) {
+            
+            $p1 = '%' . $parts[0] . '%';
+            $p2 = '%' . $parts[1] . '%';
+
+            $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
+                    FROM salaries
+                    WHERE (prenom_salarie LIKE :p1 AND nom_salarie LIKE :p2)
+                       OR (prenom_salarie LIKE :p2 AND nom_salarie LIKE :p1)
+                    ORDER BY nom_salarie, prenom_salarie";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':p1' => $p1,
+                ':p2' => $p2,
+            ]);
+
+        // Si il y a juste le prenom ou juste le nom dans la recherche
+        } else {
+            
+            $like = '%' . $search . '%';
+            $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
+                    FROM salaries
+                    WHERE nom_salarie LIKE :q
+                       OR prenom_salarie LIKE :q
+                    ORDER BY nom_salarie, prenom_salarie";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':q' => $like]);
+        }
+
+    } else {
+        //si il n'ya pas de recherche on affiche tous les salaries
+        $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
+                FROM salaries
+                ORDER BY nom_salarie, prenom_salarie";
+        $stmt = $pdo->query($sql);
+    }
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 /**
  * Retourne une matrice des créneaux sur une semaine :
