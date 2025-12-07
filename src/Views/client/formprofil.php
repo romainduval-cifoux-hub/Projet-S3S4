@@ -15,7 +15,7 @@
 <body>
     <?php require __DIR__ . '/../shared/header.php'; ?>
 
-    <main style="max-width:900px;margin:30px auto;padding:20px;background:#fff;border-radius:12px;">
+    <main>
         <h1>Mon profil client</h1>
 
         <?php if (!empty($errors ?? [])): ?>

@@ -36,7 +36,7 @@
         ?>
 
         <main class="main-content">
-            <section class="board" style="padding:20px;">
+            <section class="board">
                 <h1>Ajouter un employé</h1>
 
                 <?php if (!empty($errors)): ?>

@@ -40,7 +40,7 @@
         ?>
 
         <main class="main-content">
-            <section class="board" style="padding:25px;">
+            <section class="board">
                 
                 <h1>Liste des employés</h1>
 
