@@ -1,7 +1,8 @@
 <?php 
     $nav = $nav ?? ['Accueil', 'Avis', 'Nos réalisations', 'Contact']; 
     $bouton = $bouton ?? "Se connecter";
-    $redirection = $redirection ?? BASE_URL . "/public/index.php?page=login";
+
+    $redirection = $redirection ?? ($_SERVER['REQUEST_URI'] ?? BASE_URL . "/public/index.php");
 ?>
 <header>
     <div class='container'>
@@ -10,12 +11,14 @@
             <ul>
                 <li><a href="<?= BASE_URL ?>/public/index.php#main-accueil">Accueil</a></li>
                 <li><a href="<?= BASE_URL ?>/public/index.php#main-avis">Avis</a></li>
-                <li><a href="<?= BASE_URL ?>/public/index.php#main-realisation" >Réalisations</a></li>
+                <li><a href="<?= BASE_URL ?>/public/index.php#main-realisation">Réalisations</a></li>
                 <li><a href="<?= BASE_URL ?>/public/index.php#main-contact">Contact</a></li>
-                <li><a href="<?= BASE_URL ?>/public/index.php#">Contact</a></li>
             </ul>
         </nav>
 
-        <a href="<?= BASE_URL ?>/public/index.php?page=login" class="btn_login"><?php echo ($bouton) ?></a>
+        <a href="<?= BASE_URL ?>/public/index.php?page=login&redirect=<?= urlencode($redirection) ?>" 
+           class="btn_login">
+            <?= htmlspecialchars($bouton) ?>
+        </a>
     </div>
 </header>
