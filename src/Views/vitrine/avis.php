@@ -6,9 +6,9 @@ require_once __DIR__ . '/../../Database/avis.php';
 <div id="main-avis" class="avis_container">
     <h2>Vous pouvez nous faire <span class="highlight">CONFIANCE</span> </h2>
     <h3>EXCELLENT</h3>
-    <img id="note" 
-     src="<?= BASE_URL ?>/public/assets/vitrine/img/<?= $moyenne ?>stars-google.png" 
-     alt="note moyenne">
+    <img id="note"
+        src="<?= BASE_URL ?>/public/assets/vitrine/img/<?= $moyenne ?>stars-google.png"
+        alt="note moyenne">
     <p>Basé sur <strong><?= count($avis) ?> avis</strong></p>
     <img id="logo-google" src="<?= BASE_URL ?>/public/assets/vitrine/img/Google-logo.png" alt="logo-google">
 
@@ -21,7 +21,11 @@ require_once __DIR__ . '/../../Database/avis.php';
                     <div class="avis-slide">
                         <div class="avis-google">
                             <div class="avis-header">
-                                <img class="pp" src="<?= htmlspecialchars($a['photo']) ?>" alt="photo de profil">
+                                <img
+                                    class="pp"
+                                    src="..<?= htmlspecialchars($a['photo']) ?>"
+                                    onerror="this.src='<?= BASE_URL ?>/public/assets/clients/img/default.png';"
+                                    alt="photo de profil">
 
                                 <div class="avis-info">
                                     <p class="nom-client">
@@ -57,55 +61,55 @@ require_once __DIR__ . '/../../Database/avis.php';
 
         <button class="avis-arrow avis-arrow-right" type="button">›</button>
     </div>
-<div class="avis-leave-review">
-    <button type="button" id="btn-laisser-avis">Laisser un avis</button>
-</div>
-
-<!-- Popup (modal) -->
-<div id="avis-modal" class="avis-modal-overlay">
-    <div class="avis-modal">
-        <button type="button" class="avis-modal-close">&times;</button>
-        <h3>Laisser un avis</h3>
-        <form action="index.php?page=avis_add" method="post">
-            <div class="form-group">
-                <label for="note-avis">Note :</label>
-<select name="note" id="note-avis" required>
-                    <option value="">Choisir…</option>
-                    <option value="5">5 - Excellent</option>
-                    <option value="4">4 - Très bien</option>
-                    <option value="3">3 - Moyen</option>
-                    <option value="2">2 - Passable</option>
-                    <option value="1">1 - Mauvais</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="commentaire">Commentaire :</label>
-                <textarea name="commentaire" id="commentaire" rows="4" required></textarea>
-            </div>
-
-            <button type="button" id="submit-avis-btn">Envoyer mon avis</button>
-        </form>
+    <div class="avis-leave-review">
+        <button type="button" id="btn-laisser-avis">Laisser un avis</button>
     </div>
-</div>
-<!-- Popup (modal) de connexion requise -->
-<div id="login-modal" class="avis-modal-overlay">
-    <div class="avis-modal">
-        <button type="button" class="avis-modal-close">&times;</button>
-        <h3>Connexion requise</h3>
-        <p>Vous devez être connecté pour laisser un avis.</p>
-        <button type="button" id="btn-go-login">Se connecter</button>
+
+    <!-- Popup (modal) -->
+    <div id="avis-modal" class="avis-modal-overlay">
+        <div class="avis-modal">
+            <button type="button" class="avis-modal-close">&times;</button>
+            <h3>Laisser un avis</h3>
+            <form action="index.php?page=avis_add" method="post">
+                <div class="form-group">
+                    <label for="note-avis">Note :</label>
+                    <select name="note" id="note-avis" required>
+                        <option value="">Choisir…</option>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Très bien</option>
+                        <option value="3">3 - Moyen</option>
+                        <option value="2">2 - Passable</option>
+                        <option value="1">1 - Mauvais</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="commentaire">Commentaire :</label>
+                    <textarea name="commentaire" id="commentaire" rows="4" required></textarea>
+                </div>
+
+                <button type="button" id="submit-avis-btn">Envoyer mon avis</button>
+            </form>
+        </div>
     </div>
-</div>
+    <!-- Popup (modal) de connexion requise -->
+    <div id="login-modal" class="avis-modal-overlay">
+        <div class="avis-modal">
+            <button type="button" class="avis-modal-close">&times;</button>
+            <h3>Connexion requise</h3>
+            <p>Vous devez être connecté pour laisser un avis.</p>
+            <button type="button" id="btn-go-login">Se connecter</button>
+        </div>
+    </div>
 
 
 </div>
 <script>
     // ---- Infos de session passées depuis PHP ----
     window.IS_LOGGED_IN = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
-    window.IS_CLIENT    = <?= (isset($_SESSION['user_id']) && (isset($_SESSION['role']) && $_SESSION['role'] === 'client')) ? 'true' : 'false' ?>;
-    window.USER_ROLE    = '<?= $_SESSION['role'] ?? '' ?>';
-    window.LOGIN_URL    = "<?= BASE_URL ?>/public/index.php?page=login&redirect=home";
+    window.IS_CLIENT = <?= (isset($_SESSION['user_id']) && (isset($_SESSION['role']) && $_SESSION['role'] === 'client')) ? 'true' : 'false' ?>;
+    window.USER_ROLE = '<?= $_SESSION['role'] ?? '' ?>';
+    window.LOGIN_URL = "<?= BASE_URL ?>/public/index.php?page=login&redirect=home";
 </script>
 
 <script src="<?= BASE_URL ?>/public/assets/vitrine/js/avis-slider.js"></script>

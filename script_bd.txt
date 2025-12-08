@@ -24,7 +24,7 @@ CREATE TABLE salaries (
 
 CREATE TABLE clients (
   id_client INT AUTO_INCREMENT PRIMARY KEY,
-  photo VARCHAR(255) NOT NULL,
+  photo VARCHAR(255) NOT NULL DEFAULT '/public/assets/clients/img/default.png',
   nom_client VARCHAR(100) NOT NULL,
   prenom_client VARCHAR(100) NOT NULL,
   adresse_client VARCHAR(255),
@@ -258,7 +258,7 @@ INSERT INTO users (username, password, role) VALUES
 ('salarie30', 'HASHEDPWD123', 'salarie');
 
 
-INSERT INTO clients (id_client, nom_client, prenom_client, adresse_client, ville_client, code_postal_client, siret_client)
+INSERT INTO clients (id_client,photo, nom_client, prenom_client, adresse_client, ville_client, code_postal_client, siret_client)
 VALUES
 (1, '/public/assets/clients/img/photo1.png','Durand', 'Alice', '12 rue des Lilas', 'Lyon', '69001', 'FR000001'),
 (2,'/public/assets/clients/img/photo1.png', 'Martin', 'Bob', '8 avenue Victor Hugo', 'Paris', '75008', 'FR000002'),
