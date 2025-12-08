@@ -4,15 +4,18 @@ require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../Database/db.php';
 require_once __DIR__ . '/../../Database/userRepository.php';
 
-class RegisterController {
+class RegisterController
+{
 
     private PDO $pdo;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
     }
 
-    public function handleRequest(): void {
+    public function handleRequest(): void
+    {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -30,6 +33,7 @@ class RegisterController {
             } else {
                 $userCreated = CreerUtilisateur($this->pdo, $username, $password, $role);
                 if ($userCreated) {
+                    $_SESSION['success'] = "Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.";
                     header('Location: ' . BASE_URL . '/public/index.php?page=login');
                     exit;
                 } else {

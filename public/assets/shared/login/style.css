@@ -1,11 +1,6 @@
 body.page-login{
     background-color: var(--bg);
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-    flex-direction: column;
 }
 
 .input {
@@ -54,5 +49,17 @@ a {
 .form-container {
     display: flex;
     flex-direction: column; 
-    gap: 15px;              
+    align-items: center;
+    gap: 15px;
+    margin: 60px auto 0;   
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #c3e6cb;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
 }
