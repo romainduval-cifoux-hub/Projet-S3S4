@@ -6,12 +6,12 @@
     <title><?= htmlspecialchars($pageTitle ?? 'Mon planning') ?></title>
 
     <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
-    <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
-    <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/employe/shared/header_employe/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/employe/css/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
+    <script src="<?= BASE_URL ?>/public/assets/employe/shared/header_employe/script.js" defer></script>
 </head>
 <body>
 
