@@ -258,9 +258,72 @@
     color:#777;
   }
 
+
+
+
+
+.creneau-modal {
+  position: fixed;
+  inset: 0;
+  display: none;                
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+
+.creneau-modal.open {
+  display: flex;
+}
+
+
+.creneau-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+
+.creneau-modal__dialog {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  min-width: 320px;
+  max-width: 480px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  z-index: 1; 
+}
+
+
+.creneau-modal__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.creneau-modal__title {
+  margin: 0 0 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.creneau-modal__body p {
+  margin: 6px 0;
+}
+
+
+
   /* Responsive */
   @media (max-width: 1100px) {
     .board-body {
       max-height:none;
     }
   }
+
+
+
