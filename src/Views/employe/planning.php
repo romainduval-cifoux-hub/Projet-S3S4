@@ -13,6 +13,8 @@
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
 </head>
+
+
 <body>
 
     
@@ -96,13 +98,25 @@
                                     <?php foreach ($daySlots as $slot): 
                                         $hDeb = substr($slot['heure_debut'], 0, 5);
                                         $hFin = substr($slot['heure_fin'], 0, 5);
-                                        $label = htmlspecialchars($slot['label'] ?? $slot['commentaire'] ?? 'Intervention');
+
+                                        if (!empty($slot['label'])) {
+                                            $label = $slot['label'];
+                                        } elseif (!empty($slot['commentaire'])) {
+                                            $label = $slot['commentaire'];
+                                        } else {
+                                            $label = 'Intervention';
+                                        }
                                     ?>
-                                        <div class="slot">
+                                        <div class="slot js-slot-open"
+                                            data-heures="<?= htmlspecialchars($hDeb . '–' . $hFin) ?>"
+                                            data-label="<?= htmlspecialchars($label) ?>"
+                                            data-info="<?= htmlspecialchars($slot['commentaire'] ?? '') ?>"
+                                        >
                                             <strong><?= htmlspecialchars($hDeb . '–' . $hFin) ?></strong>
-                                            <small><?= $label ?></small>
+                                            <small><?= htmlspecialchars($label) ?></small>
                                         </div>
                                     <?php endforeach; ?>
+
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -112,8 +126,15 @@
             </section>
         </main>
     </div>
+    <script src="<?= BASE_URL ?>/public/assets/chef/shared/js/creneau-modal.js"></script>
 
-    <?php require __DIR__ . '/../shared/footer.php'; ?>
+    
+    <?php
+
+    require __DIR__ . '/../chef/shared/popup_creneau.php'; 
+    require __DIR__ . '/../shared/footer.php'; 
+
+     ?>
 </section>
 </body>
 </html>
