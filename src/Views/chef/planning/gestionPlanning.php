@@ -148,16 +148,21 @@
                                             $hDeb = substr($slot['heure_debut'], 0, 5);
                                             $hFin = substr($slot['heure_fin'], 0, 5);
 
-                                            // Construire le label du créneau
-                                            if (!empty($slot['nom_poste'])) {
-                                                $label = $slot['nom_poste'];
+                                            if (!empty($slot['label'])) {
+                                                $label = $slot['label'];
                                             } elseif (!empty($slot['commentaire'])) {
                                                 $label = $slot['commentaire'];
                                             } else {
                                                 $label = 'Intervention';
                                             }
                                         ?>
-                                            <div class="slot">
+
+
+                                            <div class="slot js-slot-open"
+                                                data-heures="<?= htmlspecialchars($hDeb . '–' . $hFin) ?>"
+                                                data-label="<?= htmlspecialchars($label) ?>"
+                                                data-info="<?= htmlspecialchars($slot['commentaire'] ?? '') ?>"
+                                            >
                                                 <div class="slot-main">
                                                     <strong><?= htmlspecialchars($hDeb . '–' . $hFin) ?></strong>
                                                     <small><?= htmlspecialchars($label) ?></small>
@@ -192,8 +197,11 @@
             </section>
         </main>
     </div>
-
-    <?php require_once(__DIR__ . '/../../shared/footer.php'); ?>
+    <script src="<?= BASE_URL ?>/public/assets/chef/shared/js/creneau-modal.js"></script>                                        
+    <?php 
+    require_once __DIR__ . '/../shared/popup_creneau.php'; 
+    require_once __DIR__ . '/../../shared/footer.php'; 
+    ?>
 </div>
 </body>
 </html>
