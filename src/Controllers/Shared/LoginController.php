@@ -5,16 +5,19 @@ require_once __DIR__ . '/../../Database/db.php';
 require_once __DIR__ . '/../../Database/userRepository.php';
 require_once __DIR__ . '/../../Database/clientRepository.php';
 
-class LoginController {
+class LoginController
+{
 
     private PDO $pdo;
 
-    public function __construct() {
-    $this->pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
-}
+    public function __construct()
+    {
+        $this->pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
+    }
 
 
-    public function handleRequest(): void {
+    public function handleRequest(): void
+    {
 
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -36,10 +39,14 @@ class LoginController {
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['user_id'] = $user['id'];
 
-                
+
                 if (!empty($_GET['redirect'])) {
-                    $redirect = urlencode($_GET['redirect']);
-                    header('Location: ' . BASE_URL . '/public/index.php?page=' . $redirect);
+                    $redirect = $_GET['redirect'];
+                    if (preg_match('#^https?://#', $redirect)) {
+                        $redirect = BASE_URL . '/public/index.php';
+                    }
+
+                    header('Location: ' . $redirect);
                     exit;
                 }
 
@@ -58,10 +65,10 @@ class LoginController {
                             header('Location: ' . BASE_URL . '/public/index.php?page=home');
                         }
                         break;
-                        
 
-                    case 'salarie': 
-                        
+
+                    case 'salarie':
+
                         header('Location: ' . BASE_URL . '/public/index.php?page=employe/planning');
                         break;
 
@@ -71,9 +78,7 @@ class LoginController {
                 }
 
                 exit;
-            }
-
-            else {
+            } else {
                 $erreur = 'Identifiant ou mot de passe incorrect';
             }
         }

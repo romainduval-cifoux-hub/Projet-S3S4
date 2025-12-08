@@ -36,3 +36,10 @@ function searchUser(PDO $conn, string $recherche): array {
     $st->execute([$like, $like]);
     return $st->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function usernameExists(PDO $pdo, string $username): bool {
+    $stmt = $pdo->prepare("SELECT 1 FROM users WHERE username = :username LIMIT 1");
+    $stmt->execute(['username' => $username]);
+
+    return (bool) $stmt->fetchColumn();
+}

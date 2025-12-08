@@ -63,3 +63,42 @@ a {
     margin-bottom: 15px;
     font-size: 0.95rem;
 }
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #f5c2c7;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.back-arrow {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+
+    display: flex;
+    align-items: center;     
+    gap: 10px;               
+
+    text-decoration: none;
+    color: #367048;
+    font-weight: bold;
+}
+
+.back-arrow .arrow {
+    font-size: 3rem;  
+    line-height: 1;     
+}
+
+.back-arrow .text {
+    font-size: 2rem;
+}
+
+
+.back-arrow:hover {
+    transform: translateX(-3px);
+}

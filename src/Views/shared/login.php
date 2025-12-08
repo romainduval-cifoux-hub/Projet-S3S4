@@ -4,6 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 $successMessage = $_SESSION['success'] ?? '';
 unset($_SESSION['success']);
+
 ?>
 
 
@@ -16,6 +17,10 @@ unset($_SESSION['success']);
     <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
 </head>
 <body class="page-login">
+<a href="#" class="back-arrow" onclick="window.history.back(); return false;">
+    <span class="arrow">←</span>
+    <span class="text">Retour</span>
+</a>
     <div class="form-container">
         <img id="logo_login" src="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardin.png" alt="Logo Team Jardin">
 
