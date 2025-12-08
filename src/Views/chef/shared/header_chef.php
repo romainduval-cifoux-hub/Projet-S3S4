@@ -1,5 +1,5 @@
 <header>
-    <div class='header-container'>
+    <div class='container'>
         <img id="logo_header" 
              src="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardinTexte.png" 
              alt="logo_Team_Jardin">
