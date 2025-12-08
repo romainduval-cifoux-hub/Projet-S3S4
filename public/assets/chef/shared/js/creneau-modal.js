@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const label  = slot.dataset.label  || '';
       const info   = slot.dataset.info   || '';
 
-      modalTitle.textContent = label || 'Détail du créneau';
+      modalTitle.textContent = 'Détail du créneau';
       modalBody.innerHTML = `
         <p><strong>Heures :</strong> ${heures}</p>
         <p><strong>Détail :</strong> ${info || label}</p>

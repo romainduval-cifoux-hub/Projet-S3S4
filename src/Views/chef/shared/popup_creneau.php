@@ -1,4 +1,3 @@
-<!-- Popup détail créneau -->
 <div id="creneauModal" class="creneau-modal">
   <div class="creneau-modal__backdrop"></div>
 
@@ -10,7 +9,7 @@
     </h2>
 
     <div id="creneauModalBody" class="creneau-modal__body">
-      <!-- Le JS injectera le contenu ici -->
+      
     </div>
   </div>
 </div>

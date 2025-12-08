@@ -261,29 +261,29 @@
 
 
 
-/* Modal créneau – caché par défaut */
+
 .creneau-modal {
   position: fixed;
-  inset: 0; /* top:0; right:0; bottom:0; left:0 */
-  display: none;                /* <- important */
+  inset: 0;
+  display: none;                
   align-items: center;
   justify-content: center;
   z-index: 999;
 }
 
-/* Quand on ajoute la classe .open en JS → visible */
+
 .creneau-modal.open {
   display: flex;
 }
 
-/* Fond semi-transparent */
+
 .creneau-modal__backdrop {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
 }
 
-/* Contenu de la popup */
+
 .creneau-modal__dialog {
   position: relative;
   background: #fff;
@@ -292,10 +292,10 @@
   min-width: 320px;
   max-width: 480px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  z-index: 1; /* au-dessus du backdrop */
+  z-index: 1; 
 }
 
-/* Bouton X */
+
 .creneau-modal__close {
   position: absolute;
   top: 8px;
