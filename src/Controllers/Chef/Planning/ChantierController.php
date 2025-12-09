@@ -73,84 +73,211 @@ class ChantierController
 
         // Valeurs par défaut du formulaire
         if ($mode === 'edit' && $creneau) {
-            $date_jour  = $creneau['date_jour'];
-            $id_salarie = (int)$creneau['id_salarie'];
+            $date_jour   = $creneau['date_jour'];
+            $date_debut  = $date_jour;
+            $date_fin    = $date_jour;
+            $id_salarie  = (int)$creneau['id_salarie'];
             $commentaire = $creneau['commentaire'] ?? '';
-            // déduire la période à partir des heures
+
             if ($creneau['heure_debut'] === '08:00:00' && $creneau['heure_fin'] === '12:00:00') {
                 $periode = 'am';
             } elseif ($creneau['heure_debut'] === '13:00:00' && $creneau['heure_fin'] === '17:00:00') {
                 $periode = 'pm';
             } else {
-                $periode = 'am'; // fallback
+                $periode = 'am';
             }
         } else {
-            $date_jour   = date('Y-m-d');
+            // MODE CRÉATION
+            $date_debut  = date('Y-m-d');
+            $date_fin    = $date_debut;
+            $date_jour   = $date_debut;
             $id_salarie  = 0;
             $commentaire = '';
             $periode     = 'am';
         }
 
         $id_client = null; // pour l’instant on ne le stocke pas en BDD, on ne peut pas le pré-remplir
-
+    
+        // Traitement du formulaire
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $date_jour   = $_POST['date_jour'] ?? '';
+            
+            if ($mode === 'edit') {
+                // édition : un seul jour
+                $date_jour   = $_POST['date_jour'] ?? '';
+                $date_debut  = $date_jour;
+                $date_fin    = $date_jour;
+            } else {
+                // création : période
+                $date_debut  = $_POST['date_debut'] ?? '';
+                $date_fin    = $_POST['date_fin'] ?? '';
+                if (!$date_fin) {
+                    $date_fin = $date_debut; // si vide un seul jour
+                }
+                // pour la redirection après succès
+                $date_jour = $date_debut;
+            }
+
+
             $periode     = $_POST['periode'] ?? 'am';
             $id_salarie  = (int)($_POST['id_salarie'] ?? 0);
             $id_client   = !empty($_POST['id_client']) ? (int)$_POST['id_client'] : null;
             $commentaire = trim($_POST['commentaire'] ?? '');
 
             // Validations communes
-            if (!$date_jour) {
-                $errors[] = "La date est obligatoire.";
+            if (!$date_debut) {
+                $errors[] = "La date de début est obligatoire.";
+            }
+            if ($date_fin && $date_fin < $date_debut) {
+                $errors[] = "La date de fin doit être postérieure ou égale à la date de début.";
             }
             if ($id_salarie <= 0) {
                 $errors[] = "Veuillez sélectionner un salarié.";
             }
-            if (!in_array($periode, ['am','pm'], true)) {
+            if (!in_array($periode, ['am','pm','full'], true)) {
                 $errors[] = "Période invalide.";
             }
+            if ($mode === 'edit' && $periode === 'full') {
+                $errors[] = "En modification, choisissez Matin ou Après-midi (la journée entière n'est disponible qu'à la création).";
+            }
 
-            // Vérifier la limite de 2 demi-journées + doublon sur la même période
+            $joursSelectionnes = [];
             if (empty($errors)) {
-                $existing = ch_getCreneauxJour($this->pdo, $id_salarie, $date_jour);
+                $tsDebut = strtotime($date_debut);
+                $tsFin   = strtotime($date_fin);
 
-                // En mode édition, on exclut le créneau lui-même de la liste pour le contrôle
-                if ($mode === 'edit' && $creneau) {
-                    $existing = array_filter($existing, function($slot) use ($creneau) {
-                        return $slot['id_creneau'] != $creneau['id_creneau'];
-                    });
-                }
-
-                if (count($existing) >= 2) {
-                    $errors[] = "Ce salarié est déjà planifié sur la journée complète (2 demi-journées).";
+                if ($tsDebut === false || $tsFin === false) {
+                    $errors[] = "Dates invalides.";
+                } elseif ($tsFin < $tsDebut) {
+                    $errors[] = "La date de fin doit être postérieure ou égale à la date de début.";
                 } else {
-                    $hDeb = ($periode === 'am') ? '08:00:00' : '13:00:00';
-                    $hFin = ($periode === 'am') ? '12:00:00' : '17:00:00';
+                    for ($ts = $tsDebut; $ts <= $tsFin; $ts += 86400) {
+                        // N = 1 (lundi) à 7 (dimanche)
+                        $dayOfWeek = (int)date('N', $ts);
 
-                    foreach ($existing as $slot) {
-                        if ($slot['heure_debut'] === $hDeb && $slot['heure_fin'] === $hFin) {
-                            $errors[] = "Ce salarié a déjà un créneau sur cette demi-journée.";
-                            break;
+                        // On garde seulement lundi (1) à vendredi (5)
+                        if ($dayOfWeek <= 5) {
+                            $joursSelectionnes[] = date('Y-m-d', $ts);
                         }
                     }
                 }
             }
 
-            // Si tout est OK → création ou update
+            if (empty($joursSelectionnes)) {
+                $errors[] = "La période sélectionnée ne contient aucun jour ouvré (lundi à vendredi).";
+            }
+
+            // Vérifier limites pour chaque jour
+            if (empty($errors)) {
+                foreach ($joursSelectionnes as $jour) {
+                    $existing = ch_getCreneauxJour($this->pdo, $id_salarie, $jour);
+
+                    // En mode édition, on exclut le créneau lui-même de la liste
+                    if ($mode === 'edit' && $creneau && $jour === $creneau['date_jour']) {
+                        $existing = array_filter($existing, function($slot) use ($creneau) {
+                            return (int)$slot['id_creneau'] !== (int)$creneau['id_creneau'];
+                        });
+                    }
+
+                    // Si on demande une journée entière
+                    if ($periode === 'full') {
+                        // 1) déjà 2 demi-journées ce jour-là : impossible
+                        if (count($existing) >= 2) {
+                            $errors[] = "Le $jour : ce salarié est déjà planifié sur la journée complète (2 demi-journées).";
+                            break;
+                        }
+
+                        // 2) une des deux demi-journées déjà prise : impossible
+                        $matinPris = false;
+                        $apremPris = false;
+
+                        foreach ($existing as $slot) {
+                            if ($slot['heure_debut'] === '08:00:00' && $slot['heure_fin'] === '12:00:00') {
+                                $matinPris = true;
+                            }
+                            if ($slot['heure_debut'] === '13:00:00' && $slot['heure_fin'] === '17:00:00') {
+                                $apremPris = true;
+                            }
+                        }
+
+                        if ($matinPris || $apremPris) {
+                            $errors[] = "Le $jour : ce salarié a déjà une demi-journée planifiée, impossible de réserver la journée entière.";
+                            break;
+                        }
+                    }
+                    // Sinon : logique normale am/pm
+                    else {
+                        $hDeb = ($periode === 'am') ? '08:00:00' : '13:00:00';
+                        $hFin = ($periode === 'am') ? '12:00:00' : '17:00:00';
+
+                        if (count($existing) >= 2) {
+                            $errors[] = "Le $jour : ce salarié est déjà planifié sur la journée complète (2 demi-journées).";
+                            break;
+                        }
+
+                        foreach ($existing as $slot) {
+                            if ($slot['heure_debut'] === $hDeb && $slot['heure_fin'] === $hFin) {
+                                $errors[] = "Le $jour : ce salarié a déjà un créneau sur cette demi-journée.";
+                                break 2;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Si tout est OK, création ou update
             if (empty($errors)) {
                 if ($mode === 'create') {
-                    $ok = ch_createCreneauAvecPlanning(
-                        $this->pdo,
-                        $managerId,
-                        $id_salarie,
-                        $date_jour,
-                        $periode,
-                        $id_client,
-                        $commentaire
-                    );
+                    $okGlobal = true;
+
+                    foreach ($joursSelectionnes as $jour) {
+
+                        if ($periode === 'full') {
+                            // Matin
+                            $ok1 = ch_createCreneauAvecPlanning(
+                                $this->pdo,
+                                $managerId,
+                                $id_salarie,
+                                $jour,
+                                'am',
+                                $id_client,
+                                $commentaire
+                            );
+                            // Après-midi
+                            $ok2 = ch_createCreneauAvecPlanning(
+                                $this->pdo,
+                                $managerId,
+                                $id_salarie,
+                                $jour,
+                                'pm',
+                                $id_client,
+                                $commentaire
+                            );
+
+                            if (!$ok1 || !$ok2) {
+                                $okGlobal = false;
+                                break;
+                            }
+                        } else {
+                            // cas simple : matin OU après-midi
+                            $ok = ch_createCreneauAvecPlanning(
+                                $this->pdo,
+                                $managerId,
+                                $id_salarie,
+                                $jour,
+                                $periode,
+                                $id_client,
+                                $commentaire
+                            );
+
+                            if (!$ok) {
+                                $okGlobal = false;
+                                break;
+                            }
+                        }
+                    }
                 } else {
-                    $ok = ch_updateCreneau(
+                    // édition : un seul jour, et on ne gère pas "full" ici
+                    $okGlobal = ch_updateCreneau(
                         $this->pdo,
                         (int)$creneau['id_creneau'],
                         $id_salarie,
@@ -161,8 +288,8 @@ class ChantierController
                     );
                 }
 
-                if ($ok) {
-                    header('Location: ' . BASE_URL . '/public/index.php?page=chef/planning&date=' . $date_jour);
+                if ($okGlobal) {
+                    header('Location: ' . BASE_URL . '/public/index.php?page=chef/planning&date=' . $date_debut);
                     exit;
                 } else {
                     $errors[] = "Erreur lors de l'enregistrement du créneau.";
