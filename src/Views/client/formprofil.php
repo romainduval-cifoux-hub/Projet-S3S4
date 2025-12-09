@@ -14,6 +14,8 @@
 
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
+
+    <link href="<?= BASE_URL ?>/public/assets/shared/burger-accueil/css/style.css" rel="stylesheet">
 </head>
 <body>
     <?php 
@@ -21,11 +23,13 @@
     $nav         = ['Accueil', 'Avis', 'Nos réalisations', 'Contact', 'Profil'];
     $bouton      = 'Déconnexion';
     $redirection = BASE_URL . '/public/index.php?page=logout';
+
+    
     
     require __DIR__ . '/../shared/header.php'; 
-    
+    require __DIR__ . '/../shared/burger-accueil.php';
     ?>
-
+    
     <main>
         <h1>Mon profil client</h1>
 
