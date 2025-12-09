@@ -16,7 +16,15 @@
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
 </head>
 <body>
-    <?php require __DIR__ . '/../shared/header.php'; ?>
+    <?php 
+
+    $nav         = ['Accueil', 'Avis', 'Nos réalisations', 'Contact', 'Profil'];
+    $bouton      = 'Déconnexion';
+    $redirection = BASE_URL . '/public/index.php?page=logout';
+    
+    require __DIR__ . '/../shared/header.php'; 
+    
+    ?>
 
     <main>
         <h1>Mon profil client</h1>
