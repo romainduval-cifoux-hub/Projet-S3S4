@@ -136,7 +136,7 @@
                             <select id="periode" name="periode" required>
                                 <option value="am" <?= $periode === 'am' ? 'selected' : '' ?>>Matin (8h–12h)</option>
                                 <option value="pm" <?= $periode === 'pm' ? 'selected' : '' ?>>Après-midi (13h–17h)</option>
-                                
+                                <option value="full" <?= $periode === 'full' ? 'selected' : '' ?>>Journée entière (8h–12h + 13h–17h)</option>
                             </select>
                         </div>
                         
