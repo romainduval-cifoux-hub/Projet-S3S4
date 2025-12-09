@@ -28,12 +28,20 @@ $pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
 
     <link href="<?= BASE_URL ?>/public/assets/vitrine/css/contact/style.css" rel="stylesheet">
 
+    <link href="<?= BASE_URL ?>/public/assets/shared/burger-accueil/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
 
     <?php
+    require_once __DIR__ . '/shared/burger-accueil.php'; 
+
+    
     require_once __DIR__ . '/shared/header.php';
+
+    
+
     require_once __DIR__ . '/vitrine/accueil.php';
     require_once __DIR__ . '/vitrine/avis.php';
     require_once __DIR__ . '/vitrine/realisation.php';
