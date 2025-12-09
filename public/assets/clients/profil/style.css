@@ -4,18 +4,18 @@
     --bge: #FBFFE9;          /* beige clair */
 }
 
-/* ===== CONTENEUR PRINCIPAL ===== */
+
 main {
     max-width: 700px;
     margin: 120px auto 70px;
     padding: 30px 35px;
-    background: var(--bge); /* même ambiance que les sections vitrine */
+    background: var(--bge); 
     border-radius: 20px;
     box-shadow: 0 8px 18px rgba(0,0,0,0.10);
-    font-family: Arial, sans-serif;
+    
 }
 
-/* Titre */
+
 main h1 {
     color: var(--vert-fonce);
     font-size: 2.2rem;
@@ -23,27 +23,27 @@ main h1 {
     margin: 0 0 25px 0;
 }
 
-/* ===== FORMULAIRE ===== */
+
 form {
     display: flex;
     flex-direction: column;
     gap: 18px;
 }
 
-/* Ligne de formulaire */
+
 .form-row {
     display: flex;
     flex-direction: column;
 }
 
-/* Label */
+
 .form-row label {
     font-weight: bold;
     margin-bottom: 6px;
     color: #333;
 }
 
-/* Champ texte */
+
 .form-row input {
     padding: 10px 12px;
     font-size: 1rem;
@@ -53,7 +53,7 @@ form {
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
-/* Focus */
+
 .form-row input:focus {
     outline: none;
     border-color: var(--vert-fonce);
@@ -63,7 +63,7 @@ form {
 
 
 
-/* ===== ALERTES ERREUR ===== */
+
 .alert {
     padding: 14px 16px;
     border-radius: 12px;
@@ -85,7 +85,7 @@ form {
     font-size: 0.95rem;
 }
 
-/* ===== RESPONSIVE ===== */
+
 @media (max-width: 768px) {
     main {
         margin: 100px 15px 50px;

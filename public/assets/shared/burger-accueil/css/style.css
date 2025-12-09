@@ -25,13 +25,16 @@
     line-height: 1;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     white-space: nowrap;
-}
+  }
 
 .quick-menu-btn:hover {
   filter: brightness(1.05);
 }
 
 /* Fond sombre */
+
+
+
 .quick-menu-backdrop {
   position: fixed;
   inset: 0;
