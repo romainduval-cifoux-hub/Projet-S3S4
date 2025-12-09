@@ -3,26 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title><?= htmlspecialchars($pageTitle ?? 'Nouveau chantier') ?></title>
-
     <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
-
     <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
-
     <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
-
-    <link href="<?= BASE_URL ?>/public/assets/chef/css/planning.css" rel="stylesheet"> 
+    <link href="<?= BASE_URL ?>/public/assets/chef/planning/crudcreneau/style.css" rel="stylesheet"> 
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
-
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
 </head>
 <body>
 <div class="page">
-    <?php
-        
-        require_once(__DIR__ . '/../shared/header_chef.php');
-    ?>
+    <?php require_once(__DIR__ . '/../shared/header_chef.php'); ?>
 
     <div class="app">
         <?php
@@ -42,7 +34,7 @@
         ?>
 
         <main class="main-content">
-            <section class="board" style="padding:20px;">
+            <section class="board">
                 <h1>Nouveau chantier (créneau demi-journée)</h1>
 
                 <?php if (!empty($errors)): ?>
@@ -78,7 +70,7 @@
                             value="<?= htmlspecialchars($searchClient ?? '') ?>">
                     </div>
 
-                    <button type="submit" class="btn_login">Filtrer</button>
+                    <button type="submit" class="btn_filtrer">Filtrer</button>
                 </form>
 
                 <form method="post" class="form-chantier">
@@ -130,7 +122,7 @@
                                   placeholder="Détails du chantier, lieu précis, matériel à prévoir..."><?= htmlspecialchars($commentaire ?? '') ?></textarea>
                     </div>
 
-                    <button type="submit" class="btn_login">Créer le créneau</button>
+                    <button type="submit" class="btn_creer_creneau">Créer le créneau</button>
                 </form>
             </section>
         </main>

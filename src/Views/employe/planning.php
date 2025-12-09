@@ -6,12 +6,12 @@
     <title><?= htmlspecialchars($pageTitle ?? 'Mon planning') ?></title>
 
     <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
-    <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
-    <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/employe/shared/header_employe/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/employe/css/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
+    <script src="<?= BASE_URL ?>/public/assets/employe/shared/header_employe/script.js" defer></script>
 </head>
 
 
@@ -24,7 +24,7 @@
         $nav = ['Espace Personnel', 'Messagerie','Mon planning'];
         $bouton = 'Déconnexion';
         $redirection = BASE_URL . '/public/index.php?page=logout';
-        require __DIR__ . '/../shared/header.php';
+        require __DIR__ . '/shared/header_employe.php';
     ?>
 
     <div class="app">

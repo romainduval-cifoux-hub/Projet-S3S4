@@ -8,7 +8,7 @@
     <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
-    <link href="<?= BASE_URL ?>/public/assets/chef/css/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/chef/planning/crudemploye/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
 </head>
@@ -95,7 +95,7 @@
                         <input type="date" name="date_embauche" id="date_embauche">
                     </div>
 
-                    <button type="submit" class="btn_login">Créer l'employé</button>
+                    <button type="submit" class="btn_creer_emp">Créer l'employé</button>
                 </form>
             </section>
         </main>
