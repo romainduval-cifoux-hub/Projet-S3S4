@@ -150,10 +150,20 @@ class ChantierController
                 } elseif ($tsFin < $tsDebut) {
                     $errors[] = "La date de fin doit être postérieure ou égale à la date de début.";
                 } else {
-                    for ($t = $tsDebut; $t <= $tsFin; $t = strtotime('+1 day', $t)) {
-                        $joursSelectionnes[] = date('Y-m-d', $t);
+                    for ($ts = $tsDebut; $ts <= $tsFin; $ts += 86400) {
+                        // N = 1 (lundi) à 7 (dimanche)
+                        $dayOfWeek = (int)date('N', $ts);
+
+                        // On garde seulement lundi (1) à vendredi (5)
+                        if ($dayOfWeek <= 5) {
+                            $joursSelectionnes[] = date('Y-m-d', $ts);
+                        }
                     }
                 }
+            }
+
+            if (empty($joursSelectionnes)) {
+                $errors[] = "La période sélectionnée ne contient aucun jour ouvré (lundi à vendredi).";
             }
 
             // Vérifier limites pour chaque jour
