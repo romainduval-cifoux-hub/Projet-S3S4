@@ -50,7 +50,7 @@
                             <?php foreach ($realisations as $r): ?>
                                 <tr>
                                     <td>
-                                        <img src="<?= BASE_URL.'/'.$r['photo'] ?>" alt="Photo" width="80">
+                                        <img src="<?= BASE_URL.$r['photo'] ?>" alt="Photo" width="80">
                                     </td>
                                     <td><?= htmlspecialchars($r['commentaire']) ?></td>
                                     <td><?= htmlspecialchars($r['categorie_nom']) ?></td>
