@@ -21,6 +21,9 @@ require_once __DIR__ . '/Controllers/Chef/Facturation/FacturationController.php'
 require_once __DIR__ . '/Controllers/Chef/Facturation/FormEditBusinessInfoController.php';
 require_once __DIR__ . '/Controllers/Chef/Facturation/GestionnaireFacturationController.php';
     //Realisation
+require_once __DIR__ . '/Controllers/Chef/Realisation/AdminRealisationController.php';
+    //Categories
+require_once __DIR__ . '/Controllers/Chef/Realisation/AdminCategoryController.php';
 
 //Employe
 require_once __DIR__ . '/Controllers/Employe/PlanningEmployeController.php';
@@ -76,6 +79,50 @@ switch ($page) {
         break;
 
     //Chef
+    
+        // Réalisations admin
+    case 'chef/realisations':
+        $controller = new AdminRealisationController();
+        $controller->index();
+        break;
+
+    case 'chef/realisations/create':
+        $controller = new AdminRealisationController();
+        $controller->create();
+        break;
+
+    case 'chef/realisations/edit':
+        $controller = new AdminRealisationController();
+        $controller->edit();
+        break;
+
+    case 'chef/realisations/delete':
+        $controller = new AdminRealisationController();
+        $controller->delete();
+        break;
+
+        // Catégories admin
+    case 'chef/categories':
+        $controller = new AdminCategoryController();
+        $controller->index();
+        break;
+
+    case 'chef/categories/create':
+        $controller = new AdminCategoryController();
+        $controller->create();
+        break;
+
+    case 'chef/categories/edit':
+        $controller = new AdminCategoryController();
+        $controller->edit();
+        break;
+
+    case 'chef/categories/delete':
+        $controller = new AdminCategoryController();
+        $controller->delete();
+        break;
+
+
         //Planning
     case 'chef/planning':
         

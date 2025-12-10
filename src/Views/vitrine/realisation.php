@@ -5,7 +5,7 @@
             <?php foreach ($realisationFavorite as $r): ?>
                 <div class="realisation-item">
                     <div class="realisation-image">
-                        <img src="..<?= htmlspecialchars($r['photo']) ?>" alt="Image de la réalisation">
+                        <img src="<?= BASE_URL . '/' . htmlspecialchars($r['photo']) ?>" alt="Image de la réalisation">
                         <p class="realisation-commentaire">
                             <?= htmlspecialchars($r['commentaire']) ?>
                         </p>
