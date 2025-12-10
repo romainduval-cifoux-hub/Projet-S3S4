@@ -175,7 +175,7 @@ CREATE TABLE entreprise (
     description TEXT,
     telephone VARCHAR(20),
     adresse VARCHAR(255),
-    siret VARCHAR(14)
+    siret VARCHAR(14) PRIMARY KEY
 );
 
 
@@ -293,7 +293,7 @@ VALUES
 (30,'/public/assets/clients/img/photo1.png', 'Masson', 'Julie', '10 rue du Rhône', 'Lyon', '69003', 'FR000030');
 
 
-INSERT INTO salaries (id_salarie, nom_salarie, prenom_salarie, adresse_salarie, ville_salarie, code_postal_salarie, salaire, date_embauche)
+INSERT INTO salaries (id_salarie, photo,nom_salarie, prenom_salarie, adresse_salarie, ville_salarie, code_postal_salarie, salaire, date_embauche)
 VALUES
 (31,'/public/assets/clients/img/photo1.png', 'Dupont', 'Marie', '1 rue des Lilas', 'Lyon', '69001', 2800.00, '2018-03-15'),
 (32,'/public/assets/clients/img/photo1.png', 'Durand', 'Pierre', '2 rue des Roses', 'Paris', '75012', 3100.00, '2019-06-10'),
