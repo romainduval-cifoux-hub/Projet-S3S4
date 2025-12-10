@@ -1,0 +1,58 @@
+main {
+    background-color: var(--bge);
+    margin-inline: 2%;
+    padding: 3%;
+    border: 2px solid black;
+    border-radius: 16px;
+}
+
+.board h1 {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 30px;
+    margin: 1em 20%;
+    padding-block: 0.8em;
+}
+
+.table-categories {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: var(--bg);
+    border: 2px solid black;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table-categories thead {
+    background: var(--vert-fonce);
+    color: white;
+}
+
+.table-categories th,
+.table-categories td {
+    padding: 1rem;
+    border-bottom: 1px solid black;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.table-categories tbody tr:nth-child(even) {
+    background: #f0f0f0; /* léger contraste */
+}
+
+.table-categories tbody tr:hover {
+    background: var(--bge);
+}
+
+.table-categories a {
+    color: var(--vert-fonce);
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.table-categories a:hover {
+    color: var(--btn-hover);
+    text-decoration: underline;
+}
