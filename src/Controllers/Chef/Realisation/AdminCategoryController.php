@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../../Database/CategoryRepository.php';
-require_once __DIR__ . '/../../../Database/db.php';
+require_once __DIR__ . '/../../../../Database/CategoryRepository.php';
+require_once __DIR__ . '/../../../../Database/db.php';
 
 class AdminCategoryController {
     public PDO $pdo;
