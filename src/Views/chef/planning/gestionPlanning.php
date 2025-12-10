@@ -55,6 +55,7 @@
             ];
             $menu2 = [
               ['label'=>'Ajouter employé', 'href'=> BASE_URL.'/public/index.php?page=employe/create'],
+              ['label'=>'Demandes de congé', 'href'=> BASE_URL.'/public/index.php?page=chef/conges'],
             ];
             require_once(__DIR__ . '/../../shared/aside.php');
         ?>

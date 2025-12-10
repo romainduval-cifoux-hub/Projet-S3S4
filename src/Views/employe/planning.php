@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title><?= htmlspecialchars($pageTitle ?? 'Mon planning') ?></title>
-
+    <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/employe/shared/header_employe/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/employe/css/style.css" rel="stylesheet">
