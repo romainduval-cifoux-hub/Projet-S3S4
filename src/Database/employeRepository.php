@@ -71,7 +71,7 @@ function emp_createSalarie(
  */
 function emp_getAllSalaries(PDO $pdo): array
 {
-    $sql = "SELECT s.id_salarie, s.nom_salarie, s.prenom_salarie, u.username
+    $sql = "SELECT s.id_salarie, s.photo, s.nom_salarie, s.prenom_salarie, u.username
             FROM salaries s
             JOIN users u ON s.id_salarie = u.id
             ORDER BY s.nom_salarie, s.prenom_salarie";
