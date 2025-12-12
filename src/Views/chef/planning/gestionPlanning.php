@@ -67,9 +67,9 @@
 
                     <!-- Formulaire de recherche d’employé -->
                     <form method="get" class="emp-search">
-                        <!-- on force la page pour rester sur le planning -->
+                        <!-- forcage de la page pour rester sur le planning -->
                         <input type="hidden" name="page" value="chef/planning">
-                        <!-- on garde la semaine courante -->
+                        <!-- semaine courante -->
                         <input type="hidden" name="date" value="<?= htmlspecialchars($refDate ?? $joursAffiches[0]) ?>">
 
                         <input type="text"
@@ -176,7 +176,6 @@
                                         <?php endforeach; ?>
                                     </div>
                                 <?php endforeach; ?>
-
                             </div>
                         <?php endforeach; ?>
                     </div>
