@@ -187,7 +187,9 @@ VALUES (
     'Entretien d''espaces verts',
     '0667788990',
     '12 rue des Fleurs, La doua',
-    '12345678901234'
+    '12345678901234',
+    'FR7630006000011234567890187',
+    'CMCIFRPP'
 );
 
 
