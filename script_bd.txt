@@ -26,10 +26,10 @@ CREATE TABLE clients (
   id_client INT AUTO_INCREMENT PRIMARY KEY,
   nom_client VARCHAR(100) NOT NULL,
   prenom_client VARCHAR(100) NOT NULL,
+  telephone_client VARCHAR(20),
   adresse_client VARCHAR(255),
   ville_client VARCHAR(100),
   code_postal_client VARCHAR(15),
-  telephone_client VARCHAR(20),
   siret_client VARCHAR(20),
   user_id INT NULL,
   UNIQUE(user_id), 
@@ -175,17 +175,20 @@ CREATE TABLE entreprise (
     description TEXT,
     telephone VARCHAR(20),
     adresse VARCHAR(255),
-    siret VARCHAR(14)
+    siret VARCHAR(14) PRIMARY KEY,
+    iban VARCHAR(50),
+    bic VARCHAR(50)
 );
 
-
-INSERT INTO entreprise (nom, description, telephone, adresse, siret)
+INSERT INTO entreprise (nom, description, telephone, adresse, siret, iban, bic)
 VALUES (
     'Team Jardin',
     'Entretien d''espaces verts',
     '0667788990',
     '12 rue des Fleurs, La doua',
-    '12345678901234'
+    '12345678901234',
+    'FR7630006000011234567890187',
+    'CMCIFRPP'
 );
 
 
@@ -259,38 +262,48 @@ INSERT INTO users (username, password, role) VALUES
 ('salarie30', 'HASHEDPWD123', 'salarie');
 
 
-INSERT INTO clients (id_client, nom_client, prenom_client, adresse_client, ville_client, code_postal_client, telephone_client, siret_client)
+INSERT INTO clients (
+    id_client,
+    photo,
+    nom_client,
+    prenom_client,
+    telephone_client,
+    adresse_client,
+    ville_client,
+    code_postal_client,
+    siret_client
+)
 VALUES
-(1, 'Durand', 'Alice', '12 rue des Lilas', 'Lyon', '69001', '0601000001', 'FR000001'),
-(2, 'Martin', 'Bob', '8 avenue Victor Hugo', 'Paris', '75008', '0601000002', 'FR000002'),
-(3, 'Lefevre', 'Claire', '14 rue Pasteur', 'Marseille', '13001', '0601000003', 'FR000003'),
-(4, 'Moreau', 'David', '6 rue du Parc', 'Nice', '06000', '0601000004', 'FR000004'),
-(5, 'Garcia', 'Emma', '18 rue de la Gare', 'Bordeaux', '33000', '0601000005', 'FR000005'),
-(6, 'Bernard', 'Lucas', '25 avenue Foch', 'Lille', '59000', '0601000006', 'FR000006'),
-(7, 'Petit', 'Nora', '3 place Bellecour', 'Lyon', '69002', '0601000007', 'FR000007'),
-(8, 'Robert', 'Hugo', '4 rue Nationale', 'Tours', '37000', '0601000008', 'FR000008'),
-(9, 'Richard', 'Zoé', '22 avenue République', 'Dijon', '21000', '0601000009', 'FR000009'),
-(10, 'Dubois', 'Léo', '10 chemin du Lac', 'Annecy', '74000', '0601000010', 'FR000010'),
-(11, 'Laurent', 'Sarah', '5 rue des Fleurs', 'Grenoble', '38000', '0601000011', 'FR000011'),
-(12, 'Simon', 'Paul', '45 avenue de la Liberté', 'Toulouse', '31000', '0601000012', 'FR000012'),
-(13, 'Michel', 'Eva', '7 rue Voltaire', 'Nantes', '44000', '0601000013', 'FR000013'),
-(14, 'Thomas', 'Olivier', '9 rue Carnot', 'Clermont-Ferrand', '63000', '0601000014', 'FR000014'),
-(15, 'Garnier', 'Inès', '11 avenue du Stade', 'Reims', '51100', '0601000015', 'FR000015'),
-(16, 'Faure', 'Louis', '2 rue des Peupliers', 'Caen', '14000', '0601000016', 'FR000016'),
-(17, 'Roux', 'Chloé', '17 rue du Moulin', 'Le Havre', '76600', '0601000017', 'FR000017'),
-(18, 'Fontaine', 'Maxime', '15 rue Lafayette', 'Rouen', '76000', '0601000018', 'FR000018'),
-(19, 'Chevalier', 'Lina', '28 rue des Écoles', 'Nancy', '54000', '0601000019', 'FR000019'),
-(20, 'Lambert', 'Noah', '30 rue République', 'Metz', '57000', '0601000020', 'FR000020'),
-(21, 'Bonnet', 'Jules', '13 rue St-Jean', 'Poitiers', '86000', '0601000021', 'FR000021'),
-(22, 'Francois', 'Ana', '8 rue St-Michel', 'Angers', '49000', '0601000022', 'FR000022'),
-(23, 'Renaud', 'Eliott', '4 rue des Alpes', 'Grenoble', '38000', '0601000023', 'FR000023'),
-(24, 'Morin', 'Camille', '6 rue de Paris', 'Chartres', '28000', '0601000024', 'FR000024'),
-(25, 'Renard', 'Tom', '19 rue de Lyon', 'Strasbourg', '67000', '0601000025', 'FR000025'),
-(26, 'Marchand', 'Léa', '7 rue de la Paix', 'Besançon', '25000', '0601000026', 'FR000026'),
-(27, 'Blanc', 'Nathan', '16 rue du Marché', 'Perpignan', '66000', '0601000027', 'FR000027'),
-(28, 'Guillaume', 'Emma', '2 rue du Pont', 'Avignon', '84000', '0601000028', 'FR000028'),
-(29, 'Henry', 'Victor', '8 rue Victor Hugo', 'Paris', '75009', '0601000029', 'FR000029'),
-(30, 'Masson', 'Julie', '10 rue du Rhône', 'Lyon', '69003', '0601000030', 'FR000030');
+(1,'/public/assets/clients/img/photo1.png','Durand','Alice','0612345601','12 rue des Lilas','Lyon','69001','FR000001'),
+(2,'/public/assets/clients/img/photo1.png','Martin','Bob','0612345602','8 avenue Victor Hugo','Paris','75008','FR000002'),
+(3,'/public/assets/clients/img/photo1.png','Lefevre','Claire','0612345603','14 rue Pasteur','Marseille','13001','FR000003'),
+(4,'/public/assets/clients/img/photo1.png','Moreau','David','0612345604','6 rue du Parc','Nice','06000','FR000004'),
+(5,'/public/assets/clients/img/photo1.png','Garcia','Emma','0612345605','18 rue de la Gare','Bordeaux','33000','FR000005'),
+(6,'/public/assets/clients/img/photo1.png','Bernard','Lucas','0612345606','25 avenue Foch','Lille','59000','FR000006'),
+(7,'/public/assets/clients/img/photo1.png','Petit','Nora','0612345607','3 place Bellecour','Lyon','69002','FR000007'),
+(8,'/public/assets/clients/img/photo1.png','Robert','Hugo','0612345608','4 rue Nationale','Tours','37000','FR000008'),
+(9,'/public/assets/clients/img/photo1.png','Richard','Zoé','0612345609','22 avenue République','Dijon','21000','FR000009'),
+(10,'/public/assets/clients/img/photo1.png','Dubois','Léo','0612345610','10 chemin du Lac','Annecy','74000','FR000010'),
+(11,'/public/assets/clients/img/photo1.png','Laurent','Sarah','0612345611','5 rue des Fleurs','Grenoble','38000','FR000011'),
+(12,'/public/assets/clients/img/photo1.png','Simon','Paul','0612345612','45 avenue de la Liberté','Toulouse','31000','FR000012'),
+(13,'/public/assets/clients/img/photo1.png','Michel','Eva','0612345613','7 rue Voltaire','Nantes','44000','FR000013'),
+(14,'/public/assets/clients/img/photo1.png','Thomas','Olivier','0612345614','9 rue Carnot','Clermont-Ferrand','63000','FR000014'),
+(15,'/public/assets/clients/img/photo1.png','Garnier','Inès','0612345615','11 avenue du Stade','Reims','51100','FR000015'),
+(16,'/public/assets/clients/img/photo1.png','Faure','Louis','0612345616','2 rue des Peupliers','Caen','14000','FR000016'),
+(17,'/public/assets/clients/img/photo1.png','Roux','Chloé','0612345617','17 rue du Moulin','Le Havre','76600','FR000017'),
+(18,'/public/assets/clients/img/photo1.png','Fontaine','Maxime','0612345618','15 rue Lafayette','Rouen','76000','FR000018'),
+(19,'/public/assets/clients/img/photo1.png','Chevalier','Lina','0612345619','28 rue des Écoles','Nancy','54000','FR000019'),
+(20,'/public/assets/clients/img/photo1.png','Lambert','Noah','0612345620','30 rue République','Metz','57000','FR000020'),
+(21,'/public/assets/clients/img/photo1.png','Bonnet','Jules','0612345621','13 rue St-Jean','Poitiers','86000','FR000021'),
+(22,'/public/assets/clients/img/photo1.png','Francois','Ana','0612345622','8 rue St-Michel','Angers','49000','FR000022'),
+(23,'/public/assets/clients/img/photo1.png','Renaud','Eliott','0612345623','4 rue des Alpes','Grenoble','38000','FR000023'),
+(24,'/public/assets/clients/img/photo1.png','Morin','Camille','0612345624','6 rue de Paris','Chartres','28000','FR000024'),
+(25,'/public/assets/clients/img/photo1.png','Renard','Tom','0612345625','19 rue de Lyon','Strasbourg','67000','FR000025'),
+(26,'/public/assets/clients/img/photo1.png','Marchand','Léa','0612345626','7 rue de la Paix','Besançon','25000','FR000026'),
+(27,'/public/assets/clients/img/photo1.png','Blanc','Nathan','0612345627','16 rue du Marché','Perpignan','66000','FR000027'),
+(28,'/public/assets/clients/img/photo1.png','Guillaume','Emma','0612345628','2 rue du Pont','Avignon','84000','FR000028'),
+(29,'/public/assets/clients/img/photo1.png','Henry','Victor','0612345629','8 rue Victor Hugo','Paris','75009','FR000029'),
+(30,'/public/assets/clients/img/photo1.png','Masson','Julie','0612345630','10 rue du Rhône','Lyon','69003','FR000030');
 
 
 INSERT INTO salaries (id_salarie, nom_salarie, prenom_salarie, adresse_salarie, ville_salarie, code_postal_salarie, salaire, date_embauche)
