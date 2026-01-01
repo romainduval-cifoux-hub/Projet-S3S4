@@ -181,7 +181,7 @@ CREATE TABLE entreprise (
 );
 
 
-INSERT INTO entreprise (nom, description, telephone, adresse, siret)
+INSERT INTO entreprise (nom, description, telephone, adresse, siret, iban, bic)
 VALUES (
     'Team Jardin',
     'Entretien d''espaces verts',
