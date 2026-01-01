@@ -49,7 +49,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
     <h2>Facture n°<?= $facture['num'] ?></h2>
     <hr>
     <p><strong>Client :</strong> <?= $facture['nomClient'] ?></p>
-    <p><strong>Date :</strong> <?= date('d/m/Y', strtotime($facture['dateDoc'])) ?></p>
+    <p><strong>Date :</strong> <?= date('d/m/Y', strtotime($facture['datePaiement'])) ?></p>
     <p><strong>Status :</strong> <?= $facture['statusDoc'] ?></p>
 
     <h3>Détails :</h3>
