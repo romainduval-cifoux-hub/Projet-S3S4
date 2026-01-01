@@ -175,7 +175,9 @@ CREATE TABLE entreprise (
     description TEXT,
     telephone VARCHAR(20),
     adresse VARCHAR(255),
-    siret VARCHAR(14) PRIMARY KEY
+    siret VARCHAR(14) PRIMARY KEY,
+    iban VARCHAR(50),
+    bic VARCHAR(50)
 );
 
 
