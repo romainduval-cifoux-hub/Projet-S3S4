@@ -1,12 +1,12 @@
 <?php  
 
 function getEntrepriseInfo(PDO $pdo) {
-    $sql = "SELECT nom, description, telephone, adresse, siret FROM entreprise LIMIT 1";
+    $sql = "SELECT nom, description, telephone, adresse, siret, iban, bic FROM entreprise LIMIT 1";
     $stmt = $pdo->query($sql);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$row) {
-        return []; 
+        return [];
     }
 
     return [
@@ -14,18 +14,21 @@ function getEntrepriseInfo(PDO $pdo) {
         'description' => $row['description'],
         'telephone'   => $row['telephone'],
         'adresse'     => $row['adresse'],
-        'siret'       => $row['siret']
+        'siret'       => $row['siret'],
+        'iban'        => $row['iban'],
+        'bic'         => $row['bic']
     ];
 }
 
 function updateEntreprise(PDO $pdo, array $data) {
-
     $sql = "UPDATE entreprise SET 
                 nom = :nom,
                 description = :description,
                 telephone = :telephone,
                 adresse = :adresse,
-                siret = :siret
+                siret = :siret,
+                iban = :iban,
+                bic = :bic
             LIMIT 1";
 
     $stmt = $pdo->prepare($sql);
@@ -35,9 +38,12 @@ function updateEntreprise(PDO $pdo, array $data) {
         ':description' => $data['description'] ?? '',
         ':telephone'   => $data['telephone'] ?? '',
         ':adresse'     => $data['adresse'] ?? '',
-        ':siret'       => $data['siret'] ?? ''
+        ':siret'       => $data['siret'] ?? '',
+        ':iban'        => $data['iban'] ?? '',
+        ':bic'         => $data['bic'] ?? ''
     ]);
 }
+
 
 
 function getAllFactures(PDO $pdo) {

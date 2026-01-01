@@ -21,47 +21,66 @@ class CreationDocumentController {
         $clients = loadClients($this->pdo);
         $clientData = null;
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $action = $_POST['action'] ?? '';
+// ... dans handleRequest()
 
-            if ($action === 'selectClient' && !empty($_POST['client'])) {
-                $idCli = intval($_POST['client']);
-                $clientData = getClientById($this->pdo, $idCli);
-            }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? '';
 
-            if ($action === 'createFacture') {
-                // Créer un tableau "row" pour initialiser l'objet Facture
-                $factureData = [
-                    'idDoc'           => null, // sera généré par la base
-                    'num'             => $numFacture,
-                    'nomClient'       => $_POST['nomClient'] ?? '',
-                    'telClient'       => $_POST['telClient'] ?? '',
-                    'addrClient'      => $_POST['addrClient'] ?? '',
-                    'villeClient'     => $_POST['villeClient'] ?? '',
-                    'codePostalClient'=> $_POST['codePostalClient'] ?? '',
-                    'siretClient'     => $_POST['siretClient'] ?? '',
-                    'dateDoc'         => $_POST['dateDoc'] ?? date('Y-m-d H:i:s'),
-                    'typeDoc'         => $_POST['typeDoc'] ?? 'Facture',
-                    'statusDoc'       => 'En attente',
-                    'reglementDoc'    => $_POST['reglementDoc'] ?? '',
-                    'datePaiement'    => null,
-                    'nbRelance'       => 0,
-                ];
+    if ($action === 'selectClient' && !empty($_POST['client'])) {
+        $idCli = (int) $_POST['client'];
+        $clientData = getClientById($this->pdo, $idCli);
+    }
 
-                $facture = new Facture($factureData);
+    if ($action === 'createFacture') {
 
-                // Récupérer les lignes
-                $lignesPost = $_POST['lignes'] ?? [];
-                foreach ($lignesPost as $ligneRow) {
-                    $facture->lignes[] = new LigneFacture($ligneRow);
-                }
-
-                // Enregistrer la facture en base
-                createFacture($this->pdo, $facture);
-                header('Location: ' . BASE_URL . '/public/index.php?page=chef/facturation/dashboard');
-
-            }
+        // 1) Récupérer l'id client envoyé en hidden
+        $idCli = isset($_POST['idCli']) ? (int) $_POST['idCli'] : 0;
+        if ($idCli <= 0) {
+            die("Erreur : aucun client sélectionné (idCli manquant).");
         }
+
+        // 2) Recharger le client depuis la BD (source de vérité)
+        $clientData = getClientById($this->pdo, $idCli);
+        if (!$clientData) {
+            die("Erreur : client introuvable en base (idCli=$idCli).");
+        }
+
+        // 3) Construire la facture en utilisant les champs de la BD, pas le POST
+        $factureData = [
+            'idDoc'            => null,
+            'num'              => $numFacture,
+
+            // Champs client depuis la BD
+            'nomClient'        => $clientData['nom_client'] ?? '',
+            'telClient'        => $clientData['telephone_client'] ?? '',
+            'addrClient'       => $clientData['adresse_client'] ?? '',
+            'villeClient'      => $clientData['ville_client'] ?? '',
+            'codePostalClient' => $clientData['code_postal_client'] ?? '',
+            'siretClient'      => $clientData['siret_client'] ?? '',
+
+            // Champs facture depuis le POST
+            'dateDoc'          => $_POST['dateDoc'] ?? date('Y-m-d'),
+            'typeDoc'          => $_POST['typeDoc'] ?? 'Facture',
+            'statusDoc'        => 'En attente',
+            'reglementDoc'     => $_POST['reglementDoc'] ?? '',
+            'datePaiement'     => null,
+            'nbRelance'        => 0,
+        ];
+
+        $facture = new Facture($factureData);
+
+        // 4) Lignes
+        $lignesPost = $_POST['lignes'] ?? [];
+        foreach ($lignesPost as $ligneRow) {
+            $facture->lignes[] = new LigneFacture($ligneRow);
+        }
+
+        // 5) Enregistrer + redirect
+        createFacture($this->pdo, $facture);
+        header('Location: ' . BASE_URL . '/public/index.php?page=chef/facturation/dashboard');
+        exit;
+    }
+}
 
         // Inclure la vue après le traitement POST
         require_once __DIR__ . '/../../../Views/chef/facturation/createDocument.php';

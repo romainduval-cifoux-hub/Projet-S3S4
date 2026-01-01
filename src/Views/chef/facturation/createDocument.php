@@ -39,6 +39,14 @@ require_once(__DIR__ . '/../../../Database/db.php');
     <form method="POST" action="">
         <fieldset>
             <legend>Sélectionner un client</legend>
+
+            <label>Type de document :</label>
+            <select name="typeDoc">
+                <option value="Facture">Facture</option>
+                <option value="Devis">Devis</option>
+            </select>
+
+
             <label>Client :</label>
             <select name="client" required>
                 <option value="">-- choisir un client --</option>
@@ -58,26 +66,17 @@ require_once(__DIR__ . '/../../../Database/db.php');
     <!-- ================= FORMULAIRE 2 : Création de la facture ================= -->
     <form method="POST" action="">
         <fieldset>
+            
             <legend>Informations client</legend>
+
             <input type="hidden" name="idCli" value="<?= $clientData['id_client'] ?? '' ?>">
+            <p><strong>Nom client :</strong> <?= htmlspecialchars($clientData['nom_client'] ?? '') ?></p>
+            <p><strong>Téléphone :</strong> <?= htmlspecialchars($clientData['telephone_client'] ?? '') ?></p>
+            <p><strong>Adresse :</strong> <?= htmlspecialchars($clientData['adresse_client'] ?? '') ?></p>
+            <p><strong>Ville :</strong> <?= htmlspecialchars($clientData['ville_client'] ?? '') ?></p>
+            <p><strong>Code postal :</strong> <?= htmlspecialchars($clientData['code_postal_client'] ?? '') ?></p>
+            <p><strong>SIRET :</strong> <?= htmlspecialchars($clientData['siret_client'] ?? '') ?></p>
 
-            <label>Nom client :</label>
-            <input type="text" name="nomClient" value="<?= $clientData['nom_client'] ?? '' ?>" required>
-
-            <label>Téléphone :</label>
-            <input type="text" name="telClient" value="<?= $clientData['telephone_client'] ?? '' ?>">
-
-            <label>Adresse :</label>
-            <input type="text" name="addrClient" value="<?= $clientData['adresse_client'] ?? '' ?>">
-
-            <label>Ville :</label>
-            <input type="text" name="villeClient" value="<?= $clientData['ville_client'] ?? '' ?>">
-
-            <label>Code postal :</label>
-            <input type="text" name="codePostalClient" value="<?= $clientData['code_postal_client'] ?? '' ?>">
-
-            <label>SIRET :</label>
-            <input type="text" name="siretClient" value="<?= $clientData['siret_client'] ?? '' ?>">
         </fieldset>
 
         <hr>
@@ -113,14 +112,8 @@ require_once(__DIR__ . '/../../../Database/db.php');
 
         <fieldset>
             <legend>Informations Facture</legend>
-            <label>Date du document :</label>
-            <input type="datetime-local" name="dateDoc" value="<?= date('Y-m-d\TH:i') ?>">
-
-            <label>Type de document :</label>
-            <select name="typeDoc">
-                <option value="Facture">Facture</option>
-                <option value="Devis">Devis</option>
-            </select>
+            <label>Date d'échéance :</label>
+            <input type="date" name="dateDoc" value="<?= date('dd-mm-YYYY') ?>">
 
             <label>Mode de règlement :</label>
             <select name="reglementDoc">

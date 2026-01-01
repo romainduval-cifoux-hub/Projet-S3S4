@@ -45,7 +45,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
         <h2>Modifier les informations de l'entreprise</h2>
         <div class="container">
             <div class="gauche">
-                <label>Nom de l'entreprise</label><br>
+                <label>Raison sociale</label><br>
                 <input type="text" name="nom" value="<?php echo htmlspecialchars($dataBusiness['nom']); ?>" required>
                 <br><br>
 
@@ -65,7 +65,19 @@ require_once(__DIR__ . '/../../../Database/db.php');
                 <label>SIRET</label><br>
                 <input type="text" name="siret" value="<?php echo htmlspecialchars($dataBusiness['siret']); ?>">
                 <br><br>
+
+            <label>IBAN</label><br>
+            <input type="text" name="iban" value="<?php echo htmlspecialchars($dataBusiness['iban']); ?>">
+            <br><br>
+
+
+            <label>BIC</label><br>
+            <input type="text" name="bic" value="<?php echo htmlspecialchars($dataBusiness['bic']); ?>">
+            <br><br>
             </div>
+
+            
+=
         </div>
         <button type="submit">Enregistrer</button>
 
