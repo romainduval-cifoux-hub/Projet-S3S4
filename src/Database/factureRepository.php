@@ -221,6 +221,23 @@ function marquerFacturePayee(PDO $pdo, int $idDoc): bool {
     return $stmt->execute(['idDoc' => $idDoc]);
 }
 
+function marquerDevisAccepte(PDO $pdo, int $idDoc): void {
+    $stmt = $pdo->prepare("
+        UPDATE Document
+        SET statusDoc = 'Accepté'
+        WHERE idDoc = :idDoc AND typeDoc = 'Devis'
+    ");
+    $stmt->execute(['idDoc' => $idDoc]);
+}
+
+function marquerDevisRefuse(PDO $pdo, int $idDoc): void {
+    $stmt = $pdo->prepare("
+        UPDATE Document
+        SET statusDoc = 'Refusé'
+        WHERE idDoc = :idDoc AND typeDoc = 'Devis'
+    ");
+    $stmt->execute(['idDoc' => $idDoc]);
+}
 
 
 ?>
