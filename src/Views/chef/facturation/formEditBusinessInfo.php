@@ -76,8 +76,6 @@ require_once(__DIR__ . '/../../../Database/db.php');
             <br><br>
             </div>
 
-            
-=
         </div>
         <button type="submit">Enregistrer</button>
 

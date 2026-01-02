@@ -69,6 +69,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
             
             <legend>Informations client</legend>
 
+            <input type="hidden" name="typeDoc" value="<?= htmlspecialchars($_POST['typeDoc'] ?? 'Facture') ?>">
             <input type="hidden" name="idCli" value="<?= $clientData['id_client'] ?? '' ?>">
             <p><strong>Nom client :</strong> <?= htmlspecialchars($clientData['nom_client'] ?? '') ?></p>
             <p><strong>Téléphone :</strong> <?= htmlspecialchars($clientData['telephone_client'] ?? '') ?></p>
@@ -113,7 +114,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
         <fieldset>
             <legend>Informations Facture</legend>
             <label>Date d'échéance :</label>
-            <input type="date" name="dateDoc" value="<?= date('dd-mm-YYYY') ?>">
+            <input type="date" name="datePaiement">
 
             <label>Mode de règlement :</label>
             <select name="reglementDoc">

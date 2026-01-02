@@ -21,8 +21,6 @@ class CreationDocumentController {
         $clients = loadClients($this->pdo);
         $clientData = null;
 
-// ... dans handleRequest()
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
@@ -38,6 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($idCli <= 0) {
             die("Erreur : aucun client sélectionné (idCli manquant).");
         }
+
+        if (empty($_POST['datePaiement'])) {
+            die("Erreur : la date de règlement est obligatoire.");
+        }
+        $datePaiement = $_POST['datePaiement'];
+
+
 
         // 2) Recharger le client depuis la BD (source de vérité)
         $clientData = getClientById($this->pdo, $idCli);
@@ -59,12 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'siretClient'      => $clientData['siret_client'] ?? '',
 
             // Champs facture depuis le POST
-            'dateDoc'          => $_POST['dateDoc'] ?? date('Y-m-d'),
+            'dateDoc'          => date('Y-m-d H:i:s'),
             'typeDoc'          => $_POST['typeDoc'] ?? 'Facture',
             'statusDoc'        => 'En attente',
             'reglementDoc'     => $_POST['reglementDoc'] ?? '',
-            'datePaiement'     => null,
+            'datePaiement'     => $datePaiement,
             'nbRelance'        => 0,
+            'idCli'            => $idCli,
+
         ];
 
         $facture = new Facture($factureData);
