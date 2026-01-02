@@ -1,8 +1,19 @@
 <?php
+require_once(__DIR__ . '/../../../config.php');
+require_once(__DIR__ . '/../../../Database/db.php');
 
-require_once(__DIR__ . '/../../../config.php'); 
-require_once(__DIR__ . '/../../../Database/db.php');     
+$typeDoc = $_POST['typeDoc'] ?? 'Facture';
+$idClientChoisi = $_POST['client'] ?? ($clientData['id_client'] ?? '');
 
+$lignesPost = $_POST['lignes'] ?? [];
+if (!is_array($lignesPost) || count($lignesPost) === 0) {
+    $lignesPost = [
+        ['designation' => '', 'description' => '', 'unite' => '', 'quantite' => 1, 'prixUnitaire' => 0]
+    ];
+}
+
+$datePaiement = $_POST['datePaiement'] ?? '';
+$reglementDoc = $_POST['reglementDoc'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +22,6 @@ require_once(__DIR__ . '/../../../Database/db.php');
     <meta charset="utf-8">
     <title>Team jardin (Chef d'entreprise)</title>
 
-    <!-- CSS -->
     <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
@@ -31,59 +41,57 @@ require_once(__DIR__ . '/../../../Database/db.php');
 
 <main>
 
-    <h1> Numéro de facture : <?= $numFacture ?></h1>
+    <h1> Numéro de <?= htmlspecialchars($typeDoc) ?> : <?= htmlspecialchars($numFacture) ?></h1>
+    <h2>Créer un nouveau document</h2>
 
-    <h2>Créer une nouvelle facture</h2>
-
-    <!-- ================= FORMULAIRE 1 : Sélection du client ================= -->
     <form method="POST" action="">
         <fieldset>
-            <legend>Sélectionner un client</legend>
+            <legend>Sélection</legend>
 
             <label>Type de document :</label>
             <select name="typeDoc">
-                <option value="Facture">Facture</option>
-                <option value="Devis">Devis</option>
+                <option value="Facture" <?= $typeDoc === 'Facture' ? 'selected' : '' ?>>Facture</option>
+                <option value="Devis"   <?= $typeDoc === 'Devis'   ? 'selected' : '' ?>>Devis</option>
             </select>
-
 
             <label>Client :</label>
             <select name="client" required>
                 <option value="">-- choisir un client --</option>
                 <?php foreach ($clients as $cli): ?>
-                    <option value="<?= $cli['id_client'] ?>"
-                        <?= isset($clientData['id_client']) && $clientData['id_client'] == $cli['id_client'] ? 'selected' : '' ?>>
+                    <option value="<?= (int)$cli['id_client'] ?>"
+                        <?= ((string)$idClientChoisi === (string)$cli['id_client']) ? 'selected' : '' ?>>
                         <?= htmlspecialchars($cli['nom_client']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
-            <button type="submit" name="action" value="selectClient">Choisir</button>
+
+            <!-- Bouton qui recharge les infos client SANS perdre le reste -->
+            <button type="submit" name="action" value="selectClient" formnovalidate>
+                Charger le client
+            </button>
         </fieldset>
-    </form>
 
-    <hr>
+        <hr>
 
-    <!-- ================= FORMULAIRE 2 : Création de la facture ================= -->
-    <form method="POST" action="">
         <fieldset>
-            
             <legend>Informations client</legend>
 
-            <input type="hidden" name="typeDoc" value="<?= htmlspecialchars($_POST['typeDoc'] ?? 'Facture') ?>">
-            <input type="hidden" name="idCli" value="<?= $clientData['id_client'] ?? '' ?>">
+            <!-- idCli utilisé par ton controller -->
+            <input type="hidden" name="idCli" value="<?= htmlspecialchars((string)($clientData['id_client'] ?? $idClientChoisi)) ?>">
+
             <p><strong>Nom client :</strong> <?= htmlspecialchars($clientData['nom_client'] ?? '') ?></p>
             <p><strong>Téléphone :</strong> <?= htmlspecialchars($clientData['telephone_client'] ?? '') ?></p>
             <p><strong>Adresse :</strong> <?= htmlspecialchars($clientData['adresse_client'] ?? '') ?></p>
             <p><strong>Ville :</strong> <?= htmlspecialchars($clientData['ville_client'] ?? '') ?></p>
             <p><strong>Code postal :</strong> <?= htmlspecialchars($clientData['code_postal_client'] ?? '') ?></p>
             <p><strong>SIRET :</strong> <?= htmlspecialchars($clientData['siret_client'] ?? '') ?></p>
-
         </fieldset>
 
         <hr>
 
         <fieldset>
-            <legend>Lignes de la facture</legend>
+            <legend>Lignes du document</legend>
+
             <table id="tableLignes" border="1" cellpadding="5" style="width:100%; margin-bottom:15px;">
                 <thead>
                     <tr>
@@ -95,45 +103,63 @@ require_once(__DIR__ . '/../../../Database/db.php');
                         <th></th>
                     </tr>
                 </thead>
+
                 <tbody>
+                <?php foreach ($lignesPost as $i => $ligne): ?>
                     <tr>
-                        <td><input type="text" name="lignes[0][designation]" required></td>
-                        <td><input type="text" name="lignes[0][description]"></td>
-                        <td><input type="text" name="lignes[0][unite]"></td>
-                        <td><input type="number" name="lignes[0][quantite]" min="1" value="1"></td>
-                        <td><input type="number" name="lignes[0][prixUnitaire]" step="0.01" value="0"></td>
+                        <td><input type="text" name="lignes[<?= (int)$i ?>][designation]"
+                                   value="<?= htmlspecialchars($ligne['designation'] ?? '') ?>" required></td>
+
+                        <td><input type="text" name="lignes[<?= (int)$i ?>][description]"
+                                   value="<?= htmlspecialchars($ligne['description'] ?? '') ?>"></td>
+
+                        <td><input type="text" name="lignes[<?= (int)$i ?>][unite]"
+                                   value="<?= htmlspecialchars($ligne['unite'] ?? '') ?>"></td>
+
+                        <td><input type="number" name="lignes[<?= (int)$i ?>][quantite]" min="1"
+                                   value="<?= htmlspecialchars((string)($ligne['quantite'] ?? 1)) ?>"></td>
+
+                        <td><input type="number" name="lignes[<?= (int)$i ?>][prixUnitaire]" step="0.01"
+                                   value="<?= htmlspecialchars((string)($ligne['prixUnitaire'] ?? 0)) ?>"></td>
+
                         <td><button type="button" onclick="removeLine(this)">X</button></td>
                     </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
+
             <button type="button" onclick="addLine()">+ Ajouter une ligne</button>
         </fieldset>
 
         <hr>
 
         <fieldset>
-            <legend>Informations Facture</legend>
+            <legend>Informations</legend>
+
             <label>Date d'échéance :</label>
-            <input type="date" name="datePaiement">
+            <input type="date" name="datePaiement" value="<?= htmlspecialchars($datePaiement) ?>">
 
             <label>Mode de règlement :</label>
             <select name="reglementDoc">
-                <option value="">Non spécifié</option>
-                <option value="Carte bancaire">Carte bancaire</option>
-                <option value="Virement">Virement</option>
-                <option value="Chèque">Chèque</option>
-                <option value="Espèces">Espèces</option>
+                <option value="" <?= $reglementDoc === '' ? 'selected' : '' ?>>Non spécifié</option>
+                <option value="Carte bancaire" <?= $reglementDoc === 'Carte bancaire' ? 'selected' : '' ?>>Carte bancaire</option>
+                <option value="Virement" <?= $reglementDoc === 'Virement' ? 'selected' : '' ?>>Virement</option>
+                <option value="Chèque" <?= $reglementDoc === 'Chèque' ? 'selected' : '' ?>>Chèque</option>
+                <option value="Espèces" <?= $reglementDoc === 'Espèces' ? 'selected' : '' ?>>Espèces</option>
             </select>
 
             <br><br>
-            <button type="submit" name="action" value="createFacture">Créer la facture</button>
+
+            <button type="submit" name="action" value="createFacture">
+                <?= $typeDoc === 'Devis' ? 'Créer le devis' : 'Créer la facture' ?>
+            </button>
         </fieldset>
     </form>
 
 </main>
 
 <script>
-let indexLigne = 1;
+let indexLigne = <?= count($lignesPost) ?>;
 
 function addLine() {
     const tbody = document.querySelector('#tableLignes tbody');

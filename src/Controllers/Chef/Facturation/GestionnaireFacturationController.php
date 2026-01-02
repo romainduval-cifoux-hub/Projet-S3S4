@@ -300,8 +300,6 @@ class GestionnaireFacturationController {
                 'en_attente' => $filtreEnAttente
             ]);
 
-            header('Location: ' . BASE_URL . '/public/index.php?' . $query);
-            exit;
         }
 
         // --- Data ---

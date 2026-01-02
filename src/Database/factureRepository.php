@@ -158,17 +158,25 @@ function getClientById(PDO $pdo, int $idCli): ?array {
     return $client ?: null;
 }
 
-function generateNextNumeroFacture(PDO $pdo) {
-    $sql = "SELECT MAX(num) AS lastNum 
-            FROM Document 
-            WHERE typeDoc = 'Facture'";
+function generateNextNumeroDocument(PDO $pdo, string $typeDoc): string
+{
+    if (!in_array($typeDoc, ['Facture', 'Devis'], true)) {
+        $typeDoc = 'Facture';
+    }
 
-    $stmt = $pdo->query($sql);
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("
+        SELECT MAX(CAST(num AS UNSIGNED)) AS maxNum
+        FROM Document
+        WHERE typeDoc = :typeDoc
+    ");
+    $stmt->execute(['typeDoc' => $typeDoc]);
+    $max = (int)($stmt->fetch(PDO::FETCH_ASSOC)['maxNum'] ?? 0);
 
-    // Si aucune facture → commence à 1
-    return $row['lastNum'] ? $row['lastNum'] + 1 : 1;
+    $next = $max + 1;
+
+    return (string)$next;
 }
+
 
 
 function getFacturesByClient(PDO $pdo, int $idCli): array {
