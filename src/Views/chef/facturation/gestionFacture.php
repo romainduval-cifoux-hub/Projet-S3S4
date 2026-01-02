@@ -74,6 +74,11 @@ require_once(__DIR__ . '/../../../Database/db.php');
         </form>
     <?php endif; ?>
 
+    <form method="POST" target="_blank">
+        <input type="hidden" name="idDoc" value="<?= (int)$facture['idDoc'] ?>">
+        <button name="action" value="pdf">PDF</button>
+    </form>
+
     <h3>Détails :</h3>
 
     <?php $total = 0;  ?>
@@ -92,6 +97,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
     <hr>
     <p><strong>Total :</strong> <?= $total ?> €</p>
 </div>
+
 
 <?php endforeach; ?>
 
