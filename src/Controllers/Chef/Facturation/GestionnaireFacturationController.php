@@ -24,7 +24,9 @@ class GestionnaireFacturationController {
 
     public function handleRequest() {
 
+        // =========================
         // PDF : avant tout HTML
+        // =========================
         if (($_POST['action'] ?? '') === 'pdf' && !empty($_POST['idDoc'])) {
 
             $idDoc = (int)$_POST['idDoc'];
@@ -32,7 +34,7 @@ class GestionnaireFacturationController {
 
             if (!$facture) {
                 http_response_code(404);
-                exit('Facture introuvable');
+                exit('Document introuvable');
             }
 
             $entreprise = getEntrepriseInfo($this->pdo);
@@ -67,7 +69,10 @@ class GestionnaireFacturationController {
             $pdf->SetTextColor(255, 255, 255);
             $pdf->SetFont('Arial', 'B', 14);
             $pdf->SetXY(10, 5);
-            $pdf->Cell(100, 8, pdf_txt('Facture ' . $numero), 0, 0, 'L');
+
+            // Optionnel mais recommandé : afficher "Devis" si besoin
+            $libelleDoc = $facture['typeDoc'] ?? 'Document';
+            $pdf->Cell(100, 8, pdf_txt($libelleDoc . ' ' . $numero), 0, 0, 'L');
 
             $pdf->SetFont('Arial', '', 11);
             $pdf->SetXY(120, 6);
@@ -79,7 +84,7 @@ class GestionnaireFacturationController {
             $yTop = 25;
 
             // Logo (optionnel)
-            $logoPath = __DIR__ . '/../../../../public/assets/shared/logo.png';
+            $logoPath = __DIR__ . '/../../../../public/assets/shared/img/logoTeamJardin.png';
             if (file_exists($logoPath)) {
                 $pdf->Image($logoPath, 12, $yTop, 28);
             }
@@ -171,10 +176,8 @@ class GestionnaireFacturationController {
                 $pdf->Cell($w['montant'],     10, pdf_txt(money_eur($montant)), 1, 1, 'C');
             }
 
-            // --- Bloc totaux (aligné cohérent avec le tableau) ---
+            // --- Bloc totaux ---
             $pdf->Ln(8);
-
-            // Tableau : X=10, largeur=190. Bloc totaux : 30+30+40=100 => X = 10 + (190-100) = 100
             $blocTotauxX = 100;
 
             $pdf->SetX($blocTotauxX);
@@ -222,34 +225,103 @@ class GestionnaireFacturationController {
             $pdf->SetFont('Arial', '', 10);
             $pdf->Cell(120, 6, pdf_txt($entreprise['bic'] ?? ''), 0, 1);
 
-            // Signature : alignée sur le bloc totaux pour cohérence visuelle
             $pdf->SetFont('Arial', 'B', 10);
             $pdf->SetXY($blocTotauxX, $pdf->GetY() + 8);
             $pdf->Cell(100, 6, pdf_txt('Bon pour accord, date et signature :'), 0, 1, 'L');
 
-            // Sécurité : aucun buffer ne doit traîner
             while (ob_get_level() > 0) {
                 ob_end_clean();
             }
 
-            $pdf->Output('I', 'facture_' . $numero . '.pdf');
+            $pdf->Output('I', 'document_' . $numero . '.pdf');
             exit;
         }
 
+        // =========================
         // HTML normal
+        // =========================
         require_once __DIR__ . '/../../../Views/chef/shared/header_chef.php';
 
-        if (($_POST['action'] ?? '') === 'payer' && !empty($_POST['idDoc'])) {
-            $idDoc = (int)$_POST['idDoc'];
-            marquerFacturePayee($this->pdo, $idDoc);
+        // --- Filtres (POST ou GET) ---
+        $idCli = null;
+        if (isset($_POST['idCli']) && $_POST['idCli'] !== '') $idCli = (int)$_POST['idCli'];
+        if (isset($_GET['idCli']) && $_GET['idCli'] !== '')  $idCli = (int)$_GET['idCli'];
 
-            header('Location: ' . BASE_URL . '/public/index.php?page=chef/facturation');
-            exit;
+        $types = $_POST['types'] ?? ($_GET['types'] ?? ['Facture', 'Devis']);
+        if (!is_array($types)) $types = [$types];
+        $types = array_values(array_intersect($types, ['Facture', 'Devis']));
+
+        $filtreEnAttente = $_POST['en_attente'] ?? ($_GET['en_attente'] ?? '1');
+        $filtreEnAttente = ($filtreEnAttente === '1') ? '1' : '0';
+
+        // --- Actions ---
+        $action = $_POST['action'] ?? null;
+
+        if (!empty($_POST['idDoc']) && in_array($action, ['payer','accepter','refuser'], true)) {
+            $idDoc = (int)$_POST['idDoc'];
+
+            $doc = getFactureById($this->pdo, $idDoc);
+            if (!$doc) {
+                http_response_code(404);
+                exit('Document introuvable');
+            }
+
+            $typeDoc = $doc['typeDoc'] ?? '';
+
+            if ($action === 'payer') {
+                if ($typeDoc !== 'Facture') {
+                    http_response_code(400);
+                    exit('Action invalide: ce document n\'est pas une Facture');
+                }
+                marquerFacturePayee($this->pdo, $idDoc);
+            }
+
+            if ($action === 'accepter') {
+                if ($typeDoc !== 'Devis') {
+                    http_response_code(400);
+                    exit('Action invalide: ce document n\'est pas un Devis');
+                }
+                marquerDevisAccepte($this->pdo, $idDoc);
+            }
+
+            if ($action === 'refuser') {
+                if ($typeDoc !== 'Devis') {
+                    http_response_code(400);
+                    exit('Action invalide: ce document n\'est pas un Devis');
+                }
+                marquerDevisRefuse($this->pdo, $idDoc);
+            }
+
+            // Redirect avec filtres
+            $query = http_build_query([
+                'page' => 'chef/facturation',
+                'idCli' => $idCli,
+                'types' => $types,
+                'en_attente' => $filtreEnAttente
+            ]);
+
         }
 
+        // --- Data ---
         $clients = getClientsFactures($this->pdo);
-        $idCli = (isset($_POST['idCli']) && $_POST['idCli'] !== '') ? (int)$_POST['idCli'] : null;
+
         $factures = $idCli ? getFacturesByClient($this->pdo, $idCli) : getAllFactures($this->pdo);
+
+        // Filtre typeDoc
+        if (count($types) === 0) {
+            $factures = [];
+        } else {
+            $factures = array_values(array_filter($factures, function ($f) use ($types) {
+                return isset($f['typeDoc']) && in_array($f['typeDoc'], $types, true);
+            }));
+        }
+
+        // Filtre en attente
+        if ($filtreEnAttente === '1') {
+            $factures = array_values(array_filter($factures, function ($f) {
+                return ($f['statusDoc'] ?? '') === 'En attente';
+            }));
+        }
 
         require_once __DIR__ . '/../../../Views/chef/facturation/gestionFacture.php';
     }
