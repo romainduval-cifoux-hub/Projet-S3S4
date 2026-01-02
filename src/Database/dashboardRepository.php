@@ -75,9 +75,6 @@ function getMontantEnAttenteParMois(PDO $pdo, int $annee): array {
     }
 }
 
-
-
-
 function getNombreFacturesPayees(PDO $pdo, int $annee): int {
     try {
         $stmt = $pdo->prepare("
