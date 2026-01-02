@@ -40,6 +40,18 @@ require_once(__DIR__ . '/../../../Database/db.php');
 
 <main>
 
+<form method="POST">
+    <select name="idCli" onchange="this.form.submit()">
+        <option value="">-- Tous les clients --</option>
+        <?php foreach ($clients as $cli): ?>
+            <option value="<?= $cli['id_client'] ?>" <?= ((int)($idCli ?? 0) === (int)$cli['id_client']) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($cli['nom_client']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</form>
+
+
 
 <h1>Liste des factures</h1>
 
@@ -49,8 +61,23 @@ require_once(__DIR__ . '/../../../Database/db.php');
     <h2>Facture n°<?= $facture['num'] ?></h2>
     <hr>
     <p><strong>Client :</strong> <?= $facture['nomClient'] ?></p>
-    <p><strong>Date :</strong> <?= date('d/m/Y', strtotime($facture['dateDoc'])) ?></p>
+    <p><strong>Date :</strong> <?= date('d/m/Y', strtotime($facture['datePaiement'])) ?></p>
     <p><strong>Status :</strong> <?= $facture['statusDoc'] ?></p>
+
+    <?php if ($facture['statusDoc'] === 'En attente'): ?>
+        <form method="POST" style="margin:10px 0;">
+            <input type="hidden" name="idDoc" value="<?= (int)$facture['idDoc'] ?>">
+            <input type="hidden" name="idCli" value="<?= htmlspecialchars($idCli ?? '') ?>">
+            <button type="submit" name="action" value="payer">
+                Marquer comme payé
+            </button>
+        </form>
+    <?php endif; ?>
+
+    <form method="POST" target="_blank">
+        <input type="hidden" name="idDoc" value="<?= (int)$facture['idDoc'] ?>">
+        <button name="action" value="pdf">PDF</button>
+    </form>
 
     <h3>Détails :</h3>
 
@@ -70,6 +97,7 @@ require_once(__DIR__ . '/../../../Database/db.php');
     <hr>
     <p><strong>Total :</strong> <?= $total ?> €</p>
 </div>
+
 
 <?php endforeach; ?>
 

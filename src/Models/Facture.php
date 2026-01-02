@@ -14,6 +14,7 @@ class Facture {
     public $reglement;
     public $datePaiement;
     public $nbRelance;
+    public $idCli;
     public $lignes = [];
 
     public function __construct(array $row) {
@@ -31,6 +32,8 @@ class Facture {
         $this->reglement   = $row['reglementDoc'];
         $this->datePaiement = $row['datePaiement'];
         $this->nbRelance   = $row['nbRelance'];
+        $this->idCli        = $row['idCli'] ?? null;  
+
     }
 }
 

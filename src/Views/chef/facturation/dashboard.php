@@ -39,6 +39,21 @@ require_once(__DIR__ . '/../../../Database/db.php');
         ?>
 
 <main>
+
+    <form method="POST" >
+        <label for="annee">Année :</label>
+        <input type="hidden" name="page" value="<?= htmlspecialchars($_GET['page'] ?? '' ) ?>">
+
+        <select name="annee" id="annee" onchange="this.form.submit()">
+            <?php foreach ($annees as $a): ?>
+                <option value="<?= $a ?>" <?= ((int)$a === (int)$annee) ? 'selected' : '' ?>>
+                    <?= $a ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </form>
+
+
     <h1>Tableau de bord de l'année <?php echo($annee)?></h1>
     <div class="container">
         <div class="en-attente">

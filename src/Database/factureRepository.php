@@ -61,6 +61,8 @@ function getAllFactures(PDO $pdo) {
         $facture['lignes'] = getLignesFacture($pdo, $facture['idDoc']);
     }
 
+    unset($facture); 
+
     return $factures;
 }
 
@@ -167,5 +169,58 @@ function generateNextNumeroFacture(PDO $pdo) {
     // Si aucune facture → commence à 1
     return $row['lastNum'] ? $row['lastNum'] + 1 : 1;
 }
+
+
+function getFacturesByClient(PDO $pdo, int $idCli): array {
+    $stmt = $pdo->prepare("
+        SELECT * FROM Document
+        WHERE idCli = :idCli
+        ORDER BY dateDoc DESC
+    ");
+    $stmt->execute(['idCli' => $idCli]);
+    $factures = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (!$factures) return [];
+
+    foreach ($factures as &$facture) {
+        $facture['lignes'] = getLignesFacture($pdo, (int)$facture['idDoc']);
+    }
+    unset($facture);
+
+    return $factures;
+}
+
+
+function getLignesByFacture(PDO $pdo, int $idDoc): array {
+    $stmt = $pdo->prepare("
+        SELECT designation, description, unite, quantite, prixUnitaire
+        FROM DetailDocument
+        WHERE idDoc = :idDoc
+    ");
+    $stmt->execute(['idDoc' => $idDoc]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getClientsFactures(PDO $pdo): array {
+    $stmt = $pdo->query("
+        SELECT DISTINCT c.id_client, c.nom_client, c.prenom_client
+        FROM Document d
+        JOIN clients c ON c.id_client = d.idCli
+        WHERE d.idCli IS NOT NULL
+        ORDER BY c.nom_client ASC, c.prenom_client ASC
+    ");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+function marquerFacturePayee(PDO $pdo, int $idDoc): bool {
+    $stmt = $pdo->prepare("
+        UPDATE Document
+        SET statusDoc = 'Payé'
+        WHERE idDoc = :idDoc
+    ");
+    return $stmt->execute(['idDoc' => $idDoc]);
+}
+
+
 
 ?>
