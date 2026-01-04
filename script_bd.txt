@@ -180,6 +180,23 @@ CREATE TABLE entreprise (
     bic VARCHAR(50)
 );
 
+
+CREATE TABLE conges (
+  id_conge INT AUTO_INCREMENT PRIMARY KEY,
+  id_salarie INT NOT NULL,
+  date_debut DATE NOT NULL,
+  date_fin   DATE NOT NULL,
+  motif      TEXT,
+  statut ENUM('en_attente','accepte','refuse') NOT NULL DEFAULT 'en_attente',
+  date_demande   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  date_decision  DATETIME NULL,
+  id_manager_decision INT NULL,
+  CONSTRAINT fk_conge_salarie FOREIGN KEY (id_salarie) REFERENCES salaries(id_salarie) ON DELETE CASCADE,
+  CONSTRAINT fk_conge_manager FOREIGN KEY (id_manager_decision) REFERENCES users(id) ON DELETE SET NULL
+);
+
+
+INSERT INTO entreprise (nom, description, telephone, adresse, siret)
 INSERT INTO entreprise (nom, description, telephone, adresse, siret, iban, bic)
 VALUES (
     'Team Jardin',

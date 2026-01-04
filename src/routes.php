@@ -26,9 +26,15 @@ require_once __DIR__ . '/Controllers/Chef/Facturation/CreationDocumentController
 require_once __DIR__ . '/Controllers/Chef/Realisation/AdminRealisationController.php';
     //Categories
 require_once __DIR__ . '/Controllers/Chef/Realisation/AdminCategoryController.php';
+    //Conges
+require_once __DIR__ . '/Controllers/Chef/Planning/ChefCongeController.php';
 
 //Employe
 require_once __DIR__ . '/Controllers/Employe/PlanningEmployeController.php';
+    //Conges
+require_once __DIR__ . '/Controllers/Employe/EmployeCongeController.php';
+
+
 
 //Client
 require_once __DIR__ . '/Controllers/Client/ClientController.php';
@@ -123,6 +129,16 @@ switch ($page) {
         $controller = new AdminCategoryController();
         $controller->delete();
         break;
+        //conges
+    case 'chef/conges':
+        $controller = new ChefCongeController();
+        $controller->index();
+        break;
+
+    case 'chef/conges/traiter':
+        $controller = new ChefCongeController();
+        $controller->traiter();
+        break;
 
 
         //Planning
@@ -204,7 +220,12 @@ switch ($page) {
         $controller = new ClientController();
         $controller->save();
         break;
-
+    //Employe
+        //Conges
+    case 'employe/conge':
+        $controller = new EmployeCongeController();
+        $controller->demande();
+        break;
         
     default:
         http_response_code(404);

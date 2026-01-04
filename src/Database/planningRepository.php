@@ -58,12 +58,11 @@ function getSalaries(PDO $pdo, ?string $search = null): array
  *
  * $lundi = date du lundi de la semaine (format 'Y-m-d')
  */
-function getWeekMatrix(PDO $pdo, string $monday): array
+function getWeekMatrix(PDO $pdo, string $lundi): array
 {
-    $start = $monday;                                      // lundi
-    $end   = date('Y-m-d', strtotime($monday.' +4 days')); // vendredi
+    $start = $lundi;
+    $end   = date('Y-m-d', strtotime($lundi . ' +4 day')); // lundi->vendredi
 
-    // récupérer TOUS les créneaux des 5 jours
     $sql = "
         SELECT
             pc.id_creneau,
@@ -80,32 +79,20 @@ function getWeekMatrix(PDO $pdo, string $monday): array
         ORDER BY pc.id_salarie, pc.date_jour, pc.heure_debut
     ";
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        ':start' => $start,
-        ':end'   => $end
-    ]);
+    $st = $pdo->prepare($sql);
+    $st->execute([':start' => $start, ':end' => $end]);
+    $rows = $st->fetchAll(PDO::FETCH_ASSOC);
 
     $matrix = [];
+    foreach ($rows as $r) {
+        $sid  = (int)$r['id_salarie'];
+        $jour = $r['date_jour'];
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $idS  = (int)$row['id_salarie'];
-        $jour = $row['date_jour'];
-
-        if (!isset($matrix[$idS][$jour])) {
-            $matrix[$idS][$jour] = [];
-        }
-
-        $matrix[$idS][$jour][] = [
-            'id_creneau'   => (int)$row['id_creneau'],
-            'heure_debut'  => $row['heure_debut'],
-            'heure_fin'    => $row['heure_fin'],
-            'type_travail' => $row['type_travail'],
-            'commentaire'  => $row['commentaire'],
-            'nom_poste'    => $row['nom_poste'],
-        ];
+        // IMPORTANT : on empile les créneaux du jour (matin + aprem)
+        $matrix[$sid][$jour][] = $r;
     }
 
     return $matrix;
 }
+
 
