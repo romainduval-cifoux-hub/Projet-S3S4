@@ -224,22 +224,21 @@
   }
 
   .cell {
-    border-right:1px solid var(--border);
-    padding:10px;
-    position:relative;
+      position: relative;
+      min-height: 90px; /* ajuste si besoin */
+      padding: 4px;
   }
+
 
   /* Créneaux */
   .slot {
-    background:var(--slot-blue);
-    border-radius:12px;
-    padding:10px 12px;
-    font-size:14px;
-    line-height:1.2;
-    box-shadow:var(--shadow);
-    max-width:92%;
-    margin-bottom:8px;
+      background: var(--slot-blue);
+      margin: 0.5em;
+      border-radius: 6px;
+      padding: 4px 6px;
+      font-size: 0.75rem;
   }
+
   .slot--y { background:var(--slot-yellow); }
   .slot--g { background:var(--slot-green); }
   .slot--r { background:var(--slot-red); }
@@ -250,6 +249,37 @@
   }
   .slot small {
     color:#4d4d4d;
+  }
+
+  .slot-menu-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .slot-menu-item{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin : 2px;
+    padding: 5px 6px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+
+    border: 1px solid #e6e9e6;
+    background: #f6fbf6;
+    color: #2b2b2b;
+
+    cursor: pointer;
+  }
+
+  .slot-menu-danger{
+    background: #f14242;
+    border: transparent;
+    color: #ffffff;
+    
   }
 
   /* Bouton 3 points */
