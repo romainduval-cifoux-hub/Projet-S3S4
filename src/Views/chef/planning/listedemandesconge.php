@@ -32,7 +32,7 @@
         ?>
 
         <main class="main-content">
-            <section class="board" style="padding:20px;">
+            <section class="board">
                 <h1>Demandes de congés en attente</h1>
 
                 <?php if (isset($_GET['err']) && $_GET['err'] === 'planning'): ?>
@@ -68,10 +68,10 @@
                                 <td><?= nl2br(htmlspecialchars($d['motif'] ?? '')) ?></td>
                                 <td><?= htmlspecialchars($d['date_demande']) ?></td>
                                 <td>
-                                    <form method="post" action="<?= BASE_URL ?>/public/index.php?page=chef/conges/traiter" style="display:inline;">
+                                    <form method="post" action="<?= BASE_URL ?>/public/index.php?page=chef/conges/traiter">
                                         <input type="hidden" name="id_conge" value="<?= (int)$d['id_conge'] ?>">
                                         <button type="submit" name="action" value="accepter" class="btn_login">Accepter</button>
-                                        <button type="submit" name="action" value="refuser" class="btn_login" style="background:#c0392b;">Refuser</button>
+                                        <button type="submit" name="action" value="refuser" class="btn_login">Refuser</button>
                                     </form>
                                 </td>
                             </tr>
