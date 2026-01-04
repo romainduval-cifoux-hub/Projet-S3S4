@@ -27,6 +27,54 @@ class ClientController {
         require __DIR__ . '/../../Views/client/formprofil.php';
     }
 
+    public function documents(): void {
+        if(($_SESSION['role'] ?? '') !== 'client') {
+            http_response_code(403);
+            exit("Accès refusé");
+        }
+
+        $client = client_getByUserId($this->pdo, $_SESSION['user_id']);
+
+        $documents = client_getDocuments($this->pdo, $client['id_client']);
+
+        $pageTitle = "Mes documents";
+        require __DIR__ . '/../../Views/client/documents.php';
+    }
+
+    public function commentaires(): void {
+        if(($_SESSION['role'] ?? '') !== 'client') {
+            http_response_code(403);
+            exit("Accès refusé");
+        }
+
+        $client = client_getByUserId($this->pdo, $_SESSION['user_id']);
+
+        $commentaires = client_getCommentaires($this->pdo, $client['id_client']);
+
+        $pageTitle = "Mes commentaires";
+        require __DIR__ . '/../../Views/client/commentaires.php';
+    }
+
+    public function supprimer_commentaire(): void
+{
+    if (($_SESSION['role'] ?? '') !== 'client') {
+        http_response_code(403);
+        exit("Accès refusé");
+    }
+
+    $commentaireId = $_POST['commentaire_id'] ?? null;
+    if (!$commentaireId) {
+        exit("Commentaire introuvable");
+    }
+
+    client_supprimerCommentaire($this->pdo, (int)$commentaireId, $_SESSION['user_id']);
+
+    header("Location: " . BASE_URL . "/public/index.php?page=client/commentaires");
+    exit;
+}
+
+
+
     public function save(): void {
 
         if (($_SESSION['role'] ?? '') !== 'client') {
