@@ -7,7 +7,7 @@
     <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
-    <link href="<?= BASE_URL ?>/public/assets/chef/realisations/crudrealisation/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/chef/realisations/liste/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
 </head>
@@ -50,7 +50,7 @@
                             <?php foreach ($realisations as $r): ?>
                                 <tr>
                                     <td>
-                                        <img src="<?= BASE_URL.'/'.$r['photo'] ?>" alt="Photo" width="80">
+                                        <img src="<?= BASE_URL.$r['photo'] ?>" alt="Photo" width="80">
                                     </td>
                                     <td><?= htmlspecialchars($r['commentaire']) ?></td>
                                     <td><?= htmlspecialchars($r['categorie_nom']) ?></td>

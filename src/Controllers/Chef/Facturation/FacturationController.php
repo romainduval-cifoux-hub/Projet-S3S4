@@ -16,18 +16,24 @@ class FacturationController {
 
             
             require_once __DIR__ . '/../../../Views/chef/shared/header_chef.php';
-            $annee = date('Y'); 
+            $annee = isset($_POST['annee']) ? (int)$_POST['annee'] : (int)date('Y');
 
 
-            $nbFactureEnAttente = getNombreFacturesEnAttente($this->pdo);
-            $montantFactureEnAttente = getMontantFactureEnAttente($this->pdo);
+            $annees = getAnneesFactures($this->pdo);
 
-            $nbFacturePayee = getNombreFacturesPayees($this->pdo);
-            $montantFacturePayee = getMontantFacturesPayees($this->pdo);
+            if (empty($annees)) {
+                $annees = [(int)date('Y')];
+            }
 
-            $montantsParMois = getMontantEnAttenteParMois($this->pdo);
 
-            $montantPayeparMois = getMontantPayeeParMois($this->pdo);
+
+            $nbFactureEnAttente = getNombreFacturesEnAttente($this->pdo, $annee);
+            $montantFactureEnAttente = getMontantFactureEnAttente($this->pdo, $annee);
+            $nbFacturePayee = getNombreFacturesPayees($this->pdo, $annee);
+            $montantFacturePayee = getMontantFacturesPayees($this->pdo, $annee);
+            $montantsParMois = getMontantEnAttenteParMois($this->pdo, $annee);
+            $montantPayeparMois = getMontantPayeeParMois($this->pdo, $annee);
+
             
             require_once __DIR__ . '/../../../Views/chef/facturation/dashboard.php';
         }

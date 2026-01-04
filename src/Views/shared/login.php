@@ -15,9 +15,10 @@ unset($_SESSION['success']);
     <title>Login - Team Jardin</title>
     <link href="<?= BASE_URL ?>/public/assets/shared/login/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
+
 </head>
 <body class="page-login">
-<a href="#" class="back-arrow" onclick="window.history.back(); return false;">
+    <a href="<?= BASE_URL ?>/public/index.php" class="back-arrow">
     <span class="arrow">←</span>
     <span class="text">Retour</span>
 </a>

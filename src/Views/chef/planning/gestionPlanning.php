@@ -15,29 +15,7 @@
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
 </head>
-<script>
-    document.addEventListener('click', function (e) {
-        // Si on clique sur le bouton "trois points"
-        const toggle = e.target.closest('.slot-menu-toggle');
-        const menus  = document.querySelectorAll('.slot-menu');
 
-        if (toggle) {
-            const menu = toggle.closest('.slot-menu');
-
-            // Fermer tous les autres
-            menus.forEach(m => {
-                if (m !== menu) m.classList.remove('open');
-            });
-
-            // Toggle celui-ci
-            menu.classList.toggle('open');
-            return;
-        }
-
-        // Si on clique en dehors des menus → tout fermer
-        menus.forEach(m => m.classList.remove('open'));
-    });
-</script>
 <body>
 <div class="page">
     <?php
@@ -89,9 +67,9 @@
 
                     <!-- Formulaire de recherche d’employé -->
                     <form method="get" class="emp-search">
-                        <!-- on force la page pour rester sur le planning -->
+                        <!-- forcage de la page pour rester sur le planning -->
                         <input type="hidden" name="page" value="chef/planning">
-                        <!-- on garde la semaine courante -->
+                        <!-- semaine courante -->
                         <input type="hidden" name="date" value="<?= htmlspecialchars($refDate ?? $joursAffiches[0]) ?>">
 
                         <input type="text"
@@ -129,15 +107,23 @@
                             <div class="row">
                                 <!-- Colonne employé -->
                                 <div class="emp">
-                                    <!-- avatar simple avec initiales -> On modifiera ensuite avec les photos de profil quand on les aura-->
-                                    <div class="avatar">
-                                        <?= htmlspecialchars(mb_substr($emp['prenom_salarie'], 0, 1) . mb_substr($emp['nom_salarie'], 0, 1)) ?>
-                                    </div>
+                                    
+                                    
+                                    <?php
+                                        
+                                        $photo = $emp['photo'] ?? '';
+                                        $src = $photo ? (BASE_URL . $photo) : (BASE_URL . '/public/assets/shared/img/default.png');
+                                    ?>
+                                    <img
+                                        class="avatar"
+                                        src="<?= htmlspecialchars($src) ?>"
+                                        onerror="this.src='<?= BASE_URL ?>/public/assets/shared/img/default-pp.png';"
+                                        alt="photo de profil">
+                                    
                                     <div class="emp-name">
                                         <?= htmlspecialchars($emp['prenom_salarie'] . ' ' . $emp['nom_salarie']) ?>
                                     </div>
-                                    <!-- bouton options -->
-                                    <button class="dots" title="Options">⋮</button>
+                                    
                                 </div>
 
                                 <!-- Colonnes jours -->
@@ -190,7 +176,6 @@
                                         <?php endforeach; ?>
                                     </div>
                                 <?php endforeach; ?>
-
                             </div>
                         <?php endforeach; ?>
                     </div>

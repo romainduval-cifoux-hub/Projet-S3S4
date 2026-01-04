@@ -1,0 +1,94 @@
+main.main-content {
+    background-color: var(--bge);
+    margin-inline: 2%;
+    padding: 3%;
+    border: 2px solid black;
+    border-radius: 16px;
+}
+
+.board h1 {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 30px;
+    margin: 1em 20%;
+    padding-block: 0.8em;
+}
+
+.table-realisations {
+    width: 95%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: var(--bg);
+    border: 2px solid black;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.table-realisations thead {
+    background: var(--vert-fonce);
+    color: white;
+}
+
+.table-realisations th,
+.table-realisations td {
+    padding: 1rem;
+    border-bottom: 1px solid black;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.table-realisations img {
+    border-radius: 6px;
+    border: 1px solid #555;
+    width: 80px;
+    height: auto;
+}
+
+.table-realisations tbody tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+.table-realisations tbody tr:hover {
+    background: var(--bge);
+    transition: 0.2s;
+}
+
+.table-realisations a {
+    color: var(--vert-fonce);
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.table-realisations a:hover {
+    color: var(--btn-hover);
+    text-decoration: underline;
+}
+
+.board p {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 2rem;
+    background: var(--bg);
+    border: 2px solid black;
+    border-radius: 12px;
+    width: 60%;
+    margin: 2rem auto;
+}
+
+@media (max-width: 768px) {
+    .table-realisations th,
+    .table-realisations td {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .board h1 {
+        margin: 1rem 5%;
+        font-size: 24px;
+    }
+
+    .table-realisations img {
+        width: 60px;
+    }
+}

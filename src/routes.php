@@ -20,6 +20,8 @@ require_once __DIR__ . '/Controllers/Chef/Planning/EmployeController.php';
 require_once __DIR__ . '/Controllers/Chef/Facturation/FacturationController.php';
 require_once __DIR__ . '/Controllers/Chef/Facturation/FormEditBusinessInfoController.php';
 require_once __DIR__ . '/Controllers/Chef/Facturation/GestionnaireFacturationController.php';
+require_once __DIR__ . '/Controllers/Chef/Facturation/CreationDocumentController.php';
+
     //Realisation
 require_once __DIR__ . '/Controllers/Chef/Realisation/AdminRealisationController.php';
     //Categories
@@ -204,7 +206,7 @@ switch ($page) {
         break;
 
     case 'chef/facturation/createFacture':
-        $controller = new GestionnaireFacturationController();
+        $controller = new CreationDocumentController();
         $controller->handleRequest();
         break;
 
