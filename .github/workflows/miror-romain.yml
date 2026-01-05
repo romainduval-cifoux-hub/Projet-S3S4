@@ -1,0 +1,17 @@
+      - name: Push to romainduval-cifoux-hub/Projet-S3S4 (header auth)
+        env:
+          TOKEN: ${{ secrets.MIRROR_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "MIRROR_TOKEN is missing/empty"
+            exit 1
+          fi
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          DEST="https://github.com/romainduval-cifoux-hub/Projet-S3S4.git"
+
+          # Auth via header (le token ne doit pas apparaître dans l'URL)
+          git -c http.extraheader="AUTHORIZATION: basic $(printf 'romainduval-cifoux-hub:%s' "$TOKEN" | base64 -w0)" \
+              push --force "$DEST" HEAD:main
