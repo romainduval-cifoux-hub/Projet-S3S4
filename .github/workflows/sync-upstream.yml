@@ -1,9 +1,9 @@
 name: Sync upstream main
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: "0 * * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -22,19 +22,14 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-      # IMPORTANT: on configure Git pour utiliser le token automatiquement sur github.com
-      - name: Configure auth for upstream
+      - name: Add upstream (authenticated)
         run: |
-          git config --global url."https://x-access-token:${{ secrets.UPSTREAM_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git remote remove upstream 2>/dev/null || true
+          git remote add upstream https://x-access-token:${{ secrets.UPSTREAM_TOKEN }}@github.com/TeamJardin/Projet-S3S4.git
 
       - name: Diagnostic - can we read upstream?
         run: |
-          echo "Trying to list upstream refs..."
-          git ls-remote https://github.com/TeamJardin/Projet-S3S4.git HEAD
-
-      - name: Add upstream
-        run: |
-          git remote add upstream https://github.com/TeamJardin/Projet-S3S4.git || true
+          git ls-remote upstream HEAD
 
       - name: Fetch upstream main
         run: |
