@@ -25,7 +25,7 @@ jobs:
       - name: Add upstream (authenticated)
         run: |
           git remote remove upstream 2>/dev/null || true
-          git remote add upstream https://x-access-token:${{ secrets.UPSTREAM_TOKEN }}@github.com/TeamJardin/Projet-S3S4.git
+          git remote add upstream https://romainduval-cifoux-hub:${{ secrets.UPSTREAM_TOKEN }}@github.com/TeamJardin/Projet-S3S4.git
 
       - name: Diagnostic - can we read upstream?
         run: |
