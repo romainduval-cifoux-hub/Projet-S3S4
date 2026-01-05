@@ -14,7 +14,16 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-
+          
+      - name: Check that secret is available (masked)
+        run: |
+          if [ -z "${{ secrets.UPSTREAM_TOKEN }}" ]; then
+            echo "UPSTREAM_TOKEN is EMPTY or not available"
+            exit 1
+          else
+            echo "UPSTREAM_TOKEN is present"
+          fi
+          
       - name: Test access to upstream (no remote)
         run: |
           echo "Testing ls-remote with token..."
