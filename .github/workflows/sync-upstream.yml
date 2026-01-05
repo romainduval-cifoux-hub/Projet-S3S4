@@ -1,8 +1,6 @@
 name: Sync upstream main
 
 on:
-  schedule:
-    - cron: "0 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,25 +15,27 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Configure git identity
+      - name: Test access to upstream (no remote)
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          echo "Testing ls-remote with token..."
+          git ls-remote "https://romainduval-cifoux-hub:${{ secrets.UPSTREAM_TOKEN }}@github.com/TeamJardin/Projet-S3S4.git" HEAD
+          echo "Listing branches..."
+          git ls-remote "https://romainduval-cifoux-hub:${{ secrets.UPSTREAM_TOKEN }}@github.com/TeamJardin/Projet-S3S4.git" --heads
 
       - name: Add upstream (authenticated)
         run: |
           git remote remove upstream 2>/dev/null || true
-          git remote add upstream https://romainduval-cifoux-hub:${{ secrets.UPSTREAM_TOKEN }}@github.com/TeamJardin/Projet-S3S4.git
+          git remote add upstream "https://romainduval-cifoux-hub:${{ secrets.UPSTREAM_TOKEN }}@github.com/TeamJardin/Projet-S3S4.git"
 
-      - name: Diagnostic - can we read upstream?
+      - name: Fetch upstream
         run: |
-          git ls-remote upstream HEAD
+          git fetch upstream
 
-      - name: Fetch upstream main
+      - name: Show upstream branches
         run: |
-          git fetch upstream main
+          git branch -r
 
-      - name: Fast-forward main
+      - name: Fast-forward main to upstream
         run: |
           git merge --ff-only upstream/main
 
