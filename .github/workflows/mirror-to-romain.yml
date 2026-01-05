@@ -1,7 +1,26 @@
+name: Mirror main to romainduval-cifoux-hub
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Push to romainduval-cifoux-hub/Projet-S3S4 (header auth)
         env:
           TOKEN: ${{ secrets.MIRROR_TOKEN }}
         run: |
+          set -e
+
           if [ -z "$TOKEN" ]; then
             echo "MIRROR_TOKEN is missing/empty"
             exit 1
@@ -12,6 +31,8 @@
 
           DEST="https://github.com/romainduval-cifoux-hub/Projet-S3S4.git"
 
-          # Auth via header (le token ne doit pas apparaître dans l'URL)
-          git -c http.extraheader="AUTHORIZATION: basic $(printf 'romainduval-cifoux-hub:%s' "$TOKEN" | base64 -w0)" \
+          # Auth via header HTTP (évite l'auth github-actions[bot] et évite le token dans l'URL)
+          AUTH_B64="$(printf 'romainduval-cifoux-hub:%s' "$TOKEN" | base64 | tr -d '\n')"
+
+          git -c http.extraheader="AUTHORIZATION: basic ${AUTH_B64}" \
               push --force "$DEST" HEAD:main
