@@ -12,9 +12,18 @@ class AdminRealisationController {
     }
 
     public function index() {
-        $realisations = $this->repo->getAll();
+        $filters = [
+            'q' => $_GET['q'] ?? null,
+            'categorie_id' => $_GET['categorie_id'] ?? null,
+            'favoris' => $_GET['favoris'] ?? null,
+        ];
+
+        $realisations = $this->repo->search($filters);
+        $categories = $this->repo->getAllCategories();
+
         require __DIR__ . '/../../../Views/chef/realisations/crudrealisation.php';
     }
+
 
     public function create() {
         $errors = [];

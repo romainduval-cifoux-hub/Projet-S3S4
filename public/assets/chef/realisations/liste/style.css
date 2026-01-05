@@ -76,6 +76,58 @@ main.main-content {
     margin: 2rem auto;
 }
 
+.filter-commentaire {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 1.5rem auto 2rem;
+    width: 80%;
+}
+
+.filter-commentaire input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 2px solid black;
+    background: var(--bg);
+}
+
+.filter-commentaire select {
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 2px solid black;
+    background: var(--bg);
+}
+
+.filter-commentaire button {
+    padding: 0.7rem 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid black;
+    background: var(--vert-fonce);
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-commentaire button:hover {
+    background: var(--btn-hover);
+}
+
+.reset-link {
+    font-weight: bold;
+    color: var(--vert-fonce);
+    text-decoration: none;
+    padding: 0.7rem 1rem;
+}
+
+.reset-link:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 768px) {
     .table-realisations th,
     .table-realisations td {
@@ -90,5 +142,15 @@ main.main-content {
 
     .table-realisations img {
         width: 60px;
+    }
+
+    .filter-commentaire {
+        flex-direction: column;
+        width: 95%;
+    }
+
+    .filter-commentaire input,
+    .filter-commentaire button {
+        width: 100%;
     }
 }
