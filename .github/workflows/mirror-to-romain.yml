@@ -1,24 +1,4 @@
-name: Mirror main to romainduval-cifoux-hub
-
-on:
-  push:
-    branches: [ "main" ]
-  workflow_dispatch:
-
-jobs:
-  mirror:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Configure git identity
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-      - name: Push to romainduval-cifoux-hub/Projet-S3S4 (using MIRROR_TOKEN)
+      - name: Push to romainduval-cifoux-hub/Projet-S3S4 (header auth)
         env:
           TOKEN: ${{ secrets.MIRROR_TOKEN }}
         run: |
@@ -27,5 +7,11 @@ jobs:
             exit 1
           fi
 
-          # Push en HTTPS avec ton compte + token en password
-          git push --force "https://romainduval-cifoux-hub:${TOKEN}@github.com/romainduval-cifoux-hub/Projet-S3S4.git" HEAD:main
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          DEST="https://github.com/romainduval-cifoux-hub/Projet-S3S4.git"
+
+          # Auth via header (le token ne doit pas apparaître dans l'URL)
+          git -c http.extraheader="AUTHORIZATION: basic $(printf 'romainduval-cifoux-hub:%s' "$TOKEN" | base64 -w0)" \
+              push --force "$DEST" HEAD:main
