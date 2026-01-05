@@ -8,20 +8,24 @@ on:
 jobs:
   mirror:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Push to romainduval-cifoux-hub/Projet-S3S4
+      - name: Configure git identity
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          # Ajoute ton repo perso comme remote de destination
-          git remote add romain https://romainduval-cifoux-hub:${{ secrets.MIRROR_TOKEN }}@github.com/romainduval-cifoux-hub/Projet-S3S4.git
+      - name: Push to romainduval-cifoux-hub/Projet-S3S4 (using MIRROR_TOKEN)
+        env:
+          TOKEN: ${{ secrets.MIRROR_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "MIRROR_TOKEN is missing/empty"
+            exit 1
+          fi
 
-          # Pousse main vers ton repo perso (miroir de main)
-          git push --force romain HEAD:main
+          # Push en HTTPS avec ton compte + token en password
+          git push --force "https://romainduval-cifoux-hub:${TOKEN}@github.com/romainduval-cifoux-hub/Projet-S3S4.git" HEAD:main
