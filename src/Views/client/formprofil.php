@@ -25,9 +25,8 @@
     
         <header>
             <div class='container'>
-                <img id="logo_header" 
-                    src="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardinTexte.png" 
-                    alt="logo_Team_Jardin">
+
+<a href="<?= BASE_URL ?>/public/index.php#main-accueil"><img id='logo_header' src="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardinTexte.png" alt="logo_Team_Jardin"></a>
 
                 <nav>
                     <ul>
