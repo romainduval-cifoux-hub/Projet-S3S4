@@ -37,7 +37,7 @@ class ForgotPasswordController
 
                     createPasswordReset($this->pdo, (int)$user['id'], $tokenHash, $expiresAt);
 
-                    $resetLink = BASE_URL . "/public/index.php?page=reset-password&token=" . urlencode($token);
+                    $resetLink = BASE_URL . "/public/index.php?page=reset_password&token=" . urlencode($token);
 
                     $subject = "Réinitialisation de votre mot de passe - Team Jardin";
                     $body =

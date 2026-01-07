@@ -229,12 +229,12 @@ switch ($page) {
         $controller->demande();
         break;
 
-    case 'forgot-password':
+    case 'forgot_password':
         $controller = new ForgotPasswordController();
         $controller->handleRequest();
         break;
 
-    case 'reset-password':
+    case 'reset_password':
         $controller = new ResetPasswordController();
         $controller->handleRequest();
         break;
