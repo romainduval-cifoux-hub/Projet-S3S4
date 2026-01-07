@@ -64,37 +64,4 @@ class AdminRealisationRepository {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function search(array $filters): array {
-        $sql = "
-            SELECT r.*, c.nom AS categorie_nom
-            FROM realisations r
-            LEFT JOIN categories c ON r.categorie_id = c.id
-            WHERE 1=1
-        ";
-
-        $params = [];
-
-        if (!empty($filters['q'])) {
-            $sql .= " AND r.commentaire LIKE :q";
-            $params['q'] = '%' . $filters['q'] . '%';
-        }
-
-        if ($filters['categorie_id'] !== null && $filters['categorie_id'] !== '') {
-            $sql .= " AND r.categorie_id = :categorie_id";
-            $params['categorie_id'] = (int)$filters['categorie_id'];
-        }
-
-        if ($filters['favoris'] !== null && $filters['favoris'] !== '') {
-            $sql .= " AND r.favoris = :favoris";
-            $params['favoris'] = (int)$filters['favoris'];
-        }
-
-        $sql .= " ORDER BY r.date_creation DESC";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 }

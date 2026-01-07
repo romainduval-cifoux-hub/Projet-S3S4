@@ -197,6 +197,20 @@ CREATE TABLE conges (
   CONSTRAINT fk_conge_manager FOREIGN KEY (id_manager_decision) REFERENCES users(id) ON DELETE SET NULL
 );
 
+CREATE TABLE password_resets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  token_hash VARCHAR(64) NOT NULL,
+  expires_at DATETIME NOT NULL,
+  used_at DATETIME DEFAULT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX (user_id),
+  INDEX (token_hash),
+  CONSTRAINT fk_password_resets_user
+    FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+);
+
 
 
 INSERT INTO entreprise (nom, description, telephone, adresse, siret, iban, bic)
@@ -412,67 +426,96 @@ INSERT INTO realisations (photo, commentaire, categorie_id) VALUES
  6);
 
 
-UPDATE users SET password = 'Client01$2025!' WHERE username = 'client01';
-UPDATE users SET password = 'Client02#R0cks' WHERE username = 'client02';
-UPDATE users SET password = 'Cl!ent03_9x' WHERE username = 'client03';
-UPDATE users SET password = 'C4-client04$' WHERE username = 'client04';
-UPDATE users SET password = 'Cli3nt05-Ok' WHERE username = 'client05';
-UPDATE users SET password = 'C06!secure' WHERE username = 'client06';
-UPDATE users SET password = 'client07_pass#' WHERE username = 'client07';
-UPDATE users SET password = 'C8*Purple!7' WHERE username = 'client08';
-UPDATE users SET password = '9client09$GO' WHERE username = 'client09';
-UPDATE users SET password = 'Client10@Home' WHERE username = 'client10';
-UPDATE users SET password = 'Cli#11-Blue' WHERE username = 'client11';
-UPDATE users SET password = 'C12_sunrise!' WHERE username = 'client12';
-UPDATE users SET password = 'client13^Tree' WHERE username = 'client13';
-UPDATE users SET password = 'Cl14!Moon' WHERE username = 'client14';
-UPDATE users SET password = 'C15-Delta$' WHERE username = 'client15';
-UPDATE users SET password = 'client16+Wave' WHERE username = 'client16';
-UPDATE users SET password = 'C17_River#' WHERE username = 'client17';
-UPDATE users SET password = 'client18?Star' WHERE username = 'client18';
-UPDATE users SET password = 'C19&Stone!' WHERE username = 'client19';
-UPDATE users SET password = 'client20=Leaf' WHERE username = 'client20';
-UPDATE users SET password = 'Cli21!Fox' WHERE username = 'client21';
-UPDATE users SET password = 'C22_Sky#' WHERE username = 'client22';
-UPDATE users SET password = 'client23+Oak' WHERE username = 'client23';
-UPDATE users SET password = 'C24*Mint!' WHERE username = 'client24';
-UPDATE users SET password = 'client25@Bee' WHERE username = 'client25';
-UPDATE users SET password = 'C26-Rain#' WHERE username = 'client26';
-UPDATE users SET password = 'client27$Peak' WHERE username = 'client27';
-UPDATE users SET password = 'C28!Echo' WHERE username = 'client28';
-UPDATE users SET password = 'client29#Bolt' WHERE username = 'client29';
-UPDATE users SET password = 'C30_Pearl!' WHERE username = 'client30';
+UPDATE users SET password = md5('Client01$2025!') WHERE username = 'client01';
+UPDATE users SET password = md5('Client02#R0cks') WHERE username = 'client02';
+UPDATE users SET password = md5('Cl!ent03_9x') WHERE username = 'client03';
+UPDATE users SET password = md5('C4-client04$') WHERE username = 'client04';
+UPDATE users SET password = md5('Cli3nt05-Ok') WHERE username = 'client05';
+UPDATE users SET password = md5('C06!secure') WHERE username = 'client06';
+UPDATE users SET password = md5('client07_pass#') WHERE username = 'client07';
+UPDATE users SET password = md5('C8*Purple!7') WHERE username = 'client08';
+UPDATE users SET password = md5('9client09$GO') WHERE username = 'client09';
+UPDATE users SET password = md5('Client10@Home') WHERE username = 'client10';
+UPDATE users SET password = md5('Cli#11-Blue') WHERE username = 'client11';
+UPDATE users SET password = md5('C12_sunrise!') WHERE username = 'client12';
+UPDATE users SET password = md5('client13^Tree') WHERE username = 'client13';
+UPDATE users SET password = md5('Cl14!Moon') WHERE username = 'client14';
+UPDATE users SET password = md5('C15-Delta$') WHERE username = 'client15';
+UPDATE users SET password = md5('client16+Wave') WHERE username = 'client16';
+UPDATE users SET password = md5('C17_River#') WHERE username = 'client17';
+UPDATE users SET password = md5('client18?Star') WHERE username = 'client18';
+UPDATE users SET password = md5('C19&Stone!') WHERE username = 'client19';
+UPDATE users SET password = md5('client20=Leaf') WHERE username = 'client20';
+UPDATE users SET password = md5('Cli21!Fox') WHERE username = 'client21';
+UPDATE users SET password = md5('C22_Sky#') WHERE username = 'client22';
+UPDATE users SET password = md5('client23+Oak') WHERE username = 'client23';
+UPDATE users SET password = md5('C24*Mint!') WHERE username = 'client24';
+UPDATE users SET password = md5('client25@Bee') WHERE username = 'client25';
+UPDATE users SET password = md5('C26-Rain#') WHERE username = 'client26';
+UPDATE users SET password = md5('client27$Peak') WHERE username = 'client27';
+UPDATE users SET password = md5('C28!Echo') WHERE username = 'client28';
+UPDATE users SET password = md5('client29#Bolt') WHERE username = 'client29';
+UPDATE users SET password = md5('C30_Pearl!') WHERE username = 'client30';
 
-UPDATE users SET password = 'Salarie01$Adm' WHERE username = 'salarie01';
-UPDATE users SET password = 'Sal02#Work' WHERE username = 'salarie02';
-UPDATE users SET password = 'S3_salarie!X' WHERE username = 'salarie03';
-UPDATE users SET password = 'Sal04@Team' WHERE username = 'salarie04';
-UPDATE users SET password = 'Salarie05%Go' WHERE username = 'salarie05';
-UPDATE users SET password = 'Sal06^Lead' WHERE username = 'salarie06';
-UPDATE users SET password = 'S07_salarie*' WHERE username = 'salarie07';
-UPDATE users SET password = 'Sal08!Done' WHERE username = 'salarie08';
-UPDATE users SET password = 'S09#Check' WHERE username = 'salarie09';
-UPDATE users SET password = 'Sal10$Plan' WHERE username = 'salarie10';
-UPDATE users SET password = 'S11-Manage' WHERE username = 'salarie11';
-UPDATE users SET password = 'Sal12+Ops' WHERE username = 'salarie12';
-UPDATE users SET password = 'S13_salarie?' WHERE username = 'salarie13';
-UPDATE users SET password = 'Sal14^Edge' WHERE username = 'salarie14';
-UPDATE users SET password = 'S15*Secure' WHERE username = 'salarie15';
-UPDATE users SET password = 'Sal16!Core' WHERE username = 'salarie16';
-UPDATE users SET password = 'S17#Root' WHERE username = 'salarie17';
-UPDATE users SET password = 'Sal18$Flow' WHERE username = 'salarie18';
-UPDATE users SET password = 'S19-Auth' WHERE username = 'salarie19';
-UPDATE users SET password = 'Sal20+Gate' WHERE username = 'salarie20';
-UPDATE users SET password = 'S21!Hash' WHERE username = 'salarie21';
-UPDATE users SET password = 'Sal22#Node' WHERE username = 'salarie22';
-UPDATE users SET password = 'S23$Sync' WHERE username = 'salarie23';
-UPDATE users SET password = 'Sal24^Task' WHERE username = 'salarie24';
-UPDATE users SET password = 'S25*Alert' WHERE username = 'salarie25';
-UPDATE users SET password = 'Sal26!salarie' WHERE username = 'salarie26';
-UPDATE users SET password = 'S27#Policy' WHERE username = 'salarie27';
-UPDATE users SET password = 'Sal28$Audit' WHERE username = 'salarie28';
-UPDATE users SET password = 'S29+OpsX' WHERE username = 'salarie29';
-UPDATE users SET password = 'Sal30!Final' WHERE username = 'salarie30';
+UPDATE users SET password = md5('Salarie01$Adm') WHERE username = 'salarie01';
+UPDATE users SET password = md5('Sal02#Work') WHERE username = 'salarie02';
+UPDATE users SET password = md5('S3_salarie!X') WHERE username = 'salarie03';
+UPDATE users SET password = md5('Sal04@Team') WHERE username = 'salarie04';
+UPDATE users SET password = md5('Salarie05%Go') WHERE username = 'salarie05';
+UPDATE users SET password = md5('Sal06^Lead') WHERE username = 'salarie06';
+UPDATE users SET password = md5('S07_salarie*') WHERE username = 'salarie07';
+UPDATE users SET password = md5('Sal08!Done') WHERE username = 'salarie08';
+UPDATE users SET password = md5('S09#Check') WHERE username = 'salarie09';
+UPDATE users SET password = md5('Sal10$Plan') WHERE username = 'salarie10';
+UPDATE users SET password = md5('S11-Manage') WHERE username = 'salarie11';
+UPDATE users SET password = md5('Sal12+Ops') WHERE username = 'salarie12';
+UPDATE users SET password = md5('S13_salarie?') WHERE username = 'salarie13';
+UPDATE users SET password = md5('Sal14^Edge') WHERE username = 'salarie14';
+UPDATE users SET password = md5('S15*Secure') WHERE username = 'salarie15';
+UPDATE users SET password = md5('Sal16!Core') WHERE username = 'salarie16';
+UPDATE users SET password = md5('S17#Root') WHERE username = 'salarie17';
+UPDATE users SET password = md5('Sal18$Flow') WHERE username = 'salarie18';
+UPDATE users SET password = md5('S19-Auth') WHERE username = 'salarie19';
+UPDATE users SET password = md5('Sal20+Gate') WHERE username = 'salarie20';
+UPDATE users SET password = md5('S21!Hash') WHERE username = 'salarie21';
+UPDATE users SET password = md5('Sal22#Node') WHERE username = 'salarie22';
+UPDATE users SET password = md5('S23$Sync') WHERE username = 'salarie23';
+UPDATE users SET password = md5('Sal24^Task') WHERE username = 'salarie24';
+UPDATE users SET password = md5('S25*Alert') WHERE username = 'salarie25';
+UPDATE users SET password = md5('Sal26!salarie') WHERE username = 'salarie26';
+UPDATE users SET password = md5('S27#Policy') WHERE username = 'salarie27';
+UPDATE users SET password = md5('Sal28$Audit') WHERE username = 'salarie28';
+UPDATE users SET password = md5('S29+OpsX') WHERE username = 'salarie29';
+UPDATE users SET password = md5('Sal30!Final') WHERE username = 'salarie30';
 
-
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client01') WHERE id_client=1;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client02') WHERE id_client=2;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client03') WHERE id_client=3;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client04') WHERE id_client=4;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client05') WHERE id_client=5;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client06') WHERE id_client=6;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client07') WHERE id_client=7;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client08') WHERE id_client=8;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client09') WHERE id_client=9;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client10') WHERE id_client=10;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client11') WHERE id_client=11;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client12') WHERE id_client=12;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client13') WHERE id_client=13;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client14') WHERE id_client=14;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client15') WHERE id_client=15;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client16') WHERE id_client=16;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client17') WHERE id_client=17;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client18') WHERE id_client=18;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client19') WHERE id_client=19;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client20') WHERE id_client=20;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client21') WHERE id_client=21;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client22') WHERE id_client=22;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client23') WHERE id_client=23;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client24') WHERE id_client=24;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client25') WHERE id_client=25;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client26') WHERE id_client=26;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client27') WHERE id_client=27;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client28') WHERE id_client=28;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client29') WHERE id_client=29;
+UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client30') WHERE id_client=30;
 

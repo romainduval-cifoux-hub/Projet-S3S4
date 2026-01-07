@@ -6,35 +6,34 @@ require_once __DIR__ . '/Controllers/Shared/HomeController.php';
 require_once __DIR__ . '/Controllers/Shared/LoginController.php';
 require_once __DIR__ . '/Controllers/Shared/RegisterController.php';
 require_once __DIR__ . '/Controllers/Shared/LogoutController.php';
+require_once __DIR__ . '/Controllers/Shared/ForgotPasswordController.php';
+require_once __DIR__ . '/Controllers/Shared/ResetPasswordController.php';
 
 //Vitrine
 require_once __DIR__ . '/Controllers/Vitrine/AvisController.php';
 require_once __DIR__ . '/Controllers/Vitrine/RealisationController.php';
 
 //Chef
-    //Planning
+//Planning
 require_once __DIR__ . '/Controllers/Chef/Planning/PlanningController.php';
 require_once __DIR__ . '/Controllers/Chef/Planning/ChantierController.php';
 require_once __DIR__ . '/Controllers/Chef/Planning/EmployeController.php';
-    //Facturation
+//Facturation
 require_once __DIR__ . '/Controllers/Chef/Facturation/FacturationController.php';
 require_once __DIR__ . '/Controllers/Chef/Facturation/FormEditBusinessInfoController.php';
 require_once __DIR__ . '/Controllers/Chef/Facturation/GestionnaireFacturationController.php';
 require_once __DIR__ . '/Controllers/Chef/Facturation/CreationDocumentController.php';
 
-    //Realisation
+//Realisation
 require_once __DIR__ . '/Controllers/Chef/Realisation/AdminRealisationController.php';
-    //Categories
+//Categories
 require_once __DIR__ . '/Controllers/Chef/Realisation/AdminCategoryController.php';
-    //Conges
+//Conges
 require_once __DIR__ . '/Controllers/Chef/Planning/ChefCongeController.php';
-
-//Client
-require_once __DIR__ . '/Controllers/Client/ClientController.php';
 
 //Employe
 require_once __DIR__ . '/Controllers/Employe/PlanningEmployeController.php';
-    //Conges
+//Conges
 require_once __DIR__ . '/Controllers/Employe/EmployeCongeController.php';
 
 
@@ -46,7 +45,7 @@ require_once __DIR__ . '/Controllers/Client/ClientController.php';
 
 $page = $_GET['page'] ?? 'home';
 
-$pagesPubliques = ['login', 'register', 'logout', 'home', 'realisation'];
+$pagesPubliques = ['login', 'register', 'logout', 'home', 'realisation', 'forgot_password', 'reset_password'];
 
 if (!in_array($page, $pagesPubliques) && empty($_SESSION['user'])) {
 
@@ -68,7 +67,7 @@ switch ($page) {
         break;
 
     case 'home':
-        ShowHomeController(); 
+        ShowHomeController();
         break;
 
     case 'logout':
@@ -77,21 +76,21 @@ switch ($page) {
         break;
 
     case 'avis_add':
-    
+
         $controller = new AvisController();
         $controller->add();
         break;
 
     case 'realisation':
-        require_once __DIR__ . '/Views/shared/header.php';  
+        require_once __DIR__ . '/Views/shared/header.php';
         $controller = new RealisationController();
         $controller->affichage_realisations();
-        require_once __DIR__ . '/Views/shared/footer.php' ;
+        require_once __DIR__ . '/Views/shared/footer.php';
         break;
 
     //Chef
-    
-        // Réalisations admin
+
+    // Réalisations admin
     case 'chef/realisations':
         $controller = new AdminRealisationController();
         $controller->index();
@@ -112,7 +111,7 @@ switch ($page) {
         $controller->delete();
         break;
 
-        // Catégories admin
+    // Catégories admin
     case 'chef/categories':
         $controller = new AdminCategoryController();
         $controller->index();
@@ -132,7 +131,7 @@ switch ($page) {
         $controller = new AdminCategoryController();
         $controller->delete();
         break;
-        //conges
+    //conges
     case 'chef/conges':
         $controller = new ChefCongeController();
         $controller->index();
@@ -144,9 +143,9 @@ switch ($page) {
         break;
 
 
-        //Planning
+    //Planning
     case 'chef/planning':
-        
+
         $controller = new PlanningController();
         $controller->handleRequest();
         break;
@@ -157,14 +156,14 @@ switch ($page) {
         break;
 
     case 'chef/facturation':
-        
+
         $controller = new FacturationController();
         $controller->handleRequest();
         break;
 
 
     case 'chantier/delete':
-        
+
         $controller = new ChantierController();
         $controller->delete();
         break;
@@ -173,7 +172,7 @@ switch ($page) {
         $controller = new ChantierController();
         $controller->edit();
         break;
-    
+
     case 'employe/create':
         $controller = new EmployeController();
         $controller->create();
@@ -189,21 +188,21 @@ switch ($page) {
         $controller->handleRequest();
         break;
 
-        //Facturation
+    //Facturation
     case 'chef/facturation/dashboard':
-        
+
         $controller = new FacturationController();
         $controller->handleRequest();
         break;
 
     case 'chef/facturation/EditBusinessInfo':
-        
+
         $controller = new FormEditBusinessInfoController();
         $controller->handleRequest();
         break;
 
     case 'chef/facturation/GestionFacturation':
-        
+
         $controller = new GestionnaireFacturationController();
         $controller->handleRequest();
         break;
@@ -223,32 +222,25 @@ switch ($page) {
         $controller = new ClientController();
         $controller->save();
         break;
-
-    case 'client/documents':
-        $controller = new ClientController();
-        $controller->documents();
-        break;
-
-    case 'client/commentaires':
-        $controller = new ClientController();
-        $controller->commentaires();
-        break;
-
-    case 'client/supprimer_commentaire':
-        $controller = new ClientController();
-        $controller->supprimer_commentaire();
-        break;
-
     //Employe
-        //Conges
+    //Conges
     case 'employe/conge':
         $controller = new EmployeCongeController();
         $controller->demande();
         break;
-        
+
+    case 'forgot_password':
+        $controller = new ForgotPasswordController();
+        $controller->handleRequest();
+        break;
+
+    case 'reset_password':
+        $controller = new ResetPasswordController();
+        $controller->handleRequest();
+        break;
+
     default:
         http_response_code(404);
         echo "404 - Page non trouvée";
         break;
-    
-    }
+}
