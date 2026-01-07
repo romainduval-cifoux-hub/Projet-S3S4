@@ -35,6 +35,43 @@
             <section class="board">
                 <h1>Liste des réalisations</h1>
 
+                <form method="get" class="filter-commentaire">
+                    <input type="hidden" name="page" value="chef/realisations">
+
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Rechercher dans le commentaire"
+                        value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
+                    >
+
+                    <select name="categorie_id">
+                        <option value="">Toutes les catégories</option>
+                        <?php foreach ($categories as $cat): ?>
+                            <option
+                                value="<?= $cat['id'] ?>"
+                                <?= (($_GET['categorie_id'] ?? '') == $cat['id']) ? 'selected' : '' ?>
+                            >
+                                <?= htmlspecialchars($cat['nom']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <select name="favoris">
+                        <option value="">Tous</option>
+                        <option value="1" <?= ($_GET['favoris'] ?? '') === '1' ? 'selected' : '' ?>>Favoris</option>
+                        <option value="0" <?= ($_GET['favoris'] ?? '') === '0' ? 'selected' : '' ?>>Non favoris</option>
+                    </select>
+
+                    <button type="submit">Filtrer</button>
+
+                    <?php if (!empty($_GET['q']) || !empty($_GET['categorie_id']) || isset($_GET['favoris'])): ?>
+                        <a href="<?= BASE_URL ?>/public/index.php?page=chef/realisations" class="reset-link">
+                            Réinitialiser
+                        </a>
+                    <?php endif; ?>
+                </form>
+                
                 <?php if (!empty($realisations)): ?>
                     <table class="table-realisations">
                         <thead>
