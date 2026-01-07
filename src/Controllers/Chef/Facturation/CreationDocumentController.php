@@ -12,7 +12,7 @@ class CreationDocumentController {
     private PDO $pdo;
 
     public function __construct() {
-        $this->pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS);
+        $this->pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS,DB_PORT);
     }
 
 public function handleRequest() {

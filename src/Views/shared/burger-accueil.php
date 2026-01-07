@@ -15,8 +15,7 @@
     <nav>
         <a href="<?= BASE_URL ?>/public/index.php?page=client/profil">Mon profil</a>
         <a href="<?= BASE_URL ?>/public/index.php?page=home#avis">Mes avis</a>
-        <a href="<?= BASE_URL ?>/public/index.php?page=client/documents">Mes documents</a>
-        <a href="<?= BASE_URL ?>/public/index.php?page=client/commentaires">Mes commentaires</a>
+    </nav>
 </aside>
 
 
