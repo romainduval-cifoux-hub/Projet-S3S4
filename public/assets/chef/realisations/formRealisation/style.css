@@ -65,3 +65,23 @@ h1 {
 .btn_creer_realisation:hover {
     background: var(--btn-hover);
 }
+
+.crop-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 10px;
+    background: var(--bge);
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.crop-container img {
+    border: 2px solid black;
+    border-radius: 8px;
+    max-height: 300px;
+    width: 100%;
+    object-fit: contain;
+    display: block;
+}

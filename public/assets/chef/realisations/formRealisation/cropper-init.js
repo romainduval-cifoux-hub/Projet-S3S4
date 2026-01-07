@@ -1,21 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const imageRecupere = document.getElementById('photo');
-    const imageExemple = document.getElementById('imageExemple');
-    const imageRogne = document.getElementById('croppedImage');
+    const inputImage = document.getElementById('photo');
+    const imagePreview = document.getElementById('imagePreview');
+    const croppedInput = document.getElementById('croppedImage');
     let cropper;
 
-    imageRecupere.addEventListener('change', (e) => {
+    inputImage.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
         const reader = new FileReader();
         reader.onload = () => {
-            imageExemple.src = reader.result;
-            imageExemple.style.display = 'block';
+            imagePreview.src = reader.result;
+            imagePreview.style.display = 'block';
 
             if (cropper) cropper.destroy();
 
-            cropper = new Cropper(imageExemple, {
+            cropper = new Cropper(imagePreview, {
                 aspectRatio: 3 / 4,
                 viewMode: 1,
                 autoCropArea: 1
@@ -29,11 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!cropper) return;
 
         e.preventDefault();
-
         cropper.getCroppedCanvas().toBlob((blob) => {
             const reader = new FileReader();
             reader.onloadend = () => {
-                imageRogne.value = reader.result;
+                croppedInput.value = reader.result;
                 form.submit();
             };
             reader.readAsDataURL(blob);

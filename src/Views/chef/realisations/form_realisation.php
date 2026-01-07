@@ -11,12 +11,10 @@
     <link href="<?= BASE_URL ?>/public/assets/chef/realisations/formRealisation/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
+
+    <!-- Cropper.js CSS via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
 </head>
-
-<script src="<?= BASE_URL ?>/public/assets/chef/realisations/formRealisation/cropper-init.js" defer></script>
-
-
-
 <body>
 <div class="page">
     <?php require_once(__DIR__ . '/../shared/header_chef.php'); ?>
@@ -55,16 +53,17 @@
                 <?php endif; ?>
 
                 <form method="post" enctype="multipart/form-data" class="form-realisation" action="<?= $formAction ?>">
+                    
                     <div class="form-row">
                         <label for="photo">Photo</label>
                         <input type="file" id="photo" accept="image/*">
                         <?php if (!empty($realisation['photo'])): ?>
-                            <img src="<?= BASE_URL.'/'.$realisation['photo'] ?>" alt="Photo actuelle" width="100">
+                            <img src="<?= BASE_URL.'/'.$realisation['photo'] ?>" alt="Photo actuelle">
                         <?php endif; ?>
                     </div>
 
-                    <div class="crop-container" style="max-width:500px; margin-top:20px;">
-                        <img id="imagePreview" style="max-width:100%; display:none;">
+                    <div class="crop-container">
+                        <img id="imagePreview">
                     </div>
 
                     <input type="hidden" name="croppedImage" id="croppedImage">
@@ -88,14 +87,15 @@
 
                     <div class="form-row">
                         <label for="favoris">
-                            <input type="checkbox" id="favoris" name="favoris" <?= !empty($realisation['favoris']) ? 'checked' : '' ?>>
                             Favoris
+                            <input type="checkbox" id="favoris" name="favoris" <?= !empty($realisation['favoris']) ? 'checked' : '' ?>>
                         </label>
                     </div>
 
                     <button type="submit" class="btn_creer_realisation">
                         <?= isset($realisation['id']) ? 'Mettre à jour' : 'Créer' ?>
                     </button>
+
                 </form>
             </section>
         </main>
@@ -103,8 +103,9 @@
 
     <?php require __DIR__ . '/../../shared/footer.php'; ?>
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script src="<?= BASE_URL ?>/public/assets/chef/realisations/formRealisation/cropper-init.js"></script>
 
 </body>
 </html>
