@@ -77,10 +77,16 @@ function markPasswordResetUsed(PDO $pdo, int $resetId): bool {
 }
 
 function updateUserPassword(PDO $pdo, int $userId, string $newPassword): bool {
-    // Compatible avec ton login() actuel qui utilise md5()
     $stmt = $pdo->prepare("UPDATE users SET password = :p WHERE id = :id");
     return $stmt->execute([
         'p'  => md5($newPassword),
         'id' => $userId
     ]);
+}
+
+function usernameExists(PDO $pdo, string $username): bool {
+    $stmt = $pdo->prepare("SELECT 1 FROM users WHERE username = :username LIMIT 1");
+    $stmt->execute(['username' => $username]);
+
+    return (bool) $stmt->fetchColumn();
 }
