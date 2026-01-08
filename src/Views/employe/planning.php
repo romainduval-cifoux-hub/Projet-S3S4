@@ -43,6 +43,8 @@
             ];
             require __DIR__ . '/../shared/aside.php';
         ?>
+        
+
         <main class="main-content">
             <section class="board">
 

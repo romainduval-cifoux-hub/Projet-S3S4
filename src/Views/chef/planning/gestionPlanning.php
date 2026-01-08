@@ -156,19 +156,44 @@
                                                 </div>
                                                 <div class="slot-menu js-slot-menu">
                                                     <div class="slot-menu-panel">
+                                                        <!-- Bouton DÉTAILS -->
+                                                        <button
+                                                            type="button"
+                                                            class="slot-details-btn slot-menu-item js-open-creneau-modal js-no-modal"
+                                                            data-heures="<?= htmlspecialchars($hDeb . '–' . $hFin) ?>"
+                                                            data-label="<?= htmlspecialchars($label) ?>"
+                                                            data-info="<?= htmlspecialchars($slot['commentaire'] ?? '') ?>"
+                                                        >
+                                                            Détails
+                                                        </button>
+
                                                         <!-- Modifier -->
-                                                        <a class="slot-menu-item"
+                                                        <a class="slot-menu-item js-no-modal"
                                                             href="<?= BASE_URL ?>/public/index.php?page=chantier/edit&id=<?= (int)($slot['id_creneau'] ?? 0) ?>">
                                                             Modifier
                                                         </a>
 
                                                         <!-- Supprimer -->
                                                         <form method="post"
-                                                            action="<?= BASE_URL ?>/public/index.php?page=chantier/delete">
-                                                            <input type="hidden" name="id_creneau" value="<?= (int)($slot['id_creneau'] ?? 0) ?>">
-                                                            <button type="submit" class="slot-menu-item slot-menu-danger">
-                                                                Supprimer
+                                                            action="<?= BASE_URL ?>/public/index.php?page=chantier/delete"
+                                                            class="js-double-confirm js-no-modal"
+                                                        >
+                                                        <input type="hidden" name="id_creneau" value="<?= (int)($slot['id_creneau'] ?? 0) ?>">
+
+                                                        <!-- 1er clic -->
+                                                        <button type="button" class="slot-menu-item slot-menu-danger js-ask-delete">
+                                                            🗑
+                                                        </button>
+
+                                                        <!-- 2e validation -->
+                                                        <div class="slot-confirm" hidden>
+                                                            <button type="submit" class="slot-menu-item slot-menu-danger js-no-modal">
+                                                            Confirmer
                                                             </button>
+                                                            <button type="button" class="slot-menu-item js-cancel-delete js-no-modal">
+                                                            Annuler
+                                                            </button>
+                                                        </div>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -183,7 +208,8 @@
             </section>
         </main>
     </div>
-    <script src="<?= BASE_URL ?>/public/assets/chef/shared/js/creneau-modal.js"></script>                                        
+    <script src="<?= BASE_URL ?>/public/assets/chef/shared/js/creneau-modal.js"></script>     
+    <script src="<?= BASE_URL ?>/public/assets/chef/shared/js/confirmation-suppression.js"></script>                                       
     <?php 
     require_once __DIR__ . '/../shared/popup_creneau.php'; 
     require_once __DIR__ . '/../../shared/footer.php'; 

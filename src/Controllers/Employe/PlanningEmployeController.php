@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../Database/db.php';
 require_once __DIR__ . '/../../Database/planningRepository.php';
+require_once __DIR__ . '/../../Database/notificationsRepository.php';
 
 class PlanningEmployeController {
 
@@ -17,6 +18,10 @@ class PlanningEmployeController {
 
     public function handleRequest(): void
     {
+
+        
+
+
         //Sécurité : seulement salariés
         if (empty($_SESSION['user']) || ($_SESSION['role'] ?? '') !== 'salarie') {
             http_response_code(403);
@@ -61,6 +66,9 @@ class PlanningEmployeController {
         $slotsMatrix = getWeekMatrix($this->pdo, $lundi);
 
         $slotsPerso = $slotsMatrix[$idSalarie] ?? [];
+
+        $notifsUnread = notif_getUnread($this->pdo, (int)$_SESSION['user_id']);
+        $nbNotifs     = count($notifsUnread);
 
         $pageTitle = "Mon planning – Team Jardin";
 
