@@ -85,14 +85,26 @@ CREATE TABLE messages (
 
 
 CREATE TABLE notifications (
-  id_notification INT AUTO_INCREMENT PRIMARY KEY,
-  id_expediteur INT NULL,
-  titre VARCHAR(200) NOT NULL,
-  message TEXT NOT NULL,
-  type ENUM('info','warning','success','error','autre') NOT NULL DEFAULT 'info',
-  date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT fk_notif_sender FOREIGN KEY (id_expediteur) REFERENCES users(id) ON DELETE SET NULL
+    id_notification INT AUTO_INCREMENT PRIMARY KEY,
+    id_destinataire INT NOT NULL,
+    id_expediteur INT NULL,
+    titre VARCHAR(200) NOT NULL,
+    message TEXT NOT NULL,
+    type ENUM('info','success','warning','error') NOT NULL DEFAULT 'info',
+    lien VARCHAR(255) NULL,
+    is_read TINYINT(1) NOT NULL DEFAULT 0,
+    date_lu DATETIME NULL,
+    date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_notif_destinataire
+        FOREIGN KEY (id_destinataire)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_notif_expediteur
+        FOREIGN KEY (id_expediteur)
+        REFERENCES users(id)
+        ON DELETE SET NULL
 );
+
 
 
 CREATE TABLE notification_destinataires (
