@@ -5,12 +5,12 @@ require_once __DIR__ . '/../../Database/avis.php';
 ?>
 <div id="main-avis" class="avis_container">
     <h2>Vous pouvez nous faire <span class="highlight">CONFIANCE</span> </h2>
-    <h3>EXCELLENT</h3>
+    <img id="logo-google" src="<?= BASE_URL ?>/public/assets/vitrine/img/Google-logo.png" alt="logo-google">
+
     <img id="note"
         src="<?= BASE_URL ?>/public/assets/vitrine/img/<?= $moyenne ?>stars-google.png"
         alt="note moyenne">
     <p>Basé sur <strong><?= count($avis) ?> avis</strong></p>
-    <img id="logo-google" src="<?= BASE_URL ?>/public/assets/vitrine/img/Google-logo.png" alt="logo-google">
 
     <div class="avis-slider-wrapper">
         <button class="avis-arrow avis-arrow-left" type="button">‹</button>
