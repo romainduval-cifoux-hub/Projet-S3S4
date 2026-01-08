@@ -10,7 +10,7 @@
             </ul>
         </nav>
 
-        <a href="<?= BASE_URL ?>/public/index.php?page=login">
+        <a href="<?= BASE_URL ?>/public/index.php?page=login" class="btn_login">
             <?= htmlspecialchars($bouton) ?>
         </a>
     </div>

@@ -5,7 +5,7 @@
         
         <h2>Réalisation de votre projet en 4 étapes !</h2>
 
-            <div class="step active">
+            <div class="step">
                 <div class="number">1</div>
                 <div>
                     <h3>Contact</h3>
@@ -22,14 +22,21 @@
             </div>
 
             <div class="step">
-                <div class="number">3</div>
+            <div class="number">3</div>
+            <div>
                 <h3>Devis</h3>
+                <p>Un devis clair, précis et sans surprise, validé avec vous avant le lancement.</p>
+            </div>
             </div>
 
             <div class="step">
-                <div class="number">4</div>
+            <div class="number">4</div>
+            <div>
                 <h3>Réalisation</h3>
+                <p>Des travaux réalisés avec soin, dans les délais, jusqu’à la livraison finale.</p>
             </div>
+            </div>
+
         </section>
 
         <section class="contact-form">

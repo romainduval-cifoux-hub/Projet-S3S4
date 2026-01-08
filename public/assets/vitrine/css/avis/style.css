@@ -12,6 +12,8 @@
     font-size: xx-large;
     text-align: center;
     margin-top : 0;
+    margin-bottom : 10px;
+
 }
 
 #main-avis h2 .highlight {
@@ -21,7 +23,7 @@
 }
 
 #main-avis #logo-google {
-    height: 100px;
+    height: 40px;
 }
 
 /* ==== CARTES D'AVIS ==== */
@@ -29,7 +31,7 @@
     background-color: #ffffff;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 350px;
+    width: 250px;
     padding: 15px;
     text-align: left;
     font-family: 'Arial', sans-serif;
@@ -38,7 +40,12 @@
 .avis-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+}
+
+#main-avis #logo-google,
+#main-avis #note{
+  display: block;
+  margin: 0 auto;
 }
 
 .pp {
@@ -70,6 +77,12 @@
     height: 20px;
 }
 
+#main-avis #note{
+    width: 90px;
+    height: 20px;
+
+}
+
 .avis-note {
     display: flex;
     align-items: center;
@@ -90,6 +103,11 @@
     color: #444;
     font-size: 0.95em;
     line-height: 1.4em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;       
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
 }
 
 /* ==== CARROUSEL (3 AVIS VISIBLES) ==== */
@@ -97,7 +115,7 @@
 /* Wrapper global : flèches + fenêtre + rail */
 .avis-slider-wrapper {
     position: relative;
-    max-width: 1200px;
+    max-width: 895px;
     margin: 40px auto 0;
     display: flex;
     align-items: center;
@@ -217,4 +235,9 @@
 .avis-modal form button {
     display: block;
     margin: 30px auto 0; /* auto = centre horizontalement */
+}
+
+#btn-laisser-avis{
+    margin-top: 0px;
+    margin-bottom: 20px;
 }

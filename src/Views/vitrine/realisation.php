@@ -1,5 +1,5 @@
 <section id="main-realisation" class="realisations">    
-    <h2>Nos <span class="highlight">Réalisations</span></h2>
+    <h2>Découvrez nos <span class="highlight">Réalisations</span></h2>
     <div class="container-realisation">
         <?php if (!empty($realisationFavorite) && is_array($realisationFavorite)): ?>
             <?php foreach ($realisationFavorite as $r): ?>
