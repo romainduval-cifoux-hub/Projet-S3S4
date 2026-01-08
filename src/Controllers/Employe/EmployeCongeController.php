@@ -57,6 +57,9 @@ class EmployeCongeController {
         // Historique du salarié
         $demandes = conge_getBySalarie($this->pdo, $id_salarie);
 
+        $notifsUnread = notif_getUnread($this->pdo, (int)$_SESSION['user_id']);
+        $nbNotifs     = count($notifsUnread);
+
         $pageTitle = "Demande de congés – Team Jardin";
 
         require __DIR__ . '/../../Views/employe/demandeconge.php';

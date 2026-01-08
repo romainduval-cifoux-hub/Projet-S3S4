@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../../../config.php';
 require_once __DIR__ . '/../../../Database/db.php';
 require_once __DIR__ . '/../../../Database/congeRepository.php';
+require_once __DIR__ . '/../../../Database/notificationsRepository.php';
 
 class ChefCongeController {
 
@@ -63,18 +64,48 @@ class ChefCongeController {
                 $conge['date_fin']
             );
 
+
             if ($okPlanning) {
                 conge_updateStatut($this->pdo, $id_conge, 'accepte', $managerId);
+
+                notif_create(
+                    $this->pdo,
+                    (int)$conge['id_salarie'],      // destinataire = salarié
+                    $managerId,                     // expéditeur = chef
+                    "Congé accepté",
+                    "Votre demande de congé du {$conge['date_debut']} au {$conge['date_fin']} a été acceptée.",
+                    "success",
+                    BASE_URL . "/public/index.php?page=employe/planning&date=" . $conge['date_debut']
+                );
+
+
                 header('Location: ' . BASE_URL . '/public/index.php?page=chef/conges&ok=1');
             } else {
                 // conflit planning
                 header('Location: ' . BASE_URL . '/public/index.php?page=chef/conges&err=planning');
             }
 
+            
+
+
         } elseif ($action === 'refuser') {
 
             conge_updateStatut($this->pdo, $id_conge, 'refuse', $managerId);
+
+            notif_create(
+                $this->pdo,
+                (int)$conge['id_salarie'],
+                $managerId,
+                "Congé refusé",
+                "Votre demande de congé du {$conge['date_debut']} au {$conge['date_fin']} a été refusée.",
+                "error",
+                BASE_URL . "/public/index.php?page=employe/conges"
+            );
+
+
             header('Location: ' . BASE_URL . '/public/index.php?page=chef/conges&ok=0');
+
+
 
         } else {
             header('Location: ' . BASE_URL . '/public/index.php?page=chef/conges&err=action');

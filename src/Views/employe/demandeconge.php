@@ -19,7 +19,7 @@
         $nav = ['Espace Personnel', 'Messagerie','Mon planning'];
         $bouton = 'Déconnexion';
         $redirection = BASE_URL . '/public/index.php?page=logout';
-        require __DIR__ . '/../shared/header.php';
+        require __DIR__ . '/shared/header_employe.php';
     ?>
 
     <div class="app">

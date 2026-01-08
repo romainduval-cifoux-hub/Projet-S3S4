@@ -33,6 +33,9 @@ require_once __DIR__ . '/Controllers/Chef/Planning/ChefCongeController.php';
 
 //Employe
 require_once __DIR__ . '/Controllers/Employe/PlanningEmployeController.php';
+require_once __DIR__ . '/Controllers/Employe/NotificationsEmployeController.php';
+
+
 //Conges
 require_once __DIR__ . '/Controllers/Employe/EmployeCongeController.php';
 
@@ -223,7 +226,25 @@ switch ($page) {
         $controller->save();
         break;
     //Employe
-    //Conges
+        //Notifications
+    
+    case 'employe/notifications':
+    $controller = new NotificationsEmployeController();
+    $controller->index();
+    break;
+
+    case 'employe/notifications/read':
+        $controller = new NotificationsEmployeController();
+        $controller->read();
+        break;
+
+    case 'employe/notifications/read-all':
+        $controller = new NotificationsEmployeController();
+        $controller->readAll();
+        break;
+
+
+        //Conges
     case 'employe/conge':
         $controller = new EmployeCongeController();
         $controller->demande();

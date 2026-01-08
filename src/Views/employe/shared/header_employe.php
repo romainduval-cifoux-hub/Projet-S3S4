@@ -10,6 +10,13 @@
             </ul>
         </nav>
 
+        <a class="notif-link" href="<?= BASE_URL ?>/public/index.php?page=employe/notifications">
+        
+        
+            <span class="notif-badge">Notifications : <?= (int)$nbNotifs ?></span>
+        
+        </a>
+
         <a href="<?= BASE_URL ?>/public/index.php?page=logout" class="btn_login">
             Déconnexion
         </a>

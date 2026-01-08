@@ -1,3 +1,22 @@
+header .container,
+header .header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo à gauche, nav au centre, boutons à droite */
+  gap: 20px;
+  padding: 10px 20px;
+}
+header .actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+header a {
+  display: inline-flex;
+  align-items: center;
+}
+
+
 header {
   background-color: #fff;
 }
@@ -43,6 +62,32 @@ nav a:hover {
 .btn_login:hover {
     background-color: var(--btn-hover);       
 }
+
+
+.notif-link{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: inherit;
+  margin-left: 12px;
+}
+
+.notif-badge{
+  display: inline-block;           
+    background-color: #76a2e6;       
+    color: white;                    
+    padding: 10px 20px;             
+    border: none;                    
+    border-radius: 8px;              
+    cursor: pointer;                 
+    font-size: larger;               
+    text-decoration: none;           
+    text-align: center;              
+    transition: background-color 0.3s; 
+}
+
 
 
 
