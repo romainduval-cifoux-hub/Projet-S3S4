@@ -85,11 +85,19 @@ switch ($page) {
         break;
 
     case 'realisation':
+        $bouton = isset($_SESSION['user']) ? 'Déconnexion' : 'Se connecter';
+        $lienBouton = isset($_SESSION['user'])
+            ? BASE_URL . '/public/index.php?page=logout'
+            : BASE_URL . '/public/index.php?page=login';
+
         require_once __DIR__ . '/Views/shared/header.php';
+
         $controller = new RealisationController();
         $controller->affichage_realisations();
+
         require_once __DIR__ . '/Views/shared/footer.php';
         break;
+
 
     //Chef
 
@@ -226,12 +234,12 @@ switch ($page) {
         $controller->save();
         break;
     //Employe
-        //Notifications
-    
+    //Notifications
+
     case 'employe/notifications':
-    $controller = new NotificationsEmployeController();
-    $controller->index();
-    break;
+        $controller = new NotificationsEmployeController();
+        $controller->index();
+        break;
 
     case 'employe/notifications/read':
         $controller = new NotificationsEmployeController();
@@ -244,7 +252,7 @@ switch ($page) {
         break;
 
 
-        //Conges
+    //Conges
     case 'employe/conge':
         $controller = new EmployeCongeController();
         $controller->demande();

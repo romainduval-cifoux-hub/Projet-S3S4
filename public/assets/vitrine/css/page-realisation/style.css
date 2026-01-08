@@ -1,0 +1,119 @@
+
+body {
+  font-family: Arial, sans-serif;
+}
+.realisations {
+  width: 100%;
+  padding: 26px 20px;
+  background-color: #2f6f3a;
+}
+
+/* Titre de catégorie */
+.realisations > h2 {
+  max-width: 1100px;
+  margin: 0 auto 18px;
+
+  color: #fff;
+  font-size: 1.6rem;
+  text-align: left;
+
+  padding: 12px 14px;
+  border-radius: 14px;
+
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Grille d’images */
+.container-realisation {
+  max-width: 1100px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+/* Carte */
+.realisation-item {
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+}
+
+/* Wrapper image (overlay) */
+.realisation-image {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Image */
+.realisation-image img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+
+  transition: transform 0.35s ease;
+}
+
+/* Overlay commentaire */
+.realisation-commentaire {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  margin: 0;
+  padding: 14px 18px;
+
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-align: left;
+
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+
+  /* Coupe le texte si trop long */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Hover zoom + affiche overlay */
+.realisation-item:hover .realisation-image img {
+  transform: scale(1.06);
+}
+
+.realisation-item:hover .realisation-commentaire {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Messages "Aucune réalisation ..." */
+.realisations p,
+body > p {
+  /* body > p couvre le cas où ton <p> "Aucune réalisation disponible." est hors section */
+  max-width: 1100px;
+  margin: 14px auto 0;
+  padding: 14px 16px;
+
+  color: #ffffff;
+  text-align: center;
+
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+}
+
+

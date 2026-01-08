@@ -1,3 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <link href="<?= BASE_URL ?>/public/assets/vitrine/css/page-realisation/style.css" rel="stylesheet">
+        <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
+        <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
+        <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet"> 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Jardin</title>
+</head>
+<body>
+    
+</body>
+</html>
+
 <?php if (empty($categoriesWithRealisations) || !is_array($categoriesWithRealisations)): ?>
     <p>Aucune réalisation disponible.</p>
 <?php else: ?>
