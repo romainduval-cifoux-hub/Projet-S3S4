@@ -1,243 +1,328 @@
-/* ==== CONTENEUR GLOBAL DES AVIS ==== */
-.avis_container {
-    background-color: var(--bg);
-    width: 100%;
-    padding-bottom: 40px;
-    text-align: center;
-    justify-items: center;
-    justify-content: center;
+/* =========================
+   AVIS — FICHIER PRO (HTML ACTUEL)
+   ========================= */
+
+:root{
+  --avis-vert: var(--vert-fonce, #2f6f3a);
+  --avis-bg: var(--bg, #f6f7f8);
+  --avis-text: #1f2937;
+  --avis-muted: #6b7280;
+  --avis-card: #ffffff;
+  --avis-border: rgba(0,0,0,0.08);
+  --avis-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-.avis_container h2 {
-    font-size: xx-large;
-    text-align: center;
-    margin-top : 0;
-    margin-bottom : 10px;
-
+/* ==== CONTENEUR GLOBAL ==== */
+.avis_container{
+  background-color: var(--avis-bg);
+  width: 100%;
+  text-align: center;
+  padding-bottom: 50px;
 }
 
-#main-avis h2 .highlight {
-    color: var(--vert-fonce);
-    display: block;
-    text-align: center;
+/* ==== TITRE ==== */
+.avis_container h2{
+  font-size: clamp(1.8rem, 2.2vw, 2.4rem);
+  line-height: 1.1;
+  margin: 0 0 14px;
+  color: var(--avis-text);
+  letter-spacing: -0.5px;
 }
 
-#main-avis #logo-google {
-    height: 40px;
-}
-
-/* ==== CARTES D'AVIS ==== */
-.avis-google {
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 250px;
-    padding: 15px;
-    text-align: left;
-    font-family: 'Arial', sans-serif;
-}
-
-.avis-header {
-    display: flex;
-    align-items: center;
-}
-
-#main-avis #logo-google,
-#main-avis #note{
+#main-avis h2 .highlight{
+  color: var(--avis-vert);
   display: block;
-  margin: 0 auto;
 }
 
-.pp {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    object-fit: cover;
+/* ======================================================
+   TON HTML: logo + étoiles + paragraphe directement
+   ====================================================== */
+
+/* centre et espace les éléments du “bloc Google” */
+#main-avis{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.avis-info {
-    flex: 1;
-    margin-left: 10px;
+/* logo google */
+#main-avis #logo-google{
+  height: 40px;
+  width: auto;
+  display: block;
+  margin: 8px auto 6px;
 }
 
-.nom-client {
-    font-weight: bold;
-    color: #333;
-    margin: 0;
-}
-
-.date-avis {
-    font-size: 0.9em;
-    color: #777;
-    margin: 0;
-}
-
-.logo-google {
-    width: 20px;
-    height: 20px;
-}
-
+/* image étoiles */
 #main-avis #note{
-    width: 90px;
-    height: 20px;
-
+  width: 110px;
+  height: 22px;
+  display: block;
+  margin: 0 auto 6px;
 }
 
-.avis-note {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+/* “Basé sur X avis” */
+#main-avis > p{
+  margin: 0 0 18px;
+  color: var(--avis-muted);
+  font-size: 0.98rem;
+  text-align: center;
 }
 
-.etoiles {
-    height: 18px;
+/* ==== CARROUSEL ==== */
+.avis-slider-wrapper{
+  position: relative;
+  max-width: 980px;
+  width: 100%;
+  margin: 18px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
 }
 
-.verifie {
-    height: 18px;
-    margin-left: 5px;
+.avis-slider-window{
+  overflow: hidden;
+  width: 100%;
 }
 
-.commentaire-client {
-    color: #444;
-    font-size: 0.95em;
-    line-height: 1.4em;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;       
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-
+.avis-slider{
+  display: flex;
+  gap: 20px; /* doit correspondre au +20 dans ton JS */
+  flex-direction: row;
+  transition: transform 0.45s ease;
+  will-change: transform;
 }
 
-/* ==== CARROUSEL (3 AVIS VISIBLES) ==== */
-
-/* Wrapper global : flèches + fenêtre + rail */
-.avis-slider-wrapper {
-    position: relative;
-    max-width: 895px;
-    margin: 40px auto 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.avis-slide{
+  flex: 0 0 auto;
 }
 
-/* Fenêtre qui masque les cartes supplémentaires */
-.avis-slider-window {
-    overflow: hidden;
-    width: 100%;
+/* ==== CARTES ==== */
+.avis-google{
+  background-color: var(--avis-card);
+  border-radius: 16px;
+  box-shadow: var(--avis-shadow);
+  border: 1px solid var(--avis-border);
+  width: 280px;
+  padding: 16px;
+  text-align: left;
+  font-family: Arial, sans-serif;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 
-/* Rail des cartes */
-.avis-slider {
-    display: flex;
-    gap: 20px;                 /* doit correspondre au +20 dans le JS */
-    flex-direction: row;
-    transition: transform 0.4s ease;
+.avis-google:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(0,0,0,0.12);
+  border-color: rgba(0,0,0,0.12);
 }
 
-/* Une carte = un slide */
-.avis-slide {
-    flex: 0 0 auto;
+.avis-header{
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Flèches de navigation */
-.avis-arrow {
-    position: absolute;
-    top: 15%;
-    transform: translateY(-50%);
-    background-color: #2f6f3a;
-    color: #fff;
-    border: none;
-    width: 55px;
-    height: 55px;
-    font-size: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-    z-index: 20;
+.pp{
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(0,0,0,0.06);
 }
 
-.avis-arrow-left {
-    left: -80px;   /* ajuste si tu veux les rapprocher/éloigner */
+.avis-info{
+  flex: 1;
+  min-width: 0;
 }
 
-.avis-arrow-right {
-    right: -60px;
+.nom-client{
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.avis-arrow:hover {
-    background-color: #295c31;
-    transform: translateY(-50%) scale(1.05);
+.date-avis{
+  font-size: 0.9em;
+  color: var(--avis-muted);
+  margin: 2px 0 0;
 }
 
-/* ===== POPUP (MODAL) ===== */
-
-/* Overlay plein écran */
-.avis-modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;   /* popup caché par défaut */
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+.logo-google{
+  width: 18px;
+  height: 18px;
+  opacity: 0.95;
 }
 
-.avis-modal-overlay {
-    display: none;
+/* note / étoiles dans la carte */
+.avis-note{
+  display: flex;
+  align-items: center;
+  margin: 12px 0 10px;
+  gap: 6px;
 }
 
-
-/* Contenu du popup */
-.avis-modal {
-    background: #fff;
-    padding: 20px 25px;
-    border-radius: 12px;
-    max-width: 500px;
-    width: 90%;
-    position: relative;
-    text-align: left;
+.etoiles{
+  height: 18px;
 }
 
-/* Bouton de fermeture (croix) */
-.avis-modal-close {
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    border: none;
-    background: transparent;
-    font-size: 24px;
-    cursor: pointer;
+.verifie{
+  height: 18px;
+  opacity: 0.95;
 }
 
-/* Un peu de structure pour les champs */
-.avis-modal .form-group {
-    margin-bottom: 15px;
+/* commentaire */
+.commentaire-client{
+  color: #374151;
+  font-size: 0.95em;
+  line-height: 1.45em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.avis-modal label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+/* ==== FLÈCHES ==== */
+.avis-arrow{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--avis-vert);
+  color: #fff;
+  border: none;
+  width: 54px;
+  height: 54px;
+  font-size: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.22);
+  z-index: 20;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
 }
 
-.avis-modal textarea,
-.avis-modal select {
-    width: 100%;
-    box-sizing: border-box;
+.avis-arrow-left{ left: -10px; }
+.avis-arrow-right{ right: -10px; }
+
+.avis-arrow:hover{
+  background-color: #295c31;
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.26);
 }
 
-.avis-modal form button {
-    display: block;
-    margin: 30px auto 0; /* auto = centre horizontalement */
+@media (max-width: 980px){
+  .avis-arrow-left{ left: 6px; }
+  .avis-arrow-right{ right: 6px; }
+}
+
+/* ==== BOUTON “LAISSER UN AVIS” ==== */
+.avis-leave-review{
+  margin-top: 20px;
 }
 
 #btn-laisser-avis{
-    margin-top: 0px;
-    margin-bottom: 20px;
+  background: var(--avis-vert);
+  color: #fff;
+  border: 1px solid transparent;
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(47,111,58,0.25);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+#btn-laisser-avis:hover{
+  background: #295c31;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(47,111,58,0.30);
+}
+
+/* ==== MODALS ==== */
+.avis-modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 18px;
+}
+
+.avis-modal{
+  background: #fff;
+  padding: 22px;
+  border-radius: 14px;
+  max-width: 520px;
+  width: min(520px, 100%);
+  position: relative;
+  text-align: left;
+  box-shadow: 0 22px 60px rgba(0,0,0,0.25);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.avis-modal-close{
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 26px;
+  cursor: pointer;
+  line-height: 1;
+  color: #111827;
+  opacity: 0.75;
+}
+
+.avis-modal-close:hover{ opacity: 1; }
+
+.avis-modal .form-group{ margin-bottom: 14px; }
+
+.avis-modal label{
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.avis-modal textarea,
+.avis-modal select{
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.18);
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.avis-modal textarea:focus,
+.avis-modal select:focus{
+  border-color: rgba(47,111,58,0.6);
+  box-shadow: 0 0 0 4px rgba(47,111,58,0.12);
+}
+
+.avis-modal form button,
+#btn-go-login,
+#submit-avis-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 18px auto 0;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: none;
+  background: var(--avis-vert);
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+  width: 100%;
 }
