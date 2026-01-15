@@ -77,3 +77,63 @@ function emp_getAllSalaries(PDO $pdo): array
             ORDER BY s.nom_salarie, s.prenom_salarie";
     return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+/**
+ * Récupère 1 salarié par id (id_salarie = users.id)
+ */
+function emp_getById(PDO $pdo, int $id_salarie): ?array
+{
+    $sql = "SELECT s.*, u.username
+            FROM salaries s
+            JOIN users u ON u.id = s.id_salarie
+            WHERE s.id_salarie = :id
+            LIMIT 1";
+    $st = $pdo->prepare($sql);
+    $st->execute([':id' => $id_salarie]);
+    $row = $st->fetch(PDO::FETCH_ASSOC);
+    return $row ?: null;
+}
+
+/**
+ * Met à jour le profil d’un salarié
+ */
+function emp_updateProfil(
+    PDO $pdo,
+    int $id_salarie,
+    string $nom,
+    string $prenom,
+    ?string $adresse,
+    ?string $ville,
+    ?string $cp,
+    ?float $salaire,
+    ?string $photoPath = null
+): bool {
+    $sql = "UPDATE salaries
+            SET nom_salarie = :nom,
+                prenom_salarie = :prenom,
+                adresse_salarie = :adr,
+                ville_salarie = :ville,
+                code_postal_salarie = :cp,
+                salaire = :sal" .
+                ($photoPath !== null ? ", photo = :photo" : "") . "
+            WHERE id_salarie = :id";
+
+    $st = $pdo->prepare($sql);
+
+    $params = [
+        ':id'    => $id_salarie,
+        ':nom'   => $nom,
+        ':prenom'=> $prenom,
+        ':adr'   => $adresse,
+        ':ville' => $ville,
+        ':cp'    => $cp,
+        ':sal'   => $salaire,
+    ];
+
+    if ($photoPath !== null) {
+        $params[':photo'] = $photoPath;
+    }
+
+    return $st->execute($params);
+}

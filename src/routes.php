@@ -39,6 +39,8 @@ require_once __DIR__ . '/Controllers/Employe/NotificationsEmployeController.php'
 //Conges
 require_once __DIR__ . '/Controllers/Employe/EmployeCongeController.php';
 
+//Profil
+require_once __DIR__ . '/Controllers/Employe/EmployeProfilController.php';
 
 
 //Client
@@ -267,6 +269,22 @@ switch ($page) {
         $controller = new ResetPasswordController();
         $controller->handleRequest();
         break;
+
+    //profil
+    
+
+    case 'employe/profil':
+        
+        $controller = new EmployeProfilController();
+        $controller->handleRequest('profil');
+        break;
+
+    case 'employe/profil/save':
+        
+        $controller = new EmployeProfilController();
+        $controller->handleRequest('save');
+        break;
+
 
     default:
         http_response_code(404);
