@@ -1,12 +1,12 @@
 <?php
 require_once __DIR__ . '/../src/config.php';
+                                            // on tente de régler un soucis
 
 //Shared
 require_once __DIR__ . '/Controllers/Shared/HomeController.php';
 require_once __DIR__ . '/Controllers/Shared/LoginController.php';
 require_once __DIR__ . '/Controllers/Shared/RegisterController.php';
 require_once __DIR__ . '/Controllers/Shared/LogoutController.php';
-
 //Vitrine
 require_once __DIR__ . '/Controllers/Vitrine/AvisController.php';
 require_once __DIR__ . '/Controllers/Vitrine/RealisationController.php';
