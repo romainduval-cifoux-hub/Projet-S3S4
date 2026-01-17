@@ -2,54 +2,65 @@
     <h2 class="page-subtitle">Nous contacter</h2>
     <section class="steps">
 
-        
+
         <h2>Réalisation de votre projet en 4 étapes !</h2>
 
-            <div class="step">
-                <div class="number">1</div>
-                <div>
-                    <h3>Contact</h3>
-                    <p>Discutez de vos envies et besoins. Prendre contact n’engage à rien !</p>
-                </div>
+        <div class="step">
+            <div class="number">1</div>
+            <div>
+                <h3>Contact</h3>
+                <p>Discutez de vos envies et besoins. Prendre contact n’engage à rien !</p>
             </div>
+        </div>
 
-            <div class="step">
-                <div class="number">2</div>
-                <div>
-                    <h3>Visite</h3>
-                    <p>Nous nous déplaçons chez vous pour évaluer le projet et prendre des mesures.</p> 
-                </div>
+        <div class="step">
+            <div class="number">2</div>
+            <div>
+                <h3>Visite</h3>
+                <p>Nous nous déplaçons chez vous pour évaluer le projet et prendre des mesures.</p>
             </div>
+        </div>
 
-            <div class="step">
+        <div class="step">
             <div class="number">3</div>
             <div>
                 <h3>Devis</h3>
                 <p>Un devis clair, précis et sans surprise, validé avec vous avant le lancement.</p>
             </div>
-            </div>
+        </div>
 
-            <div class="step">
+        <div class="step">
             <div class="number">4</div>
             <div>
                 <h3>Réalisation</h3>
                 <p>Des travaux réalisés avec soin, dans les délais, jusqu’à la livraison finale.</p>
             </div>
-            </div>
+        </div>
 
-        </section>
+    </section>
+    
+    <section class="contact-form">
+        <?php if (!empty($_SESSION['contact_success'])): ?>
+        <div class="alert-contact_success">
+            <?= htmlspecialchars($_SESSION['contact_success']) ?>
+        </div>
+        <?php unset($_SESSION['contact_success']); ?>
+    <?php endif; ?>
 
-        <section class="contact-form">
-            <h1>Formulaire de contact</h1>
-            <p>Remplissez ce formulaire pour entrer en contact avec notre équipe.</p>
+    <?php if (!empty($_SESSION['contact_error'])): ?>
+        <div class="alert-contact_error">
+            <?= htmlspecialchars($_SESSION['contact_error']) ?>
+        </div>
+        <?php unset($_SESSION['contact_error']); ?>
+    <?php endif; ?>
+        <h1>Formulaire de contact</h1>
+        <p>Remplissez ce formulaire pour entrer en contact avec notre équipe.</p>
 
-            <form method="POST" action="<?= BASE_URL ?>/public/index.php?page=contact_submit">
-                <input class="input" type="email" name="email" placeholder="email@exemple.fr" required>
-                <input class="input" type="tel" name="phone" placeholder="Numéro de téléphone">
-                <textarea class="textarea" name="message" placeholder="Votre message" required></textarea>
-                <button class="btn_connexion" type="submit">Contacter</button>
+        <form method="POST" action="<?= BASE_URL ?>/public/index.php?page=contact_submit">
+            <input class="input" type="email" name="email" placeholder="email@exemple.fr" required>
+            <input class="input" type="tel" name="phone" placeholder="Numéro de téléphone">
+            <textarea class="textarea" name="message" placeholder="Votre message" required></textarea>
+            <button class="btn_connexion" type="submit">Contacter</button>
         </form>
     </section>
 </div>
-
-

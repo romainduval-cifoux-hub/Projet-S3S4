@@ -12,6 +12,8 @@ require_once __DIR__ . '/Controllers/Shared/ResetPasswordController.php';
 //Vitrine
 require_once __DIR__ . '/Controllers/Vitrine/AvisController.php';
 require_once __DIR__ . '/Controllers/Vitrine/RealisationController.php';
+require_once __DIR__ . '/Controllers/Vitrine/ContactSubmitController.php';
+
 
 //Chef
 //Planning
@@ -50,7 +52,7 @@ require_once __DIR__ . '/Controllers/Client/ClientController.php';
 
 $page = $_GET['page'] ?? 'home';
 
-$pagesPubliques = ['login', 'register', 'logout', 'home', 'realisation', 'forgot_password', 'reset_password'];
+$pagesPubliques = ['login', 'register', 'logout', 'home', 'realisation', 'forgot_password', 'reset_password', 'contact_submit'];
 
 if (!in_array($page, $pagesPubliques) && empty($_SESSION['user'])) {
 
@@ -283,6 +285,10 @@ switch ($page) {
         
         $controller = new EmployeProfilController();
         $controller->handleRequest('save');
+        break;
+    case 'contact_submit':
+        $controller = new ContactSubmitController();
+        $controller->handleRequest();
         break;
 
 

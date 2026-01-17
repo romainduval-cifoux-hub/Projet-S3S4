@@ -2,16 +2,23 @@
 
 require_once __DIR__ . '/../config.php';
 
-function sendMailViaMailgun(string $to, string $subject, string $text): bool
+function sendMailViaMailgun(string $to, string $subject, string $text, ?string $replyTo = null): bool
 {
     $url = "https://api.mailgun.net/v3/" . MAILGUN_DOMAIN . "/messages";
 
-    $postData = http_build_query([
+    $data = [
         'from'    => MAIL_FROM,
         'to'      => $to,
         'subject' => $subject,
         'text'    => $text,
-    ]);
+    ];
+
+    if ($replyTo) {
+        // Mailgun accepte "h:Reply-To" pour ajouter un header
+        $data['h:Reply-To'] = $replyTo;
+    }
+
+    $postData = http_build_query($data);
 
     $ch = curl_init();
     curl_setopt_array($ch, [
