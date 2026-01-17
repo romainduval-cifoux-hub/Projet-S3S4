@@ -63,6 +63,12 @@
             </div>
 
             <div class="form-row">
+                <label>Téléphone</label>
+                <input type="text" name="telephone"
+                       value="<?= htmlspecialchars($client['telephone_client'] ?? '') ?>">
+            </div>
+
+            <div class="form-row">
                 <label>Adresse</label>
                 <input type="text" name="adresse"
                        value="<?= htmlspecialchars($client['adresse_client'] ?? '') ?>">
