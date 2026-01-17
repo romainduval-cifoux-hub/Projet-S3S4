@@ -35,6 +35,49 @@
             <section class="board">
                 <h1>Liste des réalisations</h1>
 
+                <form method="get" class="filter-commentaire">
+                    <input type="hidden" name="page" value="chef/realisations">
+
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Rechercher dans le commentaire"
+                        value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
+                    >
+
+                    <select name="categorie_id">
+                        <option value="">Toutes les catégories</option>
+                        <?php foreach ($categories as $cat): ?>
+                            <option
+                                value="<?= $cat['id'] ?>"
+                                <?= (($_GET['categorie_id'] ?? '') == $cat['id']) ? 'selected' : '' ?>
+                            >
+                                <?= htmlspecialchars($cat['nom']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <select name="favoris">
+                        <option value="">Tous</option>
+                        <option value="1" <?= ($_GET['favoris'] ?? '') === '1' ? 'selected' : '' ?>>Favoris</option>
+                        <option value="0" <?= ($_GET['favoris'] ?? '') === '0' ? 'selected' : '' ?>>Non favoris</option>
+                    </select>
+
+                    <select name="masque">
+                        <option value="">Tous</option>
+                        <option value="1" <?= ($_GET['masque'] ?? '') === '1' ? 'selected' : '' ?>>Masqué</option>
+                        <option value="0" <?= ($_GET['masque'] ?? '') === '0' ? 'selected' : '' ?>>Visible</option>
+                    </select>
+
+                    <button type="submit">Filtrer</button>
+
+                    <?php if (!empty($_GET['q']) || !empty($_GET['categorie_id']) || isset($_GET['favoris'])): ?>
+                        <a href="<?= BASE_URL ?>/public/index.php?page=chef/realisations" class="reset-link">
+                            Réinitialiser
+                        </a>
+                    <?php endif; ?>
+                </form>
+                
                 <?php if (!empty($realisations)): ?>
                     <table class="table-realisations">
                         <thead>
@@ -43,6 +86,7 @@
                                 <th>Commentaire</th>
                                 <th>Catégorie</th>
                                 <th>Favoris</th>
+                                <th>Masque</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -54,7 +98,22 @@
                                     </td>
                                     <td><?= htmlspecialchars($r['commentaire']) ?></td>
                                     <td><?= htmlspecialchars($r['categorie_nom']) ?></td>
-                                    <td><?= $r['favoris'] ? 'Oui' : 'Non' ?></td>
+                                    <td>
+                                        <form method="post" action="<?= BASE_URL ?>/public/index.php?page=chef/realisations/toggleFavoris&id=<?= $r['id'] ?>">
+                                            <button type="submit">
+                                                <?= $r['favoris'] ? 'Retirer des favoris' : 'Mettre en favoris' ?>
+                                            </button>
+                                        </form>
+                                    </td>
+
+                                    <td>
+                                        <form method="post" action="<?= BASE_URL ?>/public/index.php?page=chef/realisations/toggleMasque&id=<?= $r['id'] ?>">
+                                            <button type="submit">
+                                                <?= $r['masque'] ? 'Rendre visible' : 'Masquer' ?>
+                                            </button>
+                                        </form>
+                                    </td>
+
                                     <td>
                                         <a href="<?= BASE_URL ?>/public/index.php?page=chef/realisations/edit&id=<?= $r['id'] ?>">Modifier</a> |
                                         <a href="<?= BASE_URL ?>/public/index.php?page=chef/realisations/delete&id=<?= $r['id'] ?>"

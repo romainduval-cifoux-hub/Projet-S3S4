@@ -83,6 +83,13 @@
                         </label>
                     </div>
 
+                    <div class="form-row">
+                        <label for="masque">
+                            Masque
+                            <input type="checkbox" id="masque" name="masque" <?= !empty($realisation['masque']) ? 'checked' : '' ?>>
+                        </label>
+                    </div>
+
                     <button type="submit" class="btn_creer_realisation">
                         <?= isset($realisation['id']) ? 'Mettre à jour' : 'Créer' ?>
                     </button>

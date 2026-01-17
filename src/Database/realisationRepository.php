@@ -18,7 +18,7 @@ class RealisationRepository {
         $stmt = $this->pdo->prepare(
             "SELECT id, photo, commentaire, date_creation
             FROM realisations
-            WHERE categorie_id = :category_id
+            WHERE categorie_id = :category_id AND masque = 0
             ORDER BY date_creation DESC"
         );
         $stmt->execute(['category_id' => $categoryId]);
@@ -41,7 +41,7 @@ class RealisationRepository {
         $stmt = $this->pdo->prepare(
             "SELECT id, photo, commentaire, date_creation
             FROM realisations
-            WHERE favoris > 0
+            WHERE favoris > 0 AND masque = 0
             ORDER BY favoris"
         ) ;
         $stmt->execute();
