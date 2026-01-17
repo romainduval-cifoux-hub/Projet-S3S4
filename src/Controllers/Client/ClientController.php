@@ -37,6 +37,7 @@ class ClientController {
         // Récupération du formulaire
         $nom    = trim($_POST['nom'] ?? '');
         $prenom = trim($_POST['prenom'] ?? '');
+        $telephone = trim($_POST['telephone'] ?? '');
         $adresse = trim($_POST['adresse'] ?? '');
         $ville = trim($_POST['ville'] ?? '');
         $cp = trim($_POST['code_postal'] ?? '');
@@ -65,6 +66,7 @@ class ClientController {
                 $_SESSION['user_id'],
                 $nom,
                 $prenom,
+                $telephone,
                 $adresse,
                 $ville,
                 $cp,
@@ -77,6 +79,7 @@ class ClientController {
                 $_SESSION['user_id'],
                 $nom,
                 $prenom,
+                $telephone,
                 $adresse,
                 $ville,
                 $cp,
