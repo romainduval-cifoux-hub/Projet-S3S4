@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title><?= htmlspecialchars($pageTitle ?? (isset($realisation['id']) ? 'Modifier une réalisation' : 'Nouvelle réalisation')) ?></title>
+
     <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
@@ -10,6 +11,8 @@
     <link href="<?= BASE_URL ?>/public/assets/chef/realisations/formRealisation/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
 </head>
 <body>
 <div class="page">
@@ -21,7 +24,6 @@
             $menu1 = [
                 ['label'=>'Liste des réalisations', 'href'=> BASE_URL.'/public/index.php?page=chef/realisations'],
                 ['label'=>'Nouvelle réalisation', 'href'=> BASE_URL.'/public/index.php?page=chef/realisations/create']
-
             ];
             $menuTitle2 = 'Gestion des catégories';
             $menu2 = [
@@ -30,7 +32,6 @@
             ];
             require_once(__DIR__ . '/../../shared/aside.php');
 
-            // Déterminer l'action du formulaire dynamiquement (création ou édition)
             $formAction = isset($realisation['id']) 
                 ? BASE_URL.'/public/index.php?page=chef/realisations/edit&id='.$realisation['id'] 
                 : BASE_URL.'/public/index.php?page=chef/realisations/create';
@@ -51,13 +52,20 @@
                 <?php endif; ?>
 
                 <form method="post" enctype="multipart/form-data" class="form-realisation" action="<?= $formAction ?>">
+                    
                     <div class="form-row">
                         <label for="photo">Photo</label>
-                        <input type="file" id="photo" name="photo" <?= empty($realisation['photo']) ? 'required' : '' ?>>
+                        <input type="file" id="photo" accept="image/*">
                         <?php if (!empty($realisation['photo'])): ?>
-                            <img src="<?= BASE_URL.'/'.$realisation['photo'] ?>" alt="Photo actuelle" width="100">
+                            <img src="<?= BASE_URL.'/'.$realisation['photo'] ?>" alt="Photo actuelle">
                         <?php endif; ?>
                     </div>
+
+                    <div class="crop-container">
+                        <img id="imagePreview">
+                    </div>
+
+                    <input type="hidden" name="croppedImage" id="croppedImage">
 
                     <div class="form-row">
                         <label for="commentaire">Commentaire</label>
@@ -78,8 +86,8 @@
 
                     <div class="form-row">
                         <label for="favoris">
-                            <input type="checkbox" id="favoris" name="favoris" <?= !empty($realisation['favoris']) ? 'checked' : '' ?>>
                             Favoris
+                            <input type="checkbox" id="favoris" name="favoris" <?= !empty($realisation['favoris']) ? 'checked' : '' ?>>
                         </label>
                     </div>
 
@@ -100,5 +108,9 @@
 
     <?php require __DIR__ . '/../../shared/footer.php'; ?>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script src="<?= BASE_URL ?>/public/assets/chef/realisations/formRealisation/cropper-init.js"></script>
+
 </body>
 </html>
