@@ -37,20 +37,22 @@ class AdminRealisationController {
 
             $photoPath = null;
 
-            if (!empty($_FILES['photo']['tmp_name'])) {
+            if (!empty($_POST['croppedImage'])) {
+                $data = $_POST['croppedImage'];
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $data = base64_decode($data);
+
                 $targetDir = __DIR__ . '/../../../../public/assets/realisation/img/';
+                if (!is_dir($targetDir)) mkdir($targetDir, 0755, true);
 
-                if (!is_dir($targetDir)) {
-                    mkdir($targetDir, 0755, true);
-                }
-
-                $fileName = uniqid() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $_FILES['photo']['name']);
+                $fileName = uniqid() . '.png';
                 $targetFile = $targetDir . $fileName;
 
-                if (move_uploaded_file($_FILES['photo']['tmp_name'], $targetFile)) {
-                    $photoPath = '/public/assets/realisation/img/' . $fileName; 
+                if (file_put_contents($targetFile, $data)) {
+                    $photoPath = '/public/assets/realisation/img/' . $fileName;
                 } else {
-                    $errors[] = "Erreur lors de l'upload de l'image";
+                    $errors[] = "Erreur lors de l'enregistrement de l'image.";
                 }
             } else {
                 $errors[] = "La photo est obligatoire";
@@ -95,25 +97,26 @@ class AdminRealisationController {
             $masque = isset($_POST['masque']) ? 1 : 0;
             $photoPath = $realisation['photo'];
 
-            if (!empty($_FILES['photo']['tmp_name'])) {
-                $targetDir = __DIR__ . '/../../../../public/assets/realisation/img/';
-                if (!is_dir($targetDir)) {
-                    mkdir($targetDir, 0755, true);
-                }
+            if (!empty($_POST['croppedImage'])) {
+                $data = $_POST['croppedImage'];
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $data = base64_decode($data);
 
-                $fileName = uniqid() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $_FILES['photo']['name']);
+                $targetDir = __DIR__ . '/../../../../public/assets/realisation/img/';
+                if (!is_dir($targetDir)) mkdir($targetDir, 0755, true);
+
+                $fileName = uniqid() . '.png';
                 $targetFile = $targetDir . $fileName;
 
-                if (move_uploaded_file($_FILES['photo']['tmp_name'], $targetFile)) {
+                if (file_put_contents($targetFile, $data)) {
                     if (!empty($realisation['photo'])) {
                         $oldPhotoPath = __DIR__ . '/../../../../' . ltrim($realisation['photo'], '/');
-                        if (file_exists($oldPhotoPath)) {
-                            unlink($oldPhotoPath);
-                        }
+                        if (file_exists($oldPhotoPath)) unlink($oldPhotoPath);
                     }
                     $photoPath = '/public/assets/realisation/img/' . $fileName;
                 } else {
-                    $errors[] = "Erreur lors de l'upload de l'image";
+                    $errors[] = "Erreur lors de l'enregistrement de l'image.";
                 }
             }
 
@@ -144,9 +147,7 @@ class AdminRealisationController {
         if ($realisation) {
             if (!empty($realisation['photo'])) {
                 $photoPath = __DIR__ . '/../../../../' . ltrim($realisation['photo'], '/');
-                if (file_exists($photoPath)) {
-                    unlink($photoPath);
-                }
+                if (file_exists($photoPath)) unlink($photoPath);
             }
 
             $this->repo->delete((int)$id);
