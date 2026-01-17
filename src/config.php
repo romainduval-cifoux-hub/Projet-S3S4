@@ -44,6 +44,7 @@ define('DB_USER', env('DB_USER', $config['database']['user'] ?? 'root'));
 define('DB_PASS', env('DB_PASS', $config['database']['pass'] ?? ''));
 define('DB_SSLMODE', env('DB_SSLMODE', $config['database']['sslmode'] ?? ''));
 
+define('CONTACT_RECEIVER_EMAIL', 'romainduvalcifoux@gmail.com');
 define('MAILGUN_API_KEY', (string) env('MAILGUN_API_KEY', ''));
 
 define(
