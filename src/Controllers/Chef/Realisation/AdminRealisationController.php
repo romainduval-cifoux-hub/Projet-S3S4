@@ -16,6 +16,7 @@ class AdminRealisationController {
             'q' => $_GET['q'] ?? null,
             'categorie_id' => $_GET['categorie_id'] ?? null,
             'favoris' => $_GET['favoris'] ?? null,
+            'masque' => $_GET['masque'] ?? null
         ];
 
         $realisations = $this->repo->search($filters);
@@ -32,6 +33,7 @@ class AdminRealisationController {
             $commentaire = $_POST['commentaire'] ?? '';
             $categorie_id = (int)($_POST['categorie_id'] ?? 0);
             $favoris = isset($_POST['favoris']) ? 1 : 0;
+            $masque = isset($_POST['masque']) ? 1 : 0;
 
             $photoPath = null;
 
@@ -61,7 +63,8 @@ class AdminRealisationController {
                     'photo' => $photoPath,
                     'commentaire' => $commentaire,
                     'categorie_id' => $categorie_id,
-                    'favoris' => $favoris
+                    'favoris' => $favoris,
+                    'masque' => $masque
                 ]);
                 header('Location: ' . BASE_URL . '/public/index.php?page=chef/realisations');
                 exit;
@@ -91,7 +94,7 @@ class AdminRealisationController {
             $commentaire = $_POST['commentaire'] ?? '';
             $categorie_id = (int)($_POST['categorie_id'] ?? 0);
             $favoris = isset($_POST['favoris']) ? 1 : 0;
-
+            $masque = isset($_POST['masque']) ? 1 : 0;
             $photoPath = $realisation['photo'];
 
             if (!empty($_POST['croppedImage'])) {
@@ -122,13 +125,13 @@ class AdminRealisationController {
                     'photo' => $photoPath,
                     'commentaire' => $commentaire,
                     'categorie_id' => $categorie_id,
-                    'favoris' => $favoris
+                    'favoris' => $favoris,
+                    'masque' => $masque
                 ]);
                 header('Location: ' . BASE_URL . '/public/index.php?page=chef/realisations');
                 exit;
             }
         }
-
         require __DIR__ . '/../../../Views/chef/realisations/form_realisation.php';
     }
 
@@ -151,6 +154,34 @@ class AdminRealisationController {
         }
 
         header('Location: ' . BASE_URL . '/public/index.php?page=chef/realisations');
+        exit;
+    }
+
+    public function toggleFavoris() {
+        $id = $_GET['id'] ?? null;
+        if (!$id) exit;
+
+        $realisation = $this->repo->getById((int)$id);
+        if (!$realisation) exit;
+
+        $nouvelleValeur = $realisation['favoris'] ? 0 : 1;
+        $this->repo->updateFavoris((int)$id, $nouvelleValeur);
+
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+
+    public function toggleMasque() {
+        $id = $_GET['id'] ?? null;
+        if (!$id) exit;
+
+        $realisation = $this->repo->getById((int)$id);
+        if (!$realisation) exit;
+
+        $nouvelleValeur = $realisation['masque'] ? 0 : 1;
+        $this->repo->updateMasque((int)$id, $nouvelleValeur);
+
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;
     }
 }

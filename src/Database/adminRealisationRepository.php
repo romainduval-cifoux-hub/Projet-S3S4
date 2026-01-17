@@ -28,21 +28,22 @@ class AdminRealisationRepository {
 
     public function create(array $data): bool {
         $stmt = $this->pdo->prepare(
-            "INSERT INTO realisations (photo, commentaire, categorie_id, favoris) 
-             VALUES (:photo, :commentaire, :categorie_id, :favoris)"
+            "INSERT INTO realisations (photo, commentaire, categorie_id, favoris, masque) 
+             VALUES (:photo, :commentaire, :categorie_id, :favoris, :masque)"
         );
         return $stmt->execute([
             'photo' => $data['photo'],
             'commentaire' => $data['commentaire'],
             'categorie_id' => $data['categorie_id'],
-            'favoris' => $data['favoris'] ?? 0
+            'favoris' => $data['favoris'] ?? 0,
+            'masque' => $data['masque'] ?? 0
         ]);
     }
 
     public function update(int $id, array $data): bool {
         $stmt = $this->pdo->prepare(
             "UPDATE realisations 
-             SET photo = :photo, commentaire = :commentaire, categorie_id = :categorie_id, favoris = :favoris
+             SET photo = :photo, commentaire = :commentaire, categorie_id = :categorie_id, favoris = :favoris, masque = :masque
              WHERE id = :id"
         );
         return $stmt->execute([
@@ -50,7 +51,8 @@ class AdminRealisationRepository {
             'photo' => $data['photo'],
             'commentaire' => $data['commentaire'],
             'categorie_id' => $data['categorie_id'],
-            'favoris' => $data['favoris'] ?? 0
+            'favoris' => $data['favoris'] ?? 0,
+            'masque' => $data['masque'] ?? 0
         ]);
     }
 
@@ -90,6 +92,11 @@ class AdminRealisationRepository {
             $params['favoris'] = (int)$filters['favoris'];
         }
 
+        if($filters['masque'] !== null && $filters['masque'] !== '') {
+            $sql .= " AND r.masque = :masque";
+            $params['masque'] = (int)$filters['masque'];
+        }
+
         $sql .= " ORDER BY r.date_creation DESC";
 
         $stmt = $this->pdo->prepare($sql);
@@ -97,4 +104,25 @@ class AdminRealisationRepository {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function updateFavoris(int $id, int $valeur): void {
+        $stmt = $this->pdo->prepare(
+            "UPDATE realisations SET favoris = :favoris WHERE id = :id"
+        );
+        $stmt->execute([
+            'favoris' => $valeur,
+            'id' => $id
+        ]);
+    }
+
+    public function updateMasque(int $id, int $valeur): void {
+        $stmt = $this->pdo->prepare(
+            "UPDATE realisations SET masque = :masque WHERE id = :id"
+        );
+        $stmt->execute([
+            'masque' => $valeur,
+            'id' => $id
+        ]);
+    }
+
 }

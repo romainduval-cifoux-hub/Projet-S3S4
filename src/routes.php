@@ -112,6 +112,16 @@ switch ($page) {
         $controller->delete();
         break;
 
+    case 'chef/realisations/toggleFavoris':
+        $controller = new AdminRealisationController();
+        $controller->toggleFavoris();
+        break;
+
+    case 'chef/realisations/toggleMasque':
+        $controller = new AdminRealisationController();
+        $controller->toggleMasque();
+        break;
+
         // Catégories admin
     case 'chef/categories':
         $controller = new AdminCategoryController();
