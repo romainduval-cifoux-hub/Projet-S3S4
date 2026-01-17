@@ -37,3 +37,39 @@ function sendMailViaMailgun(string $to, string $subject, string $text, ?string $
 
     return ($httpCode >= 200 && $httpCode < 300);
 }
+
+function sendMailViaMailgunWithPdf(string $to, string $subject, string $text, string $pdfPath, ?string $replyTo = null): bool
+{
+    $url = "https://api.mailgun.net/v3/" . MAILGUN_DOMAIN . "/messages";
+
+    $data = [
+        'from'    => MAIL_FROM,
+        'to'      => $to,
+        'subject' => $subject,
+        'text'    => $text,
+    ];
+
+    if ($replyTo) {
+        $data['h:Reply-To'] = $replyTo;
+    }
+
+    $postFields = $data;
+    $postFields['attachment'] = new CURLFile($pdfPath, 'application/pdf', basename($pdfPath));
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL            => $url,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => $postFields,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_USERPWD        => 'api:' . MAILGUN_API_KEY,
+        CURLOPT_HTTPAUTH       => CURLAUTH_BASIC,
+        CURLOPT_TIMEOUT        => 20,
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    return ($httpCode >= 200 && $httpCode < 300);
+}

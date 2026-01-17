@@ -67,21 +67,26 @@ function getAllFactures(PDO $pdo) {
 }
 
 function getFactureById(PDO $pdo, int $idDoc) {
-    $sql = "SELECT * FROM Document WHERE idDoc = ?";
+    $sql = "
+        SELECT d.*,
+               u.username AS emailClient
+        FROM Document d
+        LEFT JOIN clients c ON c.id_client = d.idCli
+        LEFT JOIN users u ON u.id = c.user_id
+        WHERE d.idDoc = ?
+    ";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$idDoc]);
 
     $facture = $stmt->fetch(PDO::FETCH_ASSOC);
-
     if (!$facture) {
         return null;
     }
 
-
     $facture['lignes'] = getLignesFacture($pdo, $idDoc);
-
     return $facture;
 }
+
 
 function getLignesFacture(PDO $pdo, int $idDoc) {
     $sql = "SELECT * FROM DetailDocument WHERE idDoc = ?";
@@ -138,6 +143,15 @@ function createFacture(PDO $pdo, Facture $facture) {
 }
 
 
+function enregistrerRelance(PDO $pdo, int $idDoc): void
+{
+    $sql = "UPDATE Document
+            SET nbRelance = COALESCE(nbRelance, 0) + 1,
+                dateDerniereRelance = NOW()
+            WHERE idDoc = :idDoc";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['idDoc' => $idDoc]);
+}
 
 
 

@@ -55,9 +55,11 @@ CREATE TABLE Document (
     reglementDoc VARCHAR(50),
     datePaiement DATETIME,
     nbRelance INT,
+    dateDerniereRelance DATETIME NULL,
     idCli INT,
-    FOREIGN KEY (idCli) REFERENCES clients(id_client)  
+    FOREIGN KEY (idCli) REFERENCES clients(id_client)
 );
+
 
 
 
