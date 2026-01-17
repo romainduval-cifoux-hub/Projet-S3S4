@@ -11,6 +11,7 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
     <title>Team jardin (Chef d'entreprise)</title>
@@ -37,6 +38,8 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
         <?php require_once(__DIR__ . '/asidefacturation.php'); ?>
 
         <main>
+            
+
 
             <!-- FILTRES -->
             <form method="POST">
@@ -52,15 +55,15 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
 
                 <label>
                     <input type="checkbox" name="types[]" value="Facture"
-                           <?= in_array('Facture', $types, true) ? 'checked' : '' ?>
-                           onchange="this.form.submit()">
+                        <?= in_array('Facture', $types, true) ? 'checked' : '' ?>
+                        onchange="this.form.submit()">
                     Factures
                 </label>
 
                 <label>
                     <input type="checkbox" name="types[]" value="Devis"
-                           <?= in_array('Devis', $types, true) ? 'checked' : '' ?>
-                           onchange="this.form.submit()">
+                        <?= in_array('Devis', $types, true) ? 'checked' : '' ?>
+                        onchange="this.form.submit()">
                     Devis
                 </label>
 
@@ -76,6 +79,19 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
             </form>
 
             <h1>Liste des documents</h1>
+            <?php if (!empty($_SESSION['factu_success'])): ?>
+                <div class="alert-factu_success">
+                    <?= htmlspecialchars($_SESSION['factu_success']) ?>
+                </div>
+                <?php unset($_SESSION['factu_success']); ?>
+            <?php endif; ?>
+
+            <?php if (!empty($_SESSION['factu_error'])): ?>
+                <div class="alert-factu_error">
+                    <?= htmlspecialchars($_SESSION['factu_error']) ?>
+                </div>
+                <?php unset($_SESSION['factu_error']); ?>
+            <?php endif; ?>
 
             <?php foreach ($factures as $facture): ?>
 
@@ -87,6 +103,9 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
                 $dateRaw = $facture['datePaiement'] ?? null;
                 if (empty($dateRaw)) $dateRaw = $facture['dateDoc'] ?? null;
                 $dateAffichee = !empty($dateRaw) ? date('d/m/Y', strtotime($dateRaw)) : '-';
+                $dateRelanceRaw = $facture['dateDerniereRelance'] ?? null;
+                $dateRelanceAffichee = !empty($dateRelanceRaw) ? date('d/m/Y H:i', strtotime($dateRelanceRaw)) : '-';
+
                 ?>
 
                 <div class="facture">
@@ -96,6 +115,9 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
                     <p><strong>Client :</strong> <?= htmlspecialchars((string)($facture['nomClient'] ?? '')) ?></p>
                     <p><strong>Date :</strong> <?= $dateAffichee ?></p>
                     <p><strong>Status :</strong> <?= htmlspecialchars((string)($facture['statusDoc'] ?? '')) ?></p>
+                    <p><strong>Dernière relance :</strong> <?= $dateRelanceAffichee ?></p>
+                    <p><strong>Nombre de relances :</strong> <?= (int)($facture['nbRelance'] ?? 0) ?></p>
+
 
                     <!-- ACTIONS -->
                     <?php if (($facture['statusDoc'] ?? '') === 'En attente'): ?>
@@ -103,7 +125,7 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
                             <input type="hidden" name="idDoc" value="<?= (int)$facture['idDoc'] ?>">
                             <input type="hidden" name="idCli" value="<?= htmlspecialchars($idCli ?? '') ?>">
 
-                            <?php foreach (($types ?? ['Facture','Devis']) as $t): ?>
+                            <?php foreach (($types ?? ['Facture', 'Devis']) as $t): ?>
                                 <input type="hidden" name="types[]" value="<?= htmlspecialchars($t) ?>">
                             <?php endforeach; ?>
 
@@ -123,7 +145,7 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
                         <input type="hidden" name="idDoc" value="<?= (int)$facture['idDoc'] ?>">
                         <input type="hidden" name="idCli" value="<?= htmlspecialchars($idCli ?? '') ?>">
 
-                        <?php foreach (($types ?? ['Facture','Devis']) as $t): ?>
+                        <?php foreach (($types ?? ['Facture', 'Devis']) as $t): ?>
                             <input type="hidden" name="types[]" value="<?= htmlspecialchars($t) ?>">
                         <?php endforeach; ?>
 
@@ -131,6 +153,21 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
 
                         <button name="action" value="pdf">PDF</button>
                     </form>
+
+                    <!-- Envoi -->
+                    <form method="POST" style="margin-top:10px;">
+                        <input type="hidden" name="idDoc" value="<?= (int)$facture['idDoc'] ?>">
+                        <input type="hidden" name="idCli" value="<?= htmlspecialchars($idCli ?? '') ?>">
+
+                        <?php foreach (($types ?? ['Facture', 'Devis']) as $t): ?>
+                            <input type="hidden" name="types[]" value="<?= htmlspecialchars($t) ?>">
+                        <?php endforeach; ?>
+
+                        <input type="hidden" name="en_attente" value="<?= htmlspecialchars($filtreEnAttente) ?>">
+
+                        <button type="submit" name="action" value="send">Envoyer document</button>
+                    </form>
+
 
                     <h3>Détails :</h3>
 
@@ -159,4 +196,5 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
         </main>
     </div>
 </div>
+
 </html>
