@@ -96,3 +96,71 @@ function getWeekMatrix(PDO $pdo, string $lundi): array
 }
 
 
+function getDayMatrix(PDO $pdo, string $date_jour): array
+{
+    $sql = "
+        SELECT
+            pc.id_creneau,
+            pc.id_salarie,
+            pc.date_jour,
+            pc.heure_debut,
+            pc.heure_fin,
+            pc.type_travail,
+            pc.commentaire,
+            pp.nom_poste
+        FROM planning_creneaux pc
+        LEFT JOIN planning_postes pp ON pc.id_poste = pp.id_poste
+        WHERE pc.date_jour = :d
+        ORDER BY pc.id_salarie, pc.heure_debut
+    ";
+
+    $st = $pdo->prepare($sql);
+    $st->execute([':d' => $date_jour]);
+    $rows = $st->fetchAll(PDO::FETCH_ASSOC);
+
+    $matrix = [];
+
+    foreach ($rows as $r) {
+        $sid = (int)$r['id_salarie'];
+
+        if (!isset($matrix[$sid])) $matrix[$sid] = [];
+
+        // label comme tu fais partout
+        if (!empty($r['nom_poste'])) $r['label'] = $r['nom_poste'];
+        elseif (!empty($r['commentaire'])) $r['label'] = $r['commentaire'];
+        else $r['label'] = 'Intervention';
+
+        $matrix[$sid][] = $r;
+    }
+
+    return $matrix;
+}
+
+
+function getMonthCounts(PDO $pdo, string $monthStart, string $monthEnd): array
+{
+    // Retour: ['YYYY-MM-DD' => nb]
+    $sql = "
+        SELECT pc.date_jour, COUNT(*) AS nb
+        FROM planning_creneaux pc
+        WHERE pc.date_jour BETWEEN :d1 AND :d2
+        GROUP BY pc.date_jour
+    ";
+    $st = $pdo->prepare($sql);
+    $st->execute([
+        ':d1' => $monthStart,
+        ':d2' => $monthEnd
+    ]);
+
+    $out = [];
+    foreach ($st->fetchAll(PDO::FETCH_ASSOC) as $r) {
+        $out[$r['date_jour']] = (int)$r['nb'];
+    }
+    return $out;
+}
+
+
+
+
+
+

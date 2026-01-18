@@ -60,10 +60,22 @@
                     </div>
 
                     <div class="views">
-                        <button type="button">Vue Jour</button>
-                        <button type="button" class="active">Vue Hebdo</button>
-                        <button type="button">Vue Mensuelle</button>
+                        <a class="btn-view"
+                            href="<?= BASE_URL ?>/public/index.php?page=chef/planning&view=day&date=<?= htmlspecialchars($refDate ?? $joursAffiches[0]) ?>">
+                            Vue Jour
+                        </a>
+
+                        <a class="btn-view active"
+                            href="<?= BASE_URL ?>/public/index.php?page=chef/planning&view=week&date=<?= htmlspecialchars($refDate ?? $joursAffiches[0]) ?>">
+                            Vue Hebdo
+                        </a>
+
+                        <a class="btn-view"
+                            href="<?= BASE_URL ?>/public/index.php?page=chef/planning&view=month&date=<?= htmlspecialchars($refDate ?? $joursAffiches[0]) ?>">
+                            Vue Mensuelle
+                        </a>
                     </div>
+
 
                     <!-- Formulaire de recherche d’employé -->
                     <form method="get" class="emp-search">
