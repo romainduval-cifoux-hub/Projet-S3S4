@@ -37,16 +37,6 @@ require_once __DIR__ . '/../../../src/config.php';
                 value="<?= htmlspecialchars($username ?? '') ?>"
                 required> <input class="input" type="password" name="password" placeholder="Mot de passe" required>
             <input class="input" type="password" name="password2" placeholder="Confirmer le mot de passe" required>
-            <select class="dropdown" name="role" id="role">
-                <?php if (!empty($roles)) : ?>
-                    <?php foreach ($roles as $role) : ?>
-                        <option value="<?= htmlspecialchars($role) ?>"><?= htmlspecialchars($role) ?></option>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <option value="">Aucun rôle disponible</option>
-                <?php endif; ?>
-            </select>
-
             <button class="btn_connexion" type="submit">Créer le compte</button>
 
         </form>

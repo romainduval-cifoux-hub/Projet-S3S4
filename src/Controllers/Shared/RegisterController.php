@@ -27,7 +27,7 @@ class RegisterController
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
             $password2 = $_POST['password2'] ?? '';
-            $role     = $_POST['role'] ?? '';
+            $role     = 'client';
 
             if (!$username || !$password || !$password2) {
                 $erreur = "Veuillez remplir tous les champs.";
