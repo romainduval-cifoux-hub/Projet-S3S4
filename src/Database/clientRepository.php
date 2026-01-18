@@ -7,12 +7,13 @@ function client_getByUserId(PDO $pdo, int $userId): ?array
 {
     $sql = "SELECT *
             FROM clients
-            WHERE id_client = :id";
+            WHERE user_id = :user_id";
     $st = $pdo->prepare($sql);
-    $st->execute([':id' => $userId]);
+    $st->execute([':user_id' => $userId]);
     $row = $st->fetch(PDO::FETCH_ASSOC);
     return $row ?: null;
 }
+
 
 /**
  * Crée une fiche client liée à un user existant
@@ -26,10 +27,10 @@ function client_create(
     ?string $adresse,
     ?string $ville,
     ?string $codePostal,
-    ?string $siret 
+    ?string $siret
 ): bool {
     $sql = "INSERT INTO clients (
-                id_client,
+                user_id,
                 nom_client,
                 prenom_client,
                 telephone_client,
@@ -39,7 +40,7 @@ function client_create(
                 siret_client
             )
             VALUES (
-                :id,
+                :user_id,
                 :nom,
                 :prenom,
                 :telephone,
@@ -51,16 +52,17 @@ function client_create(
 
     $st = $pdo->prepare($sql);
     return $st->execute([
-        ':id'      => $userId,
-        ':nom'     => $nom,
-        ':prenom'  => $prenom,
+        ':user_id' => $userId,
+        ':nom' => $nom,
+        ':prenom' => $prenom,
         ':telephone' => $telephone,
         ':adresse' => $adresse,
-        ':ville'   => $ville,
-        ':cp'      => $codePostal,
-        ':siret'   => $siret
+        ':ville' => $ville,
+        ':cp' => $codePostal,
+        ':siret' => $siret
     ]);
 }
+
 
 /**
  * Met à jour la fiche client liée à un user
@@ -74,7 +76,7 @@ function client_update(
     ?string $adresse,
     ?string $ville,
     ?string $codePostal,
-    ?string $siret 
+    ?string $siret
 ): bool {
     $sql = "UPDATE clients
             SET nom_client = :nom,
@@ -84,20 +86,21 @@ function client_update(
                 ville_client = :ville,
                 code_postal_client = :cp,
                 siret_client = :siret
-            WHERE id_client = :id";
+            WHERE user_id = :user_id";
 
     $st = $pdo->prepare($sql);
     return $st->execute([
-        ':id'      => $userId,
-        ':nom'     => $nom,
-        ':prenom'  => $prenom,
+        ':user_id' => $userId,
+        ':nom' => $nom,
+        ':prenom' => $prenom,
         ':telephone' => $telephone,
         ':adresse' => $adresse,
-        ':ville'   => $ville,
-        ':cp'      => $codePostal,
-        ':siret'   => $siret
+        ':ville' => $ville,
+        ':cp' => $codePostal,
+        ':siret' => $siret
     ]);
 }
+
 
 function clientExists(PDO $pdo, int $userId): bool
 {
