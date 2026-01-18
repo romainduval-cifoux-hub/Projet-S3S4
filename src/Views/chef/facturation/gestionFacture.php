@@ -121,7 +121,7 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
 
                     <!-- ACTIONS -->
                     <?php if (($facture['statusDoc'] ?? '') === 'En attente'): ?>
-                        <form method="POST" style="margin:10px 0; display:flex; gap:10px; flex-wrap:wrap;">
+                        <form method="POST">
                             <input type="hidden" name="idDoc" value="<?= (int)$facture['idDoc'] ?>">
                             <input type="hidden" name="idCli" value="<?= htmlspecialchars($idCli ?? '') ?>">
 
@@ -135,7 +135,7 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
                                 <button type="submit" name="action" value="accepter">Marquer comme accepté</button>
                                 <button type="submit" name="action" value="refuser">Marquer comme refusé</button>
                             <?php else: ?>
-                                <button type="submit" name="action" value="payer">Marquer comme payé</button>
+                                <button type="submit" name="action" value="payer">Document payé</button>
                             <?php endif; ?>
                         </form>
                     <?php endif; ?>
@@ -151,11 +151,11 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
 
                         <input type="hidden" name="en_attente" value="<?= htmlspecialchars($filtreEnAttente) ?>">
 
-                        <button name="action" value="pdf">PDF</button>
+                        <button name="action" value="pdf">Générer le PDF</button>
                     </form>
 
                     <!-- Envoi -->
-                    <form method="POST" style="margin-top:10px;">
+                    <form method="POST">
                         <input type="hidden" name="idDoc" value="<?= (int)$facture['idDoc'] ?>">
                         <input type="hidden" name="idCli" value="<?= htmlspecialchars($idCli ?? '') ?>">
 
@@ -165,7 +165,7 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
 
                         <input type="hidden" name="en_attente" value="<?= htmlspecialchars($filtreEnAttente) ?>">
 
-                        <button type="submit" name="action" value="send">Envoyer document</button>
+                        <button type="submit" name="action" value="send">Envoyer le document par mail</button>
                     </form>
 
 
@@ -194,7 +194,10 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
             <?php endforeach; ?>
 
         </main>
+
     </div>
+<?php require_once(__DIR__ . '/../../shared/footer.php'); ?>
+
 </div>
 
 </html>

@@ -1,16 +1,16 @@
-
 :root{
-  --header-h: 100px;   
-  --aside-w: 15vw;    
+  --header-h: 100px;
+  --aside-w: 15vw;
 }
 
+/* ================= LAYOUT ================= */
 
 .app{
   display: grid;
-  grid-template-columns: var(--aside-w) minmax(0, 1fr);
-  gap: 0;
+  grid-template-columns: var(--aside-w) 1fr;
 }
 
+/* ================= HEADER ================= */
 
 header{
   position: sticky;
@@ -19,46 +19,86 @@ header{
   background: #fff;
 }
 
+/* ================= ASIDE ================= */
 
 .tj-aside{
-  position: sticky;
-  top: var(--header-h);
-  align-self: start;
-  height: calc(100vh - var(--header-h));
   background: #2b6b3d;
-  color:#fff;
+  color: #fff;
   padding: 24px 16px;
-  overflow: auto;
-  z-index: 10;
-                
+  box-sizing: border-box;
 }
 
+/* Titres */
+.tj-aside h3{
+  margin: 24px 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* Groupes */
+.tj-aside-group{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.tj-aside-link{
+  display: block;
+  width: auto;          
+  padding: 8px 12px;    
+  border-radius: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tj-aside-link:hover{
+  background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+
+}
+
+.tj-aside-group{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+  align-items: flex-start;  
+}
+
+
+
+.tj-aside-link.active{
+  background: rgba(255,255,255,0.25);
+  font-weight: 600;
+}
+
+/* ================= MAIN ================= */
 
 .main-content{
-  min-width: 0;               
-  overflow: auto;
   padding: 24px;
   background: #FBFFE9;
-  z-index: 1;
+  box-sizing: border-box;
 }
 
+/* ================= FOOTER ================= */
 
 footer{
   grid-column: 1 / -1;
 }
 
-.tj-aside .tj-aside-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;            
-}
-
-
+/* ================= MOBILE ================= */
 
 @media (max-width: 900px){
-  .app{ grid-template-columns: 1fr; }
+  .app{
+    grid-template-columns: 1fr;
+  }
+
   .tj-aside{
-    position: static;
-    height: auto;
+    width: 100%;
   }
 }

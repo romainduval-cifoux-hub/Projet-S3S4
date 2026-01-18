@@ -139,15 +139,6 @@ $reglementDoc = $_POST['reglementDoc'] ?? '';
             <label>Date d'échéance :</label>
             <input type="date" name="datePaiement" value="<?= htmlspecialchars($datePaiement) ?>">
 
-            <label>Mode de règlement :</label>
-            <select name="reglementDoc">
-                <option value="" <?= $reglementDoc === '' ? 'selected' : '' ?>>Non spécifié</option>
-                <option value="Carte bancaire" <?= $reglementDoc === 'Carte bancaire' ? 'selected' : '' ?>>Carte bancaire</option>
-                <option value="Virement" <?= $reglementDoc === 'Virement' ? 'selected' : '' ?>>Virement</option>
-                <option value="Chèque" <?= $reglementDoc === 'Chèque' ? 'selected' : '' ?>>Chèque</option>
-                <option value="Espèces" <?= $reglementDoc === 'Espèces' ? 'selected' : '' ?>>Espèces</option>
-            </select>
-
             <br><br>
 
             <button type="submit" name="action" value="createFacture">
@@ -182,5 +173,7 @@ function removeLine(button) {
 </script>
 
 </div>
+<?php require_once(__DIR__ . '/../../shared/footer.php'); ?>
+
 </body>
 </html>
