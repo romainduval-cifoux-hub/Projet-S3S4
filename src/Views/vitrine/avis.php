@@ -11,6 +11,21 @@ require_once __DIR__ . '/../../Database/avis.php';
         src="<?= BASE_URL ?>/public/assets/vitrine/img/<?= $moyenne ?>stars-google.png"
         alt="note moyenne">
     <p>Basé sur <strong><?= count($avis) ?> avis</strong></p>
+    <?php if (!empty($_SESSION['avis_success'])): ?>
+        <div class="alert-avis_success">
+            <?= htmlspecialchars($_SESSION['avis_success']) ?>
+        </div>
+        <?php unset($_SESSION['avis_success']); ?>
+    <?php endif; ?>
+
+    <?php if (!empty($_SESSION['avis_error'])): ?>
+        <div class="alert-avis_error">
+            <?= htmlspecialchars($_SESSION['avis_error']) ?>
+        </div>
+        <?php unset($_SESSION['avis_error']); ?>
+    <?php endif; ?>
+
+
 
     <div class="avis-slider-wrapper">
         <button class="avis-arrow avis-arrow-left" type="button">‹</button>

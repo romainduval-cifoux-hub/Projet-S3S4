@@ -240,164 +240,114 @@ VALUES (
 );
 
 
-INSERT INTO users (username, password, role) VALUES 
-('admin', MD5('password123'), 'admin'),
-('a', MD5('b'), 'admin'),
-('client1', MD5('clientpass'), 'client');
+/* =========================
+   USERS (20 CLIENTS + 10 SALARIES dont 2 ADMINS)
+   ids forcés pour lier facilement clients/salaries
+========================= */
 
-INSERT INTO users (username, password, role) VALUES
-('client01', 'HASHEDPWD123', 'client'),
-('client02', 'HASHEDPWD123', 'client'),
-('client03', 'HASHEDPWD123', 'client'),
-('client04', 'HASHEDPWD123', 'client'),
-('client05', 'HASHEDPWD123', 'client'),
-('client06', 'HASHEDPWD123', 'client'),
-('client07', 'HASHEDPWD123', 'client'),
-('client08', 'HASHEDPWD123', 'client'),
-('client09', 'HASHEDPWD123', 'client'),
-('client10', 'HASHEDPWD123', 'client'),
-('client11', 'HASHEDPWD123', 'client'),
-('client12', 'HASHEDPWD123', 'client'),
-('client13', 'HASHEDPWD123', 'client'),
-('client14', 'HASHEDPWD123', 'client'),
-('client15', 'HASHEDPWD123', 'client'),
-('client16', 'HASHEDPWD123', 'client'),
-('client17', 'HASHEDPWD123', 'client'),
-('client18', 'HASHEDPWD123', 'client'),
-('client19', 'HASHEDPWD123', 'client'),
-('client20', 'HASHEDPWD123', 'client'),
-('client21', 'HASHEDPWD123', 'client'),
-('client22', 'HASHEDPWD123', 'client'),
-('client23', 'HASHEDPWD123', 'client'),
-('client24', 'HASHEDPWD123', 'client'),
-('client25', 'HASHEDPWD123', 'client'),
-('client26', 'HASHEDPWD123', 'client'),
-('client27', 'HASHEDPWD123', 'client'),
-('client28', 'HASHEDPWD123', 'client'),
-('client29', 'HASHEDPWD123', 'client'),
-('client30', 'HASHEDPWD123', 'client');
+INSERT INTO users (id, username, password, role) VALUES
+(1,  'client01',  md5('Client01$2025!'), 'client'),
+(2,  'client02',  md5('Client02#R0cks'), 'client'),
+(3,  'client03',  md5('Cl!ent03_9x'),   'client'),
+(4,  'client04',  md5('C4-client04$'),  'client'),
+(5,  'client05',  md5('Cli3nt05-Ok'),   'client'),
+(6,  'client06',  md5('C06!secure'),    'client'),
+(7,  'client07',  md5('client07_pass#'),'client'),
+(8,  'client08',  md5('C8*Purple!7'),   'client'),
+(9,  'client09',  md5('9client09$GO'),  'client'),
+(10, 'client10',  md5('Client10@Home'), 'client'),
+(11, 'client11',  md5('Cli#11-Blue'),   'client'),
+(12, 'client12',  md5('C12_sunrise!'),  'client'),
+(13, 'client13',  md5('client13^Tree'), 'client'),
+(14, 'client14',  md5('Cl14!Moon'),     'client'),
+(15, 'client15',  md5('C15-Delta$'),    'client'),
+(16, 'client16',  md5('client16+Wave'), 'client'),
+(17, 'client17',  md5('C17_River#'),    'client'),
+(18, 'client18',  md5('client18?Star'), 'client'),
+(19, 'client19',  md5('C19&Stone!'),    'client'),
+(20, 'client20',  md5('client20=Leaf'), 'client'),
 
-INSERT INTO users (username, password, role) VALUES
-('salarie01', 'HASHEDPWD123', 'admin'),
-('salarie02', 'HASHEDPWD123', 'admin'),
-('salarie03', 'HASHEDPWD123', 'salarie'),
-('salarie04', 'HASHEDPWD123', 'salarie'),
-('salarie05', 'HASHEDPWD123', 'salarie'),
-('salarie06', 'HASHEDPWD123', 'salarie'),
-('salarie07', 'HASHEDPWD123', 'salarie'),
-('salarie08', 'HASHEDPWD123', 'salarie'),
-('salarie09', 'HASHEDPWD123', 'salarie'),
-('salarie10', 'HASHEDPWD123', 'salarie'),
-('salarie11', 'HASHEDPWD123', 'salarie'),
-('salarie12', 'HASHEDPWD123', 'salarie'),
-('salarie13', 'HASHEDPWD123', 'salarie'),
-('salarie14', 'HASHEDPWD123', 'salarie'),
-('salarie15', 'HASHEDPWD123', 'salarie'),
-('salarie16', 'HASHEDPWD123', 'salarie'),
-('salarie17', 'HASHEDPWD123', 'salarie'),
-('salarie18', 'HASHEDPWD123', 'salarie'),
-('salarie19', 'HASHEDPWD123', 'salarie'),
-('salarie20', 'HASHEDPWD123', 'salarie'),
-('salarie21', 'HASHEDPWD123', 'salarie'),
-('salarie22', 'HASHEDPWD123', 'salarie'),
-('salarie23', 'HASHEDPWD123', 'salarie'),
-('salarie24', 'HASHEDPWD123', 'salarie'),
-('salarie25', 'HASHEDPWD123', 'salarie'),
-('salarie26', 'HASHEDPWD123', 'salarie'),
-('salarie27', 'HASHEDPWD123', 'salarie'),
-('salarie28', 'HASHEDPWD123', 'salarie'),
-('salarie29', 'HASHEDPWD123', 'salarie'),
-('salarie30', 'HASHEDPWD123', 'salarie');
+(21, 'admin1', md5('password123'), 'admin'),
+(22, 'admin2', md5('password123'),    'admin'),
+(23, 'salarie03', md5('S3_salarie!X'),  'salarie'),
+(24, 'salarie04', md5('Sal04@Team'),    'salarie'),
+(25, 'salarie05', md5('Salarie05%Go'),  'salarie'),
+(26, 'salarie06', md5('Sal06^Lead'),    'salarie'),
+(27, 'salarie07', md5('S07_salarie*'),  'salarie'),
+(28, 'salarie08', md5('Sal08!Done'),    'salarie'),
+(29, 'salarie09', md5('S09#Check'),     'salarie'),
+(30, 'salarie10', md5('Sal10$Plan'),    'salarie');
 
+
+/* =========================
+   CLIENTS (20)
+   user_id = id users (1..20)
+========================= */
 
 INSERT INTO clients (
-    id_client,
-    photo,
-    nom_client,
-    prenom_client,
-    telephone_client,
-    adresse_client,
-    ville_client,
-    code_postal_client,
-    siret_client
-)
-VALUES
-(1,'/public/assets/clients/img/photo1.png','Durand','Alice','0612345601','12 rue des Lilas','Lyon','69001','FR000001'),
-(2,'/public/assets/clients/img/photo1.png','Martin','Bob','0612345602','8 avenue Victor Hugo','Paris','75008','FR000002'),
-(3,'/public/assets/clients/img/photo1.png','Lefevre','Claire','0612345603','14 rue Pasteur','Marseille','13001','FR000003'),
-(4,'/public/assets/clients/img/photo1.png','Moreau','David','0612345604','6 rue du Parc','Nice','06000','FR000004'),
-(5,'/public/assets/clients/img/photo1.png','Garcia','Emma','0612345605','18 rue de la Gare','Bordeaux','33000','FR000005'),
-(6,'/public/assets/clients/img/photo1.png','Bernard','Lucas','0612345606','25 avenue Foch','Lille','59000','FR000006'),
-(7,'/public/assets/clients/img/photo1.png','Petit','Nora','0612345607','3 place Bellecour','Lyon','69002','FR000007'),
-(8,'/public/assets/clients/img/photo1.png','Robert','Hugo','0612345608','4 rue Nationale','Tours','37000','FR000008'),
-(9,'/public/assets/clients/img/photo1.png','Richard','Zoé','0612345609','22 avenue République','Dijon','21000','FR000009'),
-(10,'/public/assets/clients/img/photo1.png','Dubois','Léo','0612345610','10 chemin du Lac','Annecy','74000','FR000010'),
-(11,'/public/assets/clients/img/photo1.png','Laurent','Sarah','0612345611','5 rue des Fleurs','Grenoble','38000','FR000011'),
-(12,'/public/assets/clients/img/photo1.png','Simon','Paul','0612345612','45 avenue de la Liberté','Toulouse','31000','FR000012'),
-(13,'/public/assets/clients/img/photo1.png','Michel','Eva','0612345613','7 rue Voltaire','Nantes','44000','FR000013'),
-(14,'/public/assets/clients/img/photo1.png','Thomas','Olivier','0612345614','9 rue Carnot','Clermont-Ferrand','63000','FR000014'),
-(15,'/public/assets/clients/img/photo1.png','Garnier','Inès','0612345615','11 avenue du Stade','Reims','51100','FR000015'),
-(16,'/public/assets/clients/img/photo1.png','Faure','Louis','0612345616','2 rue des Peupliers','Caen','14000','FR000016'),
-(17,'/public/assets/clients/img/photo1.png','Roux','Chloé','0612345617','17 rue du Moulin','Le Havre','76600','FR000017'),
-(18,'/public/assets/clients/img/photo1.png','Fontaine','Maxime','0612345618','15 rue Lafayette','Rouen','76000','FR000018'),
-(19,'/public/assets/clients/img/photo1.png','Chevalier','Lina','0612345619','28 rue des Écoles','Nancy','54000','FR000019'),
-(20,'/public/assets/clients/img/photo1.png','Lambert','Noah','0612345620','30 rue République','Metz','57000','FR000020'),
-(21,'/public/assets/clients/img/photo1.png','Bonnet','Jules','0612345621','13 rue St-Jean','Poitiers','86000','FR000021'),
-(22,'/public/assets/clients/img/photo1.png','Francois','Ana','0612345622','8 rue St-Michel','Angers','49000','FR000022'),
-(23,'/public/assets/clients/img/photo1.png','Renaud','Eliott','0612345623','4 rue des Alpes','Grenoble','38000','FR000023'),
-(24,'/public/assets/clients/img/photo1.png','Morin','Camille','0612345624','6 rue de Paris','Chartres','28000','FR000024'),
-(25,'/public/assets/clients/img/photo1.png','Renard','Tom','0612345625','19 rue de Lyon','Strasbourg','67000','FR000025'),
-(26,'/public/assets/clients/img/photo1.png','Marchand','Léa','0612345626','7 rue de la Paix','Besançon','25000','FR000026'),
-(27,'/public/assets/clients/img/photo1.png','Blanc','Nathan','0612345627','16 rue du Marché','Perpignan','66000','FR000027'),
-(28,'/public/assets/clients/img/photo1.png','Guillaume','Emma','0612345628','2 rue du Pont','Avignon','84000','FR000028'),
-(29,'/public/assets/clients/img/photo1.png','Henry','Victor','0612345629','8 rue Victor Hugo','Paris','75009','FR000029'),
-(30,'/public/assets/clients/img/photo1.png','Masson','Julie','0612345630','10 rue du Rhône','Lyon','69003','FR000030');
+  id_client, user_id, photo, nom_client, prenom_client, telephone_client,
+  adresse_client, ville_client, code_postal_client, siret_client
+) VALUES
+(1,  1, '/public/assets/clients/img/photo1.png','Durand','Alice','0612345601','12 rue des Lilas','Lyon','69001','FR000001'),
+(2,  2, '/public/assets/clients/img/photo1.png','Martin','Bob','0612345602','8 avenue Victor Hugo','Paris','75008','FR000002'),
+(3,  3, '/public/assets/clients/img/photo1.png','Lefevre','Claire','0612345603','14 rue Pasteur','Marseille','13001','FR000003'),
+(4,  4, '/public/assets/clients/img/photo1.png','Moreau','David','0612345604','6 rue du Parc','Nice','06000','FR000004'),
+(5,  5, '/public/assets/clients/img/photo1.png','Garcia','Emma','0612345605','18 rue de la Gare','Bordeaux','33000','FR000005'),
+(6,  6, '/public/assets/clients/img/photo1.png','Bernard','Lucas','0612345606','25 avenue Foch','Lille','59000','FR000006'),
+(7,  7, '/public/assets/clients/img/photo1.png','Petit','Nora','0612345607','3 place Bellecour','Lyon','69002','FR000007'),
+(8,  8, '/public/assets/clients/img/photo1.png','Robert','Hugo','0612345608','4 rue Nationale','Tours','37000','FR000008'),
+(9,  9, '/public/assets/clients/img/photo1.png','Richard','Zoé','0612345609','22 avenue République','Dijon','21000','FR000009'),
+(10, 10,'/public/assets/clients/img/photo1.png','Dubois','Léo','0612345610','10 chemin du Lac','Annecy','74000','FR000010'),
+(11, 11,'/public/assets/clients/img/photo1.png','Laurent','Sarah','0612345611','5 rue des Fleurs','Grenoble','38000','FR000011'),
+(12, 12,'/public/assets/clients/img/photo1.png','Simon','Paul','0612345612','45 avenue de la Liberté','Toulouse','31000','FR000012'),
+(13, 13,'/public/assets/clients/img/photo1.png','Michel','Eva','0612345613','7 rue Voltaire','Nantes','44000','FR000013'),
+(14, 14,'/public/assets/clients/img/photo1.png','Thomas','Olivier','0612345614','9 rue Carnot','Clermont-Ferrand','63000','FR000014'),
+(15, 15,'/public/assets/clients/img/photo1.png','Garnier','Inès','0612345615','11 avenue du Stade','Reims','51100','FR000015'),
+(16, 16,'/public/assets/clients/img/photo1.png','Faure','Louis','0612345616','2 rue des Peupliers','Caen','14000','FR000016'),
+(17, 17,'/public/assets/clients/img/photo1.png','Roux','Chloé','0612345617','17 rue du Moulin','Le Havre','76600','FR000017'),
+(18, 18,'/public/assets/clients/img/photo1.png','Fontaine','Maxime','0612345618','15 rue Lafayette','Rouen','76000','FR000018'),
+(19, 19,'/public/assets/clients/img/photo1.png','Chevalier','Lina','0612345619','28 rue des Écoles','Nancy','54000','FR000019'),
+(20, 20,'/public/assets/clients/img/photo1.png','Lambert','Noah','0612345620','30 rue République','Metz','57000','FR000020');
 
+
+/* =========================
+   SALARIES (10) ids = users 21..30
+========================= */
 
 INSERT INTO salaries (id_salarie, nom_salarie, prenom_salarie, adresse_salarie, ville_salarie, code_postal_salarie, salaire, date_embauche)
 VALUES
-(31, 'Dupont', 'Marie', '1 rue des Lilas', 'Lyon', '69001', 2800.00, '2018-03-15'),
-(32, 'Durand', 'Pierre', '2 rue des Roses', 'Paris', '75012', 3100.00, '2019-06-10'),
-(33, 'Bernard', 'Lucie', '3 avenue du Parc', 'Nice', '06000', 2900.00, '2017-09-25'),
-(34, 'Petit', 'Nicolas', '4 rue République', 'Marseille', '13001', 3300.00, '2016-11-05'),
-(35, 'Robert', 'Sophie', '5 avenue République', 'Bordeaux', '33000', 3400.00, '2020-01-12'),
-(36, 'Richard', 'Thomas', '6 rue des Alpes', 'Grenoble', '38000', 2700.00, '2021-05-22'),
-(37, 'Dubois', 'Pauline', '7 rue Nationale', 'Lille', '59000', 2600.00, '2015-02-01'),
-(38, 'Moreau', 'Adrien', '8 rue Victor Hugo', 'Toulouse', '31000', 2800.00, '2018-09-17'),
-(39, 'Laurent', 'Claire', '9 rue Lafayette', 'Dijon', '21000', 3000.00, '2016-12-01'),
-(40, 'Simon', 'Hugo', '10 rue du Stade', 'Lyon', '69002', 2900.00, '2017-07-30'),
-(41, 'Michel', 'Laura', '11 rue du Moulin', 'Strasbourg', '67000', 3500.00, '2019-11-21'),
-(42, 'Thomas', 'Julien', '12 rue du Pont', 'Rouen', '76000', 2950.00, '2018-04-19'),
-(43, 'Garnier', 'Camille', '13 rue de Paris', 'Caen', '14000', 3100.00, '2015-10-11'),
-(44, 'Faure', 'Louis', '14 rue des Peupliers', 'Nancy', '54000', 2700.00, '2021-02-15'),
-(45, 'Roux', 'Lina', '15 rue du Marché', 'Angers', '49000', 2600.00, '2017-06-07'),
-(46, 'Fontaine', 'Maxime', '16 rue Carnot', 'Metz', '57000', 3000.00, '2016-03-03'),
-(47, 'Chevalier', 'Chloé', '17 rue des Fleurs', 'Grenoble', '38000', 2850.00, '2018-10-22'),
-(48, 'Lambert', 'Noah', '18 rue du Lac', 'Annecy', '74000', 2950.00, '2019-12-09'),
-(49, 'Bonnet', 'Eva', '19 avenue Foch', 'Lille', '59000', 3100.00, '2020-08-25'),
-(50, 'Francois', 'Tom', '20 rue République', 'Clermont-Ferrand', '63000', 3300.00, '2017-01-14'),
-(51, 'Renaud', 'Emma', '21 rue des Écoles', 'Reims', '51100', 3000.00, '2015-05-20'),
-(52, 'Morin', 'Jules', '22 rue St-Jean', 'Poitiers', '86000', 2700.00, '2018-11-10'),
-(53, 'Renard', 'Ana', '23 rue St-Michel', 'Angers', '49000', 3200.00, '2019-03-28'),
-(54, 'Marchand', 'Nathan', '24 rue des Lilas', 'Nantes', '44000', 2850.00, '2020-06-05'),
-(55, 'Blanc', 'Victor', '25 rue Voltaire', 'Paris', '75009', 3000.00, '2016-09-16'),
-(56, 'Guillaume', 'Inès', '26 rue de Lyon', 'Strasbourg', '67000', 3100.00, '2021-07-23'),
-(57, 'Henry', 'Paul', '27 rue de la Paix', 'Besançon', '25000', 2900.00, '2019-01-31'),
-(58, 'Masson', 'Léa', '28 rue du Pont', 'Avignon', '84000', 2800.00, '2020-02-14'),
-(59, 'Charpentier', 'Olivier', '29 rue du Rhône', 'Lyon', '69003', 3400.00, '2018-06-09'),
-(60, 'Perrin', 'Julie', '30 rue Victor Hugo', 'Paris', '75008', 3500.00, '2017-12-12');
+(21, 'Dupont',  'Marie',   '1 rue des Lilas',       'Lyon',       '69001', 2800.00, '2018-03-15'),
+(22, 'Durand',  'Pierre',  '2 rue des Roses',       'Paris',      '75012', 3100.00, '2019-06-10'),
+(23, 'Bernard', 'Lucie',   '3 avenue du Parc',      'Nice',       '06000', 2900.00, '2017-09-25'),
+(24, 'Petit',   'Nicolas', '4 rue République',      'Marseille',  '13001', 3300.00, '2016-11-05'),
+(25, 'Robert',  'Sophie',  '5 avenue République',   'Bordeaux',   '33000', 3400.00, '2020-01-12'),
+(26, 'Richard', 'Thomas',  '6 rue des Alpes',       'Grenoble',   '38000', 2700.00, '2021-05-22'),
+(27, 'Dubois',  'Pauline', '7 rue Nationale',       'Lille',      '59000', 2600.00, '2015-02-01'),
+(28, 'Moreau',  'Adrien',  '8 rue Victor Hugo',     'Toulouse',   '31000', 2800.00, '2018-09-17'),
+(29, 'Laurent', 'Claire',  '9 rue Lafayette',       'Dijon',      '21000', 3000.00, '2016-12-01'),
+(30, 'Simon',   'Hugo',    '10 rue du Stade',       'Lyon',       '69002', 2900.00, '2017-07-30');
+
+
+/* =========================
+   AVIS (ok : utilisateurs 1..10 existent toujours)
+========================= */
 
 INSERT INTO avis (user_id, commentaire, note, date_commentaire) VALUES
-(1, 'Travail impeccable, mon jardin a complètement changé d’allure !', 5, '2025-01-12'),
-(2, 'Très bon contact, équipe professionnelle et ponctuelle.', 5, '2025-01-18'),
-(3, 'Résultat satisfaisant mais quelques retards sur le chantier.', 3, '2025-02-03'),
-(4, 'Superbes plantations et finitions propres. Je recommande !', 4, '2025-02-10'),
-(5, 'Le projet ne correspond pas totalement à mes attentes.', 2, '2025-02-22'),
-(6, 'Excellent suivi du début à la fin, rien à redire.', 5, '2025-03-01'),
-(7, 'Beau rendu final mais devis révisé à la hausse en cours de route.', 3, '2025-03-05'),
-(8, 'Aménagement conforme, propre, mais un peu rapide sur les explications.', 4, '2025-03-12'),
-(9, 'Très déçu du résultat, la pelouse n’a pas pris correctement.', 1, '2025-03-20'),
+(1,  'Travail impeccable, mon jardin a complètement changé d’allure !', 5, '2025-01-12'),
+(2,  'Très bon contact, équipe professionnelle et ponctuelle.', 5, '2025-01-18'),
+(3,  'Résultat satisfaisant mais quelques retards sur le chantier.', 3, '2025-02-03'),
+(4,  'Superbes plantations et finitions propres. Je recommande !', 4, '2025-02-10'),
+(5,  'Le projet ne correspond pas totalement à mes attentes.', 2, '2025-02-22'),
+(6,  'Excellent suivi du début à la fin, rien à redire.', 5, '2025-03-01'),
+(7,  'Beau rendu final mais devis révisé à la hausse en cours de route.', 3, '2025-03-05'),
+(8,  'Aménagement conforme, propre, mais un peu rapide sur les explications.', 4, '2025-03-12'),
+(9,  'Très déçu du résultat, la pelouse n’a pas pris correctement.', 1, '2025-03-20'),
 (10, 'Travail sérieux, équipe sympathique et bons conseils.', 4, '2025-03-25');
+
+
+/* =========================
+   CATEGORIES
+========================= */
 
 INSERT INTO categories (nom) VALUES
 ('Aménagement paysager'),
@@ -407,130 +357,47 @@ INSERT INTO categories (nom) VALUES
 ('Création de terrasses et allées'),
 ('Éclairage extérieur');
 
+
+/* =========================
+   REALISATIONS (images remplacées par les tiennes)
+   (elles sont "au même endroit", donc on met juste les nouveaux fichiers)
+========================= */
+
 INSERT INTO realisations (photo, commentaire, categorie_id) VALUES
-('/public/assets/realisation/img/amenagement1.png',
- 'Création complète d\'un jardin avec massifs, allées et gazon. Transformation totale d\'un extérieur brut en un espace harmonieux.',
+
+('/public/assets/realisation/img/695eef0037501_pexels-creative-vix-7283.jpg',
+ 'Aménagement paysager complet d’un jardin privé : création de massifs structurés, équilibre des volumes végétaux et mise en valeur de la pelouse.',
  1),
 
-('/public/assets/realisation/img/amenagement2.png',
- 'Installation d\'une terrasse moderne entourée de plantations structurées et éclairage d\'ambiance.',
- 1),
-
-('/public/assets/realisation/img/entretien1.png',
- 'Tonte complète, désherbage, taille des arbustes et remise en état d\'un jardin laissé à l\'abandon.',
- 2),
-
-('/public/assets/realisation/img/entretien2.png',
- 'Entretien régulier d\'un jardin : pelouse, massifs, haies et nettoyage complet.',
- 2),
-
-('/public/assets/realisation/img/plantation1.png',
- 'Plantation d\'arbres et d\'arbustes pour créer un espace naturel structuré.',
- 3),
-
-('/public/assets/realisation/img/irrigation1.png',
- 'Installation d\'un système d\'arrosage automatique optimisé pour réduire la consommation d\'eau.',
- 4),
-
-('/public/assets/realisation/img/terrasse1.png',
- 'Création d\'une allée pavée et d\'une terrasse en bois pour un espace extérieur chaleureux.',
+('/public/assets/realisation/img/695ef0c70d8a9_pexels-pixabay-158028.jpg',
+ 'Création d’une allée de jardin paysagée : tracé du chemin, intégration harmonieuse des plantations et circulation fluide.',
  5),
 
-('/public/assets/realisation/img/eclairage1.png',
- 'Installation d\'un éclairage LED extérieur pour mettre en valeur le jardin la nuit.',
- 6);
+('/public/assets/realisation/img/695ef3f197901_pexels-dom-j-7304-227391.jpg',
+ 'Réaménagement d’un grand espace vert : nivellement du terrain et engazonnement pour un rendu uniforme et durable.',
+ 1),
 
+('/public/assets/realisation/img/695ef3911199b_pexels-andersbk-13975.jpg',
+ 'Installation d’un éclairage extérieur d’ambiance : mise en valeur du jardin à la tombée de la nuit et sécurisation des accès.',
+ 6),
 
-UPDATE users SET password = md5('Client01$2025!') WHERE username = 'client01';
-UPDATE users SET password = md5('Client02#R0cks') WHERE username = 'client02';
-UPDATE users SET password = md5('Cl!ent03_9x') WHERE username = 'client03';
-UPDATE users SET password = md5('C4-client04$') WHERE username = 'client04';
-UPDATE users SET password = md5('Cli3nt05-Ok') WHERE username = 'client05';
-UPDATE users SET password = md5('C06!secure') WHERE username = 'client06';
-UPDATE users SET password = md5('client07_pass#') WHERE username = 'client07';
-UPDATE users SET password = md5('C8*Purple!7') WHERE username = 'client08';
-UPDATE users SET password = md5('9client09$GO') WHERE username = 'client09';
-UPDATE users SET password = md5('Client10@Home') WHERE username = 'client10';
-UPDATE users SET password = md5('Cli#11-Blue') WHERE username = 'client11';
-UPDATE users SET password = md5('C12_sunrise!') WHERE username = 'client12';
-UPDATE users SET password = md5('client13^Tree') WHERE username = 'client13';
-UPDATE users SET password = md5('Cl14!Moon') WHERE username = 'client14';
-UPDATE users SET password = md5('C15-Delta$') WHERE username = 'client15';
-UPDATE users SET password = md5('client16+Wave') WHERE username = 'client16';
-UPDATE users SET password = md5('C17_River#') WHERE username = 'client17';
-UPDATE users SET password = md5('client18?Star') WHERE username = 'client18';
-UPDATE users SET password = md5('C19&Stone!') WHERE username = 'client19';
-UPDATE users SET password = md5('client20=Leaf') WHERE username = 'client20';
-UPDATE users SET password = md5('Cli21!Fox') WHERE username = 'client21';
-UPDATE users SET password = md5('C22_Sky#') WHERE username = 'client22';
-UPDATE users SET password = md5('client23+Oak') WHERE username = 'client23';
-UPDATE users SET password = md5('C24*Mint!') WHERE username = 'client24';
-UPDATE users SET password = md5('client25@Bee') WHERE username = 'client25';
-UPDATE users SET password = md5('C26-Rain#') WHERE username = 'client26';
-UPDATE users SET password = md5('client27$Peak') WHERE username = 'client27';
-UPDATE users SET password = md5('C28!Echo') WHERE username = 'client28';
-UPDATE users SET password = md5('client29#Bolt') WHERE username = 'client29';
-UPDATE users SET password = md5('C30_Pearl!') WHERE username = 'client30';
+('/public/assets/realisation/img/695f565b84f9a_pexels-creative-vix-7283.jpg',
+ 'Entretien régulier d’un jardin paysager : taille des végétaux, nettoyage des massifs et remise en état générale.',
+ 2),
 
-UPDATE users SET password = md5('Salarie01$Adm') WHERE username = 'salarie01';
-UPDATE users SET password = md5('Sal02#Work') WHERE username = 'salarie02';
-UPDATE users SET password = md5('S3_salarie!X') WHERE username = 'salarie03';
-UPDATE users SET password = md5('Sal04@Team') WHERE username = 'salarie04';
-UPDATE users SET password = md5('Salarie05%Go') WHERE username = 'salarie05';
-UPDATE users SET password = md5('Sal06^Lead') WHERE username = 'salarie06';
-UPDATE users SET password = md5('S07_salarie*') WHERE username = 'salarie07';
-UPDATE users SET password = md5('Sal08!Done') WHERE username = 'salarie08';
-UPDATE users SET password = md5('S09#Check') WHERE username = 'salarie09';
-UPDATE users SET password = md5('Sal10$Plan') WHERE username = 'salarie10';
-UPDATE users SET password = md5('S11-Manage') WHERE username = 'salarie11';
-UPDATE users SET password = md5('Sal12+Ops') WHERE username = 'salarie12';
-UPDATE users SET password = md5('S13_salarie?') WHERE username = 'salarie13';
-UPDATE users SET password = md5('Sal14^Edge') WHERE username = 'salarie14';
-UPDATE users SET password = md5('S15*Secure') WHERE username = 'salarie15';
-UPDATE users SET password = md5('Sal16!Core') WHERE username = 'salarie16';
-UPDATE users SET password = md5('S17#Root') WHERE username = 'salarie17';
-UPDATE users SET password = md5('Sal18$Flow') WHERE username = 'salarie18';
-UPDATE users SET password = md5('S19-Auth') WHERE username = 'salarie19';
-UPDATE users SET password = md5('Sal20+Gate') WHERE username = 'salarie20';
-UPDATE users SET password = md5('S21!Hash') WHERE username = 'salarie21';
-UPDATE users SET password = md5('Sal22#Node') WHERE username = 'salarie22';
-UPDATE users SET password = md5('S23$Sync') WHERE username = 'salarie23';
-UPDATE users SET password = md5('Sal24^Task') WHERE username = 'salarie24';
-UPDATE users SET password = md5('S25*Alert') WHERE username = 'salarie25';
-UPDATE users SET password = md5('Sal26!salarie') WHERE username = 'salarie26';
-UPDATE users SET password = md5('S27#Policy') WHERE username = 'salarie27';
-UPDATE users SET password = md5('Sal28$Audit') WHERE username = 'salarie28';
-UPDATE users SET password = md5('S29+OpsX') WHERE username = 'salarie29';
-UPDATE users SET password = md5('Sal30!Final') WHERE username = 'salarie30';
+('/public/assets/realisation/img/695f714c4b4b6_pexels-andersbk-13975.jpg',
+ 'Éclairage décoratif du jardin : création d’ambiances lumineuses pour prolonger l’usage des espaces extérieurs en soirée.',
+ 6),
 
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client01') WHERE id_client=1;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client02') WHERE id_client=2;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client03') WHERE id_client=3;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client04') WHERE id_client=4;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client05') WHERE id_client=5;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client06') WHERE id_client=6;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client07') WHERE id_client=7;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client08') WHERE id_client=8;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client09') WHERE id_client=9;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client10') WHERE id_client=10;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client11') WHERE id_client=11;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client12') WHERE id_client=12;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client13') WHERE id_client=13;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client14') WHERE id_client=14;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client15') WHERE id_client=15;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client16') WHERE id_client=16;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client17') WHERE id_client=17;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client18') WHERE id_client=18;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client19') WHERE id_client=19;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client20') WHERE id_client=20;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client21') WHERE id_client=21;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client22') WHERE id_client=22;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client23') WHERE id_client=23;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client24') WHERE id_client=24;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client25') WHERE id_client=25;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client26') WHERE id_client=26;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client27') WHERE id_client=27;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client28') WHERE id_client=28;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client29') WHERE id_client=29;
-UPDATE clients SET user_id = (SELECT id FROM users WHERE username='client30') WHERE id_client=30;
+('/public/assets/realisation/img/695f716bd723b_pexels-dom-j-7304-227391.jpg',
+ 'Entretien de pelouse et espaces verts : tonte soignée, finitions des bordures et amélioration de la densité du gazon.',
+ 2),
+
+('/public/assets/realisation/img/695f7135ce463_pexels-pixabay-158028.jpg',
+ 'Création d’un chemin paysager au cœur du jardin : structuration des circulations et intégration esthétique dans l’environnement.',
+ 5),
+
+('/public/assets/realisation/img/696c13ed08278.png',
+ 'Plantation et composition de massifs végétaux : sélection de plantes adaptées, organisation des hauteurs et mise en scène des couleurs.',
+ 3);
 
