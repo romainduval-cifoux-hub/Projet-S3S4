@@ -25,6 +25,9 @@ require_once __DIR__ . '/Controllers/Chef/Facturation/FacturationController.php'
 require_once __DIR__ . '/Controllers/Chef/Facturation/FormEditBusinessInfoController.php';
 require_once __DIR__ . '/Controllers/Chef/Facturation/GestionnaireFacturationController.php';
 require_once __DIR__ . '/Controllers/Chef/Facturation/CreationDocumentController.php';
+//Notifications
+require_once __DIR__ . '/Controllers/Chef/Notifications/NotificationsChefController.php';
+
 
 //Realisation
 require_once __DIR__ . '/Controllers/Chef/Realisation/AdminRealisationController.php';
@@ -227,6 +230,24 @@ switch ($page) {
         $controller->handleRequest();
         break;
 
+    //Notifications Chef
+
+    case 'chef/notifications':
+        $controller = new NotificationsChefController();
+        $controller->index();
+        break;
+
+    case 'chef/notifications/read':
+        $controller = new NotificationsChefController();
+        $controller->read();
+        break;
+
+    case 'chef/notifications/read-all':
+        $controller = new NotificationsChefController();
+        $controller->readAll();
+        break;
+
+
     //Client
     case 'client/profil':
         $controller = new ClientController();
@@ -238,7 +259,7 @@ switch ($page) {
         $controller->save();
         break;
     //Employe
-    //Notifications
+    //Notifications Employee
 
     case 'employe/notifications':
         $controller = new NotificationsEmployeController();

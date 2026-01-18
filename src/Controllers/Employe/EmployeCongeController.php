@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../Database/db.php';
 require_once __DIR__ . '/../../Database/congeRepository.php';
+require_once __DIR__ . '/../../Database/notificationsRepository.php';
 
 class EmployeCongeController {
 
@@ -48,6 +49,24 @@ class EmployeCongeController {
                     $success = true;
                     // On réinitialise le formulaire
                     $motif = '';
+
+                    $adminIds = user_getAllAdminIds($this->pdo);
+                    $adminIds = array_unique($adminIds);
+
+
+                    foreach ($adminIds as $adminId) {
+                        notif_create(
+                            $this->pdo,
+                            $adminId,                 // destinataire = admin
+                            $id_salarie,              // expéditeur = salarié
+                            "Nouvelle demande de congé",
+                            "Demande de congé du $date_debut au $date_fin.",
+                            "info",
+                            BASE_URL . "/public/index.php?page=chef/conges"
+                        );
+                    }
+
+
                 } else {
                     $errors[] = "Erreur lors de l'enregistrement de la demande.";
                 }

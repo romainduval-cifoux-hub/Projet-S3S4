@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title><?= htmlspecialchars($pageTitle ?? 'Mes notifications') ?></title>
+  <title><?= htmlspecialchars($pageTitle ?? 'Notifications') ?></title>
 
   <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
   <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
@@ -12,69 +12,58 @@
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
   <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
   <link href="<?= BASE_URL ?>/public/assets/employe/notifications/style.css" rel="stylesheet">
-
   
 </head>
 <body>
 
-<section class="page">
-  <?php
-    $nav = ['Espace Personnel','Messagerie','Mon planning'];
-    $bouton = 'Déconnexion';
-    $redirection = BASE_URL . '/public/index.php?page=logout';
-    require __DIR__ . '/shared/header_employe.php';
-  ?>
+<div class="page">
+  <?php require __DIR__ . '/shared/header_chef.php'; ?>
 
   <div class="app">
     <?php
       $menuTitle1 = 'Notifications';
       $menu1 = [
-        ['label' => 'Mes notifications', 'href' => BASE_URL . '/public/index.php?page=employe/notifications'],
-        ['label' => 'Mon planning', 'href' => BASE_URL . '/public/index.php?page=employe/planning'],
+        ['label'=>'Notifications', 'href'=> BASE_URL.'/public/index.php?page=chef/notifications'],
+        ['label'=>'Planning', 'href'=> BASE_URL.'/public/index.php?page=chef/planning'],
       ];
-      $menuTitle2 = 'Mon compte';
+      $menuTitle2 = 'Gestion';
       $menu2 = [
-        ['label' => 'Mes informations', 'href' => BASE_URL . '/public/index.php?page=employe/profil'],
+        ['label'=>'Demandes de congé', 'href'=> BASE_URL.'/public/index.php?page=chef/conges'],
       ];
       require __DIR__ . '/../shared/aside.php';
     ?>
 
     <main class="main-content">
-      <main>
+      <div class="notif-wrap">
         <div class="notif-top">
-          <h1>Mes notifications</h1>
+          <h1>Notifications</h1>
 
-          <form method="post" action="<?= BASE_URL ?>/public/index.php?page=employe/notifications/read-all">
-            <button type="submit" class="btn secondary">Tout marquer comme lu</button>
+          <form method="post" action="<?= BASE_URL ?>/public/index.php?page=chef/notifications/read-all">
+            <button class="btn secondary" type="submit">Tout marquer comme lu</button>
           </form>
         </div>
 
         <?php if (empty($notifications)): ?>
-          <p>Aucune notification pour le moment.</p>
+          <p>Aucune notification.</p>
         <?php else: ?>
           <div class="notif-list">
             <?php foreach ($notifications as $n): ?>
               <div class="notif <?= ((int)$n['is_read'] === 0) ? 'unread' : '' ?>">
-                <div class="notif-type"><?= htmlspecialchars($n['type']) ?></div>
-
-                <div class="notif-body">
-                  <p class="notif-title"><?= htmlspecialchars($n['titre']) ?></p>
-                  <p class="notif-msg"><?= nl2br(htmlspecialchars($n['message'])) ?></p>
-
-                  <div class="notif-meta">
-                    <?= htmlspecialchars(date('d/m/Y H:i', strtotime($n['date_creation']))) ?>
-                  </div>
+                <div style="flex:1">
+                  <h3><?= htmlspecialchars($n['titre']) ?></h3>
+                  <p><?= nl2br(htmlspecialchars($n['message'])) ?></p>
+                  <small><?= htmlspecialchars(date('d/m/Y H:i', strtotime($n['date_creation']))) ?></small>
                 </div>
 
-                <div class="notif-actions">
+                <div class="actions">
                   <?php if (!empty($n['lien'])): ?>
                     <a class="btn" href="<?= htmlspecialchars($n['lien']) ?>">Voir</a>
                   <?php endif; ?>
 
                   <?php if ((int)$n['is_read'] === 0): ?>
-                    <form method="post" action="<?= BASE_URL ?>/public/index.php?page=employe/notifications/read">
+                    <form method="post" action="<?= BASE_URL ?>/public/index.php?page=chef/notifications/read">
                       <input type="hidden" name="id_notification" value="<?= (int)$n['id_notification'] ?>">
-                      <button type="submit" class="btn secondary">Marquer lu</button>
+                      <button class="btn secondary" type="submit">Lu</button>
                     </form>
                   <?php endif; ?>
                 </div>
@@ -82,12 +71,13 @@
             <?php endforeach; ?>
           </div>
         <?php endif; ?>
-      </main>
+
+      </div>
     </main>
   </div>
 
   <?php require __DIR__ . '/../shared/footer.php'; ?>
-</section>
+</div>
 
 </body>
 </html>

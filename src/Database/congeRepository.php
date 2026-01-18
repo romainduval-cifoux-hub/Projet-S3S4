@@ -160,3 +160,6 @@ function conge_appliquerAuPlanning(PDO $pdo, int $id_salarie, int $managerId, st
     }
 }
 
+
+
+
