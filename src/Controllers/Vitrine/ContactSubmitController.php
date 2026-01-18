@@ -51,20 +51,17 @@ class ContactSubmitController
 
             if (!empty($adminIds)) {
 
-                $msgShort = mb_substr($message, 0, 120);
-                if (mb_strlen($message) > 120) $msgShort .= '...';
-
                 $notifMessage =
                     "Nouveau contact reçu.\n" .
                     "Email : {$email}\n" .
-                    "Téléphone : " . ($phone !== '' ? $phone : '(non renseigné)') . "\n" .
-                    "Message : {$msgShort}";
+                    "Téléphone : " . ($phone !== '' ? $phone : '(non renseigné)') . "\n\n" .
+                    "Message :\n{$message}";
 
                 foreach ($adminIds as $adminId) {
                     notif_create(
                         $pdo,
-                        (int)$adminId,       
-                        null,               
+                        (int)$adminId,
+                        null,
                         "Nouveau message de contact",
                         $notifMessage,
                         "info",
@@ -72,6 +69,7 @@ class ContactSubmitController
                     );
                 }
             }
+            //
 
 
         } else {
