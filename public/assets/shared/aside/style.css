@@ -24,7 +24,7 @@ header{
   position: sticky;
   top: var(--header-h);
   align-self: start;
-  height: calc(90vh - var(--header-h));
+  height: calc(100vh - var(--header-h));
   background: #2b6b3d;
   color:#fff;
   padding: 24px 16px;
