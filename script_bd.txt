@@ -168,6 +168,7 @@ CREATE TABLE realisations (
     categorie_id INT NOT NULL,
     date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
     favoris INT DEFAULT 0,
+    masque TINYINT(1) NOT NULL DEFAULT 0,
     FOREIGN KEY (categorie_id) REFERENCES categories(id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
