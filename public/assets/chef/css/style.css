@@ -397,6 +397,40 @@
 }
 
 
+.btn-view{
+  display:inline-block;
+  padding:10px 14px;
+  text-decoration:none;
+  font-weight:600;
+  color:#678;
+  background:#fff;
+}
+
+.btn-view.active{
+  background: var(--green-100);
+  color: var(--green-700);
+}
+
+.slot--free{
+  background: #f2f2f2 !important;
+  border: 2px dashed #cfcfcf;
+  box-shadow: none;
+}
+
+
+.views{
+  margin-left:auto;
+  display:flex;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+
+
+
+
 
   /* Responsive */
   @media (max-width: 1100px) {

@@ -7,7 +7,7 @@ h1 {
 }
 
 .form-chantier, .form-filter-emp {
-    width: 60%;
+    width: 40em;
     margin: 0 auto 30px auto;
     display: flex;
     flex-direction: column;
@@ -53,3 +53,22 @@ button {
 button:hover {
     background: var(--btn-hover);
 }
+
+.board {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    justify-content: center;
+}
+
+.dispo-frame{
+  width:35em;
+  height:100%;
+  border:1px solid #ddd;
+  border-radius:12px;
+  background:#fff;
+}
+
+
+

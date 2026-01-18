@@ -1,0 +1,98 @@
+.month-board{
+  padding: 16px;
+}
+
+.month-toolbar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding: 10px 10px 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  margin-bottom: 12px;
+}
+
+.month-title{
+  display:block;
+    font-weight:800;
+    color:#2b2b2b;
+}
+
+.month-views{
+  margin-left:auto;
+  display:flex;
+  gap:8px;
+}
+
+.month-grid{
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap:10px;
+}
+
+.month-head{
+  text-align:center;
+  font-weight: 800;
+  color:#666;
+  padding: 8px 0;
+}
+
+.month-cell{
+  background:#fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 14px;
+  min-height: 90px;
+  padding: 10px;
+  text-decoration:none;
+  color:#222;
+  position:relative;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.month-cell:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.month-cell--empty{
+  background: transparent;
+  border: 1px dashed rgba(0,0,0,0.10);
+}
+
+.month-day{
+  font-weight: 900;
+  color:#333;
+}
+
+.month-badge{
+  position:absolute;
+  left:10px;
+  bottom:10px;
+  background: var(--bg);
+  border: 1px solid rgba(54,112,72,.22);
+  color: #2b2b2b;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 8px;
+  border-radius: 999px;
+}
+
+.month-cell--busy{
+  border-color: rgba(54,112,72,.35);
+}
+
+.month-cell--today{
+  outline: 3px solid rgba(54,112,72,.35);
+}
+
+.navbtn {
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    display:grid;
+    place-items:center;
+    background:var(--green-700);
+    color:#fff;
+    text-decoration:none;
+  }
