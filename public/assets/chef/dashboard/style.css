@@ -1,35 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
 main {
-    background-color: var(--bge);
-    margin-inline: 2%;
-    padding-inline: 5%;
-    align-items: center;
-    border: 2px solid black;
-    border-radius: 16px;
-}
-
-h1 {
-    text-align: center;
-    color: white ;
-    margin: 2em 30% 3em 30% ;
-    padding-block: 1em;
-    background-color: var(--vert-fonce);
-    border-radius: 8px ;
-}
-
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-
-.en-attente, .paye {
     background-color: var(--bg);
-    border: 2px solid black ;
-    border-radius: 6px ;
-    margin-inline: 20px ;
-    margin-block: 20px ;
-    padding-top: 30px ;
-    padding-bottom: 30px;
-    padding-inline: 2%;
+    padding: 20px;
+    padding-top: 0px;
 }
 
+/* HEADER */
+.header-filter {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-filter h1 {
+    font-size: 26px;
+}
+
+.header-filter form {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* KPI */
+.kpi-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 8vw;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.kpi-card {
+    flex: 1;
+    min-width: 10vw;
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid #ccc;
+}
+
+.kpi-title {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.kpi-value {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.kpi-grey {
+    border-color: #999;
+}
+
+.kpi-green {
+    border-color: #3a9d3a;
+}
+
+/* CHARTS */
+.charts {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+    
+}
+
+.chart-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    padding-top: 0px;
+    width: 43%;
+    min-width: 350px;
+
+}
+
+.chart-card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+    
+}

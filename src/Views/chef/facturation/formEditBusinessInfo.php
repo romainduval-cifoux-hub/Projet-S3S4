@@ -28,64 +28,68 @@ require_once(__DIR__ . '/../../../Database/db.php');
 
 </head>
 
+<body>
+    
 <div class="page">
-    <?php
-        require_once(__DIR__ . '/../shared/header_chef.php');
-    ?>
 
-    <div class="app">
-        <?php
-            require_once(__DIR__ . '/asidefacturation.php');
-        ?>
+<?php require_once(__DIR__ . '/../shared/header_chef.php'); ?>
+
+<div class="app">
+<?php require_once(__DIR__ . '/asidefacturation.php'); ?>
 
 <main>
 
-    <form action="" method="post">
+    <form action="" method="post" class="business-form">
 
-        <h2>Modifier les informations de l'entreprise</h2>
-        <div class="container">
-            <div class="gauche">
-                <label>Raison sociale</label><br>
-                <input type="text" name="nom" value="<?php echo htmlspecialchars($dataBusiness['nom']); ?>" required>
-                <br><br>
+        <div class="business-form__container">
 
-                <label>Description</label><br>
-                <textarea name="description" rows="4"><?php echo htmlspecialchars($dataBusiness['description']); ?></textarea>
-                <br><br>
-            </div>
-            <div class="droite">
-                <label>Téléphone</label><br>
-                <input type="text" name="telephone" value="<?php echo htmlspecialchars($dataBusiness['telephone']); ?>">
-                <br><br>
+            <div class="business-form__section">
+                <label>Raison sociale</label>
+                <input type="text" name="nom"
+                       value="<?= htmlspecialchars($dataBusiness['nom']); ?>" required>
 
-                <label>Adresse</label><br>
-                <input type="text" name="adresse" value="<?php echo htmlspecialchars($dataBusiness['adresse']); ?>">
-                <br><br>
+                <label>Description</label>
+                <input type="text" name="description"
+                    value="<?= htmlspecialchars($dataBusiness['description']); ?>" required>
 
-                <label>SIRET</label><br>
-                <input type="text" name="siret" value="<?php echo htmlspecialchars($dataBusiness['siret']); ?>">
-                <br><br>
+                <label>Téléphone</label>
+                <input type="text" name="telephone"
+                       value="<?= htmlspecialchars($dataBusiness['telephone']); ?>">
 
-            <label>IBAN</label><br>
-            <input type="text" name="iban" value="<?php echo htmlspecialchars($dataBusiness['iban']); ?>">
-            <br><br>
+                <label>Adresse</label>
+                <input type="text" name="adresse"
+                       value="<?= htmlspecialchars($dataBusiness['adresse']); ?>">
 
+                <label>SIRET</label>
+                <input type="text" name="siret"
+                       value="<?= htmlspecialchars($dataBusiness['siret']); ?>">
 
-            <label>BIC</label><br>
-            <input type="text" name="bic" value="<?php echo htmlspecialchars($dataBusiness['bic']); ?>">
-            <br><br>
+                <label>IBAN</label>
+                <input type="text" name="iban"
+                       value="<?= htmlspecialchars($dataBusiness['iban']); ?>">
+
+                <label>BIC</label>
+                <input type="text" name="bic"
+                       value="<?= htmlspecialchars($dataBusiness['bic']); ?>">
             </div>
 
         </div>
-        <button type="submit">Enregistrer</button>
+
+        <button type="submit" class="business-form__submit">
+            Enregistrer
+        </button>
 
         <?php if (!empty($successMessage)): ?>
-            <div>
-                <?php echo htmlspecialchars($successMessage); ?>
+            <div class="business-form__success">
+                <?= htmlspecialchars($successMessage); ?>
             </div>
         <?php endif; ?>
 
+        </form>
 
-    </form>
-
-</main>
+    </main>
+        </div>
+            <?php require_once(__DIR__ . '/../../shared/footer.php'); ?>
+            </div> 
+</body>
+</html>
