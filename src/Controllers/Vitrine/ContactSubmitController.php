@@ -3,6 +3,9 @@
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../Utils/mailer.php';
 
+require_once __DIR__ . '/../../Database/db.php';
+require_once __DIR__ . '/../../Database/notificationsRepository.php';
+
 class ContactSubmitController
 {
     public function handleRequest(): void
@@ -40,6 +43,37 @@ class ContactSubmitController
 
         if ($ok) {
             $_SESSION['contact_success'] = "Merci ! Votre message a bien été envoyé. Nous vous recontacterons rapidement.";
+
+            //notification admin
+            $pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
+
+            $adminIds = user_getAllAdminIds($pdo);
+
+            if (!empty($adminIds)) {
+
+                $msgShort = mb_substr($message, 0, 120);
+                if (mb_strlen($message) > 120) $msgShort .= '...';
+
+                $notifMessage =
+                    "Nouveau contact reçu.\n" .
+                    "Email : {$email}\n" .
+                    "Téléphone : " . ($phone !== '' ? $phone : '(non renseigné)') . "\n" .
+                    "Message : {$msgShort}";
+
+                foreach ($adminIds as $adminId) {
+                    notif_create(
+                        $pdo,
+                        (int)$adminId,       
+                        null,               
+                        "Nouveau message de contact",
+                        $notifMessage,
+                        "info",
+                        BASE_URL . "/public/index.php?page=chef/notifications"
+                    );
+                }
+            }
+
+
         } else {
             $_SESSION['contact_error'] = "Une erreur est survenue lors de l’envoi. Veuillez réessayer.";
         }
