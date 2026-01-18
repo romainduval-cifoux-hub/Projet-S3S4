@@ -4,7 +4,7 @@ header .header-container {
   align-items: center;
   justify-content: space-between; /* logo à gauche, nav au centre, boutons à droite */
   gap: 20px;
-  padding: 10px 20px;
+  padding: 0px 20px;
 }
 header .actions {
   display: flex;
