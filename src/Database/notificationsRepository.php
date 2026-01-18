@@ -83,3 +83,10 @@ function notif_getById(PDO $pdo, int $id_notif, int $id_user): ?array
     return $row ?: null;
 }
 
+function user_getAllAdminIds(PDO $pdo): array
+{
+    $st = $pdo->query("SELECT id FROM users WHERE role='admin' ORDER BY id ASC");
+    $ids = $st->fetchAll(PDO::FETCH_COLUMN);
+    return array_map('intval', $ids ?: []);
+}
+
