@@ -5,10 +5,12 @@ require_once __DIR__ . '/../../../Database/db.php';
 class AdminRealisationController {
 
     private AdminRealisationRepository $repo;
+    private PDO $pdo; 
+
 
     public function __construct() {
-        $pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
-        $this->repo = new AdminRealisationRepository($pdo);
+    $this->pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT); 
+    $this->repo = new AdminRealisationRepository($this->pdo);
     }
 
     public function index() {
