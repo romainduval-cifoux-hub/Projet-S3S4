@@ -301,7 +301,7 @@ class GestionnaireFacturationController
             $pdf->Cell(70, 5, pdf_txt('Téléphone : ' . ($facture['telClient'] ?? '')), 0, 1, 'R');
 
             $pdf->SetX(130);
-            $pdf->Cell(70, 5, pdf_txt('Adresse postale : ' . ($facture['addrClient'] ?? '')), 0, 1, 'R');
+            $pdf->Cell(70, 5, pdf_txt('Adresse : ' . ($facture['addrClient'] ?? '')), 0, 1, 'R');
 
             $pdf->SetX(130);
             $pdf->Cell(70, 5, pdf_txt('Ville : ' . ($facture['villeClient'] ?? '')), 0, 1, 'R');
@@ -376,12 +376,6 @@ class GestionnaireFacturationController
 
             $pdf->SetFont('Arial', 'B', 10);
             $pdf->SetX(10);
-            $pdf->Cell(60, 6, pdf_txt('Mode de règlement :'), 0, 0);
-            $pdf->SetFont('Arial', '', 10);
-            $pdf->Cell(60, 6, pdf_txt($facture['reglementDoc'] ?? ''), 0, 1);
-
-            $pdf->SetFont('Arial', 'B', 10);
-            $pdf->SetX(10);
             $pdf->Cell(60, 6, pdf_txt('Date d\'échéance :'), 0, 0);
             $pdf->SetFont('Arial', '', 10);
 
@@ -403,9 +397,12 @@ class GestionnaireFacturationController
             $pdf->SetFont('Arial', '', 10);
             $pdf->Cell(120, 6, pdf_txt($entreprise['bic'] ?? ''), 0, 1);
 
-            $pdf->SetFont('Arial', 'B', 10);
-            $pdf->SetXY($blocTotauxX, $pdf->GetY() + 8);
-            $pdf->Cell(100, 6, pdf_txt('Bon pour accord, date et signature :'), 0, 1, 'L');
+            if (($facture['typeDoc'] ?? '') === 'Devis') {
+                $pdf->SetFont('Arial', 'B', 10);
+                $pdf->SetXY($blocTotauxX, $pdf->GetY() + 8);
+                $pdf->Cell(100, 6, pdf_txt('Bon pour accord, date et signature :'), 0, 1, 'L');
+            }
+
 
             while (ob_get_level() > 0) {
                 ob_end_clean();

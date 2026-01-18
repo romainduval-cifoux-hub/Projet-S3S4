@@ -1,6 +1,13 @@
-body{   
+body {
+    margin: 0;
+    padding: 0;
+}
+
+main {
     background-color: var(--bg);
-    margin: 0px;
+    padding: 20px;
+    padding-top: 0px;
+    min-height: 100vh;
 }
 
 /* WRAPPER */
@@ -9,7 +16,9 @@ body{
     border-radius: 15px;
     padding: 25px;
     max-width: 700px;
-    margin: 0 auto;
+    margin: auto;    
+margin-top: 50px;
+margin-bottom: 50px;
 }
 
 /* TITLE */
@@ -73,13 +82,13 @@ body{
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    background-color: #3a9d3a;
+    background-color: var(--vert-fonce);
     color: white;
     transition: background-color 0.2s ease;
 }
 
 .business-form__submit:hover {
-    background-color: #2e7f2e;
+    background-color: var(--btn-hover);
 }
 
 /* SUCCESS MESSAGE */

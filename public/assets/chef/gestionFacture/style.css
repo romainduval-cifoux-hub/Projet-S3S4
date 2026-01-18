@@ -1,55 +1,208 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
 main {
-    background-color: var(--bge);
-    margin-inline: 2%;
-    padding-inline: 5%;
-    align-items: center;
-    border: 2px solid black;
-    border-radius: 16px;
-}
-
-h1 {
-    text-align: center;
-    color: white ;
-    font-size: 30px;
-    margin: 1em 30% 1em 30% ;
-    padding-block: 1em;
-    background-color: var(--vert-fonce);
-    border-radius: 8px ;
-}
-
-.facture {
     background-color: var(--bg);
-    border: 2px solid black ;
-    border-radius: 6px ;
-    margin: 20px ;
-    padding-inline: 2%;
+    padding: 20px;
+    padding-top: 0px;
+    min-height: 100vh;
 }
 
-h2 {
-    font-size: 24px ;
+
+/* ================= GLOBAL ================= */
+body {
+    background: #FBFFE9;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
-p {
-    font-size: 16px ;
+
+/* ================= FILTRES HAUT ================= */
+
+main > form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+/* Select client */
+main > form select {
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+/* Labels checkbox */
+main > form label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Checkbox documents en attente reste en haut */
+main > form label:last-of-type {
+    margin-left: auto;
+}
+
+/* Forcer retour à la ligne après la première ligne */
+main > form label:nth-of-type(2)::after {
+    content: "";
+    width: 100%;
+}
+
+/* Facture / Devis en bas */
+main > form label:nth-of-type(1),
+main > form label:nth-of-type(2) {
+    margin-top: 4px;
+}
+
+
+/* ================= TITRE ================= */
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* ================= ALERTS ================= */
+.alert-factu_success,
+.alert-factu_error {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-weight: 500;
 }
 
 .alert-factu_success {
-    background-color: #d4edda;
+    background: #d4edda;
     color: #155724;
-    padding: 10px 14px;
-    border-radius: 6px;
-    border: 1px solid #c3e6cb;
-    margin-bottom: 15px;
-    font-size: 0.95rem;
 }
 
 .alert-factu_error {
-    background-color: #f8d7da;
-    color: #842029;
-    padding: 10px 14px;
-    border-radius: 6px;
-    border: 1px solid #f5c2c7;
-    margin-bottom: 15px;
-    font-size: 0.95rem;
-    text-align: center;
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* ================= FACTURES ================= */
+.facture {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.facture h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.facture hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 10px 0;
+}
+
+.facture p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.facture ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+
+/* ================= BOUTONS ================= */
+.facture form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.facture form button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    background: #2b6b3d;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.facture form button:hover {
+    background: #1f4f2b;
+}
+
+/* Différents boutons */
+.facture form button[value="refuser"] {
+    background: #E53935;
+}
+
+.facture form button[value="refuser"]:hover {
+    background: #b32a27;
+}
+
+.facture form button[value="pdf"]{
+    background: gray;
+}
+
+.facture form button[value="pdf"]:hover{
+        background: rgb(97, 97, 97);
+
+}
+
+.facture form button[value="send"]{
+    background: #1976d2;
+}
+
+.facture form button[value="send"]:hover {
+    background: #1565c0;
+}
+
+/* ================= DETAILS ================= */
+.facture h3 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.facture hr:last-of-type {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* ================= BOUTONS À DROITE ================= */
+
+/* Tous les formulaires de la facture à droite */
+.facture form {
+    float: right;
+}
+
+.facture form button {
+
+        margin: 5px;
+
+}
+/* Les paragraphes et titres restent à gauche */
+.facture h2,
+.facture p,
+.facture h3,
+.facture ul,
+.facture hr {
+    clear: left;
+}
+
+/* Nettoyage du float à la fin de la carte */
+.facture::after {
+    content: "";
+    display: block;
+    clear: both;
 }
