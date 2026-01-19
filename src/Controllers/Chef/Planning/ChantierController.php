@@ -138,6 +138,15 @@ class ChantierController
                 $date_jour = $date_debut;
             }
 
+            
+
+
+
+            $periode     = $_POST['periode'] ?? 'am';
+            $id_salarie  = (int)($_POST['id_salarie'] ?? 0);
+            $id_client   = !empty($_POST['id_client']) ? (int)$_POST['id_client'] : null;
+            $commentaire = trim($_POST['commentaire'] ?? '');
+
             $justCheck = isset($_POST['check_dispo']) && $_POST['check_dispo'] == '1';
 
             if ($justCheck) {
@@ -146,13 +155,6 @@ class ChantierController
                 require __DIR__ . '/../../../Views/chef/planning/crudcreneau.php';
                 return;
             }
-
-
-
-            $periode     = $_POST['periode'] ?? 'am';
-            $id_salarie  = (int)($_POST['id_salarie'] ?? 0);
-            $id_client   = !empty($_POST['id_client']) ? (int)$_POST['id_client'] : null;
-            $commentaire = trim($_POST['commentaire'] ?? '');
 
             if ($mode === 'create' && $dispoMap === null) {
                 $dispoMap = ch_buildDispoMap($this->pdo, $salaries, $date_debut, $date_fin, $periode);
