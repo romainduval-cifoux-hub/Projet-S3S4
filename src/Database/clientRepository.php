@@ -108,3 +108,62 @@ function clientExists(PDO $pdo, int $userId): bool
     $client = client_getByUserId($pdo, $userId);
     return $client !== null;
 }
+
+function client_getDocuments(PDO $pdo, int $clientId): array
+{
+    $sql = "
+        SELECT 
+            idDoc,
+            num,
+            typeDoc,
+            statusDoc,
+            dateDoc,
+            reglementDoc
+        FROM Document
+        WHERE idCli = :client_id
+        ORDER BY dateDoc DESC
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        'client_id' => $clientId
+    ]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function client_getCommentaires(PDO $pdo, int $clientId): array
+{
+    $sql = "
+        SELECT
+            id,
+            date_commentaire,
+            note,
+            commentaire
+        FROM avis
+        WHERE user_id = :client_id
+        ORDER BY date_commentaire DESC
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        'client_id' => $clientId
+    ]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function client_supprimerCommentaire(PDO $pdo, int $commentaireId, int $clientId): bool
+{
+    $sql = "
+        DELETE FROM avis
+        WHERE id = :commentaire_id
+        AND user_id = :client_id
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([
+        'commentaire_id' => $commentaireId,
+        'client_id'      => $clientId
+    ]);
+}

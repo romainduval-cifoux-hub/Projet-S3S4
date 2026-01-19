@@ -41,7 +41,7 @@
                     <input
                         type="text"
                         name="q"
-                        placeholder="Rechercher dans le commentaire"
+                        placeholder="Rechercher un commentaire"
                         value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
                     >
 
@@ -100,7 +100,7 @@
                                     <td><?= htmlspecialchars($r['categorie_nom']) ?></td>
                                     <td>
                                         <form method="post" action="<?= BASE_URL ?>/public/index.php?page=chef/realisations/toggleFavoris&id=<?= $r['id'] ?>">
-                                            <button type="submit">
+                                            <button id="btn_rea" type="submit">
                                                 <?= $r['favoris'] ? 'Retirer des favoris' : 'Mettre en favoris' ?>
                                             </button>
                                         </form>
@@ -108,7 +108,7 @@
 
                                     <td>
                                         <form method="post" action="<?= BASE_URL ?>/public/index.php?page=chef/realisations/toggleMasque&id=<?= $r['id'] ?>">
-                                            <button type="submit">
+                                            <button id="btn_rea" type="submit">
                                                 <?= $r['masque'] ? 'Rendre visible' : 'Masquer' ?>
                                             </button>
                                         </form>

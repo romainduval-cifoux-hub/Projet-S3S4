@@ -1,3 +1,8 @@
+main {
+    margin: 0;
+    min-height: 85vh;
+}
+
 main.main-content {
     background-color: var(--bge);
     margin-inline: 2%;
@@ -60,6 +65,23 @@ main.main-content {
     transition: 0.2s ease;
 }
 
+#btn_rea {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--vert-fonce);
+    color: white;
+    min-width: 130px;
+}
+
+#btn_rea:hover {
+    filter: brightness(0.85);
+}
+
+
 .table-realisations a:hover {
     color: var(--btn-hover);
     text-decoration: underline;
@@ -76,7 +98,79 @@ main.main-content {
     margin: 2rem auto;
 }
 
+.filter-commentaire {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--bg);
+    border: 2px solid black;
+    border-radius: 12px;
+}
+
+.filter-commentaire input[type="text"],
+.filter-commentaire select {
+    padding: 0.6rem 1rem;
+    border: 1px solid #555;
+    border-radius: 6px;
+    font-size: 1rem;
+    min-width: 200px;
+    flex: 1 1 250px;
+}
+
+.filter-commentaire button {
+    background-color: var(--vert-fonce);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex: 1 1 150px;
+}
+
+.filter-commentaire button:hover {
+    background-color: var(--btn-hover);
+}
+
+.filter-commentaire .reset-link {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 0.7rem 1.2rem;
+    background: #ccc;
+    color: #333;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s ease;
+    flex: 1 1 150px;
+    text-align: center;
+}
+
+.filter-commentaire .reset-link:hover {
+    background: #999;
+    color: white;
+}
+
 @media (max-width: 768px) {
+    .filter-commentaire {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 1rem;
+    }
+
+    .filter-commentaire input[type="text"],
+    .filter-commentaire select,
+    .filter-commentaire button,
+    .filter-commentaire .reset-link {
+        width: 100%;
+        flex: unset;
+    }
+
     .table-realisations th,
     .table-realisations td {
         padding: 0.6rem;
@@ -92,3 +186,4 @@ main.main-content {
         width: 60px;
     }
 }
+

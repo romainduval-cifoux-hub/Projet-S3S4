@@ -34,6 +34,9 @@ require_once __DIR__ . '/Controllers/Chef/Realisation/AdminCategoryController.ph
 //Conges
 require_once __DIR__ . '/Controllers/Chef/Planning/ChefCongeController.php';
 
+//Client
+require_once __DIR__ . '/Controllers/Client/ClientController.php';
+
 //Employe
 require_once __DIR__ . '/Controllers/Employe/PlanningEmployeController.php';
 require_once __DIR__ . '/Controllers/Employe/NotificationsEmployeController.php';
@@ -266,6 +269,22 @@ switch ($page) {
         $controller = new ClientController();
         $controller->save();
         break;
+
+    case 'client/documents':
+        $controller = new ClientController();
+        $controller->documents();
+        break;
+
+    case 'client/commentaires':
+        $controller = new ClientController();
+        $controller->commentaires();
+        break;
+
+    case 'client/supprimer_commentaire':
+        $controller = new ClientController();
+        $controller->supprimer_commentaire();
+        break;
+
     //Employe
     //Notifications Employee
 
