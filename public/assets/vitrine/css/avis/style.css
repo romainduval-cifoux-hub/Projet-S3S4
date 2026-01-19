@@ -24,7 +24,7 @@
 .avis_container h2{
   font-size: clamp(1.8rem, 2.2vw, 2.4rem);
   line-height: 1.1;
-  margin: 0 0 14px;
+  margin: 50px 0 50px;
   color: var(--avis-text);
   letter-spacing: -0.5px;
 }
@@ -40,6 +40,7 @@
 
 /* centre et espace les éléments du “bloc Google” */
 #main-avis{
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   align-items: center;
