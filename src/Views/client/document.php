@@ -25,7 +25,7 @@
         <?php
         $bouton = "Déconnexion";
         $redirection = BASE_URL . "/public/index.php?page=logout";
-            require_once(__DIR__ . '/../shared/header.php');
+            require_once(__DIR__ . '/../client/header_client.php');
         ?>
 
         <main>

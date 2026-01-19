@@ -22,7 +22,7 @@
     $bouton = "Déconnexion";
     $redirection = BASE_URL . "/public/index.php?page=logout";
     ?>
-    <?php require __DIR__ . '/../shared/header.php'; ?>
+    <?php require __DIR__ . '/header_client.php'; ?>
     <?php 
 
     require __DIR__ . '/../shared/burger-accueil.php';
