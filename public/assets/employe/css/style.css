@@ -18,6 +18,18 @@
   }
 
 
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  main {
+      background-color: var(--bg);
+      padding: 20px;
+      padding-top: 0px;
+      min-height: 100vh;
+  }
+
 
   /* Topbar */
   .topbar{

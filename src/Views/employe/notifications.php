@@ -55,7 +55,7 @@
           <div class="notif-list">
             <?php foreach ($notifications as $n): ?>
               <div class="notif <?= ((int)$n['is_read'] === 0) ? 'unread' : '' ?>">
-                <div class="notif-type"><?= htmlspecialchars($n['type']) ?></div>
+                <!-- <div class="notif-type"> htmlspecialchars($n['type']) ?></div> -->
 
                 <div class="notif-body">
                   <p class="notif-title"><?= htmlspecialchars($n['titre']) ?></p>

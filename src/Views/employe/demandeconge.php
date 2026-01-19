@@ -9,6 +9,8 @@
     <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/employe/css/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/employe/css/position.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/chef/demandesConge/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
