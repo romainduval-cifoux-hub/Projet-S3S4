@@ -39,7 +39,7 @@
 
     <?php $isNew = empty($salarie); ?>
 
-    <form method="post" action="<?= BASE_URL ?>/public/index.php?page=employe/save">
+    <form method="post" action="<?= BASE_URL ?>/public/index.php?page=employe/profil/save">
 
         <div class="form-row">
             <label>Nom</label>
