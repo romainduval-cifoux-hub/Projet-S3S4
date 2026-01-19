@@ -16,9 +16,7 @@ main {
     background: var(--bge); 
     border-radius: 20px;
     box-shadow: 0 8px 18px rgba(0,0,0,0.10);
-    
 }
-
 
 main h1 {
     color: var(--vert-fonce);
@@ -27,46 +25,55 @@ main h1 {
     margin: 0 0 25px 0;
 }
 
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-}
-
-
-.form-row {
-    display: flex;
-    flex-direction: column;
-}
-
-
-.form-row label {
-    font-weight: bold;
-    margin-bottom: 6px;
-    color: #333;
-}
-
-
-.form-row input {
-    padding: 10px 12px;
-    font-size: 1rem;
-    border-radius: 10px;
-    border: 1px solid #d0d0d0;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
     background: #fff;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
-
-.form-row input:focus {
-    outline: none;
-    border-color: var(--vert-fonce);
-    box-shadow: 0 0 0 3px rgba(54,112,72,0.20);
-    background-color: #ffffff;
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 0.95rem;
 }
 
+thead {
+    background: var(--vert-fonce);
+    color: #fff;
+}
 
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
 
+tbody tr:hover {
+    background: rgba(54,112,72,0.1);
+}
+
+button {
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    color: #fff;
+    background-color: var(--vert-fonce);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: #285835;
+    transform: translateY(-1px);
+}
+
+main p {
+    text-align: center;
+    font-size: 1rem;
+    color: #555;
+}
 
 .alert {
     padding: 14px 16px;
@@ -89,7 +96,7 @@ form {
     font-size: 0.95rem;
 }
 
-
+/* Responsive */
 @media (max-width: 768px) {
     main {
         margin: 100px 15px 50px;
@@ -98,5 +105,15 @@ form {
 
     main h1 {
         font-size: 1.8rem;
+    }
+
+    th, td {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 6px 12px;
+        font-size: 0.9rem;
     }
 }
