@@ -150,34 +150,37 @@ class PlanningController
     }
 
     private function showMonth(string $refDate, string $searchEmp = ''): void
-{
-    $ts = strtotime($refDate);
-    if ($ts === false) $ts = time();
+    {
+        $ts = strtotime($refDate);
+        if ($ts === false) $ts = time();
 
-    $year  = (int)date('Y', $ts);
-    $month = (int)date('n', $ts);
+        
+        $currentDate = date('Y-m-d', $ts);
 
-    $monthStart = date('Y-m-01', $ts);
-    $monthEnd   = date('Y-m-t', $ts); // dernier jour du mois
+        
+        $monthStart = date('Y-m-01', $ts);
+        $monthEnd   = date('Y-m-t', $ts);
 
-    // navigation mois précédent/suivant
-    $prevMonth = date('Y-m-01', strtotime($monthStart . ' -1 month'));
-    $nextMonth = date('Y-m-01', strtotime($monthStart . ' +1 month'));
+        
+        $prevMonthDate = date('Y-m-01', strtotime($monthStart . ' -1 month'));
+        $nextMonthDate = date('Y-m-01', strtotime($monthStart . ' +1 month'));
 
-    // Label mois FR
-    $moisFr = [
-        1=>'Janvier',2=>'Février',3=>'Mars',4=>'Avril',5=>'Mai',6=>'Juin',
-        7=>'Juillet',8=>'Août',9=>'Septembre',10=>'Octobre',11=>'Novembre',12=>'Décembre'
-    ];
-    $monthLabel = ($moisFr[$month] ?? date('F', $ts)) . ' ' . $year;
+        $monthLabel = $this->monthLabelFromDate($monthStart);
 
-    // Données: nb créneaux par jour
-    $counts = getMonthCounts($this->pdo, $monthStart, $monthEnd);
+        $counts = getMonthCounts($this->pdo, $monthStart, $monthEnd);
 
-    // Variables header/aside si tu les utilises
-    $pageTitle = "Planning – Team Jardin";
+        $pageTitle = "Planning – Team Jardin";
+        $view = 'month';
 
-    require __DIR__ . '/../../../Views/chef/planning/gestionPlanningMonth.php';
-}
+        
+        $refDate = $currentDate;     
+        $prevMonth = $prevMonthDate;  
+        $nextMonth = $nextMonthDate;
+
+        extract($this->commonLayoutVars());
+
+        require __DIR__ . '/../../../Views/chef/planning/gestionPlanningMonth.php';
+    }
+
 
 }
