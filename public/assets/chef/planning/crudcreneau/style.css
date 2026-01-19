@@ -54,21 +54,80 @@ button:hover {
     background: var(--btn-hover);
 }
 
-.board {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 2em;
-    justify-content: center;
+
+/* Wrapper du champ + dropdown */
+.combo{
+  position: relative;
+  width: 100%;
 }
 
-.dispo-frame{
-  width:35em;
-  height:100%;
-  border:1px solid #ddd;
-  border-radius:12px;
-  background:#fff;
+/* Le champ de recherche */
+#salarie_search{
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid var(--vert-fonce);
+  border-radius: 10px;
+  outline: none;
+  background: #fff;
 }
+
+/* Dropdown OVERLAY */
+.combo-panel{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 9999;
+
+  max-height: 260px;
+  overflow: auto;
+
+  background: #fff;
+  border: 2px solid var(--vert-fonce);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  padding: 6px;
+}
+
+/* Items */
+.combo-item{
+    width: 100%;
+    text-align: left;
+    border: 0;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 10px 10px;
+    border-radius: 10px;
+    color :black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.combo-item:hover{
+  background: var(--bg);
+}
+
+.combo-name{
+  font-weight: 600;
+}
+
+.badge{
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.badge.ok{ background: #d8f5dd; color: #1f6a3b; }
+.badge.ko{ background: #ffe0e0; color: #a12727; }
+
+/* Optionnel: couleur item dispo/occupé */
+.combo-item.ok{ border: 1px solid #d8f5dd; }
+.combo-item.ko{ border: 1px solid #ffe0e0; }
+
+
 
 
 

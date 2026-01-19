@@ -338,3 +338,119 @@ function ch_getCreneauxJour(PDO $pdo, int $id_salarie, string $date_jour): array
 
     return $st->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+/**
+ * Retourne true si le salarié n'a aucun créneau qui chevauche [hDeb, hFin] ce jour-là.
+ */
+function ch_isFree(PDO $pdo, int $id_salarie, string $date_jour, string $hDeb, string $hFin): bool
+{
+    $sql = "SELECT COUNT(*) 
+            FROM planning_creneaux
+            WHERE id_salarie = :s
+              AND date_jour = :d
+              AND (heure_debut < :hFin AND heure_fin > :hDeb)";
+    $st = $pdo->prepare($sql);
+    $st->execute([
+        ':s' => $id_salarie,
+        ':d' => $date_jour,
+        ':hDeb' => $hDeb,
+        ':hFin' => $hFin,
+    ]);
+    return ((int)$st->fetchColumn() === 0);
+}
+
+/**
+ * Renvoie la liste des salariés disponibles sur toute la période (jours ouvrés seulement)
+ * $periode: am|pm|full
+ */
+function ch_getDisponiblesSurPeriode(PDO $pdo, array $salaries, string $date_debut, string $date_fin, string $periode): array
+{
+    if (!$date_fin) $date_fin = $date_debut;
+
+    // Liste des jours ouvrés
+    $jours = [];
+    $tsDeb = strtotime($date_debut);
+    $tsFin = strtotime($date_fin);
+    for ($ts = $tsDeb; $ts <= $tsFin; $ts += 86400) {
+        $n = (int)date('N', $ts); // 1..7
+        if ($n <= 5) $jours[] = date('Y-m-d', $ts);
+    }
+    if (empty($jours)) return [];
+
+    $dispos = [];
+    foreach ($salaries as $s) {
+        $idS = (int)$s['id_salarie'];
+        $ok = true;
+
+        foreach ($jours as $jour) {
+            if ($periode === 'full') {
+                if (!ch_isFree($pdo, $idS, $jour, '08:00:00', '12:00:00')) { $ok = false; break; }
+                if (!ch_isFree($pdo, $idS, $jour, '13:00:00', '17:00:00')) { $ok = false; break; }
+            } elseif ($periode === 'pm') {
+                if (!ch_isFree($pdo, $idS, $jour, '13:00:00', '17:00:00')) { $ok = false; break; }
+            } else { // am
+                if (!ch_isFree($pdo, $idS, $jour, '08:00:00', '12:00:00')) { $ok = false; break; }
+            }
+        }
+
+        if ($ok) $dispos[] = $s;
+    }
+
+    return $dispos;
+}
+
+
+function ch_getCreneauxBetween(PDO $pdo, int $id_salarie, string $date_debut, string $date_fin): array
+{
+    $sql = "SELECT date_jour, heure_debut, heure_fin, type_travail
+            FROM planning_creneaux
+            WHERE id_salarie = :s
+              AND date_jour BETWEEN :dd AND :df";
+    $st = $pdo->prepare($sql);
+    $st->execute([
+        ':s'  => $id_salarie,
+        ':dd' => $date_debut,
+        ':df' => $date_fin
+    ]);
+    return $st->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function ch_isSalarieDisponible(PDO $pdo, int $id_salarie, string $date_debut, string $date_fin, string $periode): bool
+{
+    $creneaux = ch_getCreneauxBetween($pdo, $id_salarie, $date_debut, $date_fin);
+
+    // on ignore le week-end côté controller normalement, mais au cas où :
+    // => ici on considère "occupé" si on trouve un créneau sur un jour ouvré concerné
+
+    foreach ($creneaux as $c) {
+        // si tu veux considérer congé aussi comme occupé, laisse comme ça
+        // sinon tu peux ignorer type_travail == 'congé'
+        $hDeb = $c['heure_debut'];
+        $hFin = $c['heure_fin'];
+
+        if ($periode === 'am') {
+            if ($hDeb === '08:00:00' && $hFin === '12:00:00') return false;
+        } elseif ($periode === 'pm') {
+            if ($hDeb === '13:00:00' && $hFin === '17:00:00') return false;
+        } else { // full
+            if (
+                ($hDeb === '08:00:00' && $hFin === '12:00:00') ||
+                ($hDeb === '13:00:00' && $hFin === '17:00:00')
+            ) return false;
+        }
+    }
+
+    return true;
+}
+
+function ch_buildDispoMap(PDO $pdo, array $salaries, string $date_debut, string $date_fin, string $periode): array
+{
+    $map = [];
+    foreach ($salaries as $s) {
+        $sid = (int)$s['id_salarie'];
+        $map[$sid] = ch_isSalarieDisponible($pdo, $sid, $date_debut, $date_fin, $periode);
+    }
+    return $map;
+}
+

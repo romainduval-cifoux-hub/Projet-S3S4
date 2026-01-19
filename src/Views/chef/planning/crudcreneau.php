@@ -123,16 +123,45 @@
                                 
                                 
                             <div class="form-row">
-                                <label for="id_salarie">Salarié affecté</label>
-                                <select id="id_salarie" name="id_salarie" required>
-                                    <option value="">-- Sélectionner un salarié --</option>
-                                    <?php foreach ($salaries as $s): ?>
-                                        <option value="<?= (int)$s['id_salarie'] ?>">
-                                            <?= htmlspecialchars($s['prenom_salarie'] . ' ' . $s['nom_salarie']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
+                            <label for="salarie_search">Salarié affecté</label>
+
+                            <input type="hidden" name="id_salarie" id="id_salarie" value="<?= (int)($id_salarie ?? 0) ?>">
+
+                            <div class="combo" id="comboSalarie">
+                                <input type="text" id="salarie_search" placeholder="Rechercher un salarié..."
+                                    autocomplete="off">
+
+                                <div class="combo-panel" hidden>
+                                <?php foreach ($salaries as $s): 
+                                    $sid = (int)$s['id_salarie'];
+                                    $nomComplet = $s['prenom_salarie'].' '.$s['nom_salarie'];
+
+                                    // dispoMap optionnel (si calculé côté controller)
+                                    $isOk = isset($dispoMap[$sid]) ? (bool)$dispoMap[$sid] : null;
+                                ?>
+                                    <a href="#"
+                                        class="combo-item <?= $isOk === true ? 'ok' : ($isOk === false ? 'ko' : '') ?>"
+                                        data-id="<?= $sid ?>"
+                                        data-label="<?= htmlspecialchars($nomComplet) ?>">
+
+                                            <span class="combo-name"><?= htmlspecialchars($nomComplet) ?></span>
+
+                                            <?php if ($isOk === true): ?>
+                                                <span class="badge ok">Dispo</span>
+                                            <?php elseif ($isOk === false): ?>
+                                                <span class="badge ko">Occupé</span>
+                                            <?php endif; ?>
+
+                                        </a>
+
+                                    
+                                <?php endforeach; ?>
+                                </div>
                             </div>
+
+                            <small>Cliquez sur “Vérifier disponibilités” après avoir choisi les dates et la période.</small>
+                            </div>
+
 
                             <div class="form-row">
                                 <label for="periode">Période</label>
@@ -142,8 +171,12 @@
                                     <option value="full" <?= $periode === 'full' ? 'selected' : '' ?>>Journée entière (8h–12h + 13h–17h)</option>
                                 </select>
                             </div>
+                        
                             
-                            
+                            <button type="submit" class="btn_filtrer" name="check_dispo" value="1">
+                                Vérifier disponibilités
+                            </button>            
+
 
                             <div class="form-row">
                                 <label for="id_client">Client (optionnel)</label>
@@ -163,20 +196,21 @@
                                         placeholder="Détails du chantier, lieu précis, matériel à prévoir..."><?= htmlspecialchars($commentaire ?? '') ?></textarea>
                             </div>
 
+                            
+
                         <button type="submit" class="btn_creer_creneau">Créer le créneau</button>
 
+                       
+
+                        
+
+              
                     </form>
-                </div>
-        
-                <aside class="chantier-dispo">
+
+                    
                     
 
-                    <iframe
-                    src="<?= BASE_URL ?>/public/index.php?page=chef/planning&view=day&date=<?= htmlspecialchars($date_jour ?? $date_debut) ?>&embed=1"
-                    class="dispo-frame"
-                    loading="lazy">
-                    </iframe>
-                </aside>
+                                        
 
                 
 
@@ -186,5 +220,6 @@
 
     <?php require __DIR__ . '/../../shared/footer.php'; ?>
 </div>
+<script src="<?= BASE_URL ?>/public/assets/chef/shared/js/salariesdispo.js"></script>
 </body>
 </html>
