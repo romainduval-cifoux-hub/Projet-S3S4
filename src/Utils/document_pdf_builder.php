@@ -146,7 +146,6 @@ function buildDocumentPdf(FPDF $pdf, array $facture, array $entreprise): void
 
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetX(10);
-    $pdf->Cell(60, 6, pdf_txt('Mode de règlement :'), 0, 0);
     $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(60, 6, pdf_txt($facture['reglementDoc'] ?? ''), 0, 1);
 
