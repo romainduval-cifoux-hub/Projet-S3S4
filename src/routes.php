@@ -36,6 +36,8 @@ require_once __DIR__ . '/Controllers/Chef/Planning/ChefCongeController.php';
 
 //Client
 require_once __DIR__ . '/Controllers/Client/ClientController.php';
+require_once __DIR__ . '/Controllers/Client/ClientDocumentController.php';
+
 
 //Employe
 require_once __DIR__ . '/Controllers/Employe/PlanningEmployeController.php';
@@ -260,6 +262,11 @@ switch ($page) {
 
 
     //Client
+    case 'client/document/pdf':
+    $controller = new ClientDocumentController();
+    $controller->pdf();
+    break;
+
     case 'client/profil':
         $controller = new ClientController();
         $controller->profil();

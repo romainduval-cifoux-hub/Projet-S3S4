@@ -1,73 +1,82 @@
 <?php require_once __DIR__ . '/../../config.php'; ?>
 <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title><?= htmlspecialchars($pageTitle ?? 'Mes documents') ?></title>
+<html lang="fr">
 
-        <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
-        <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
-        <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
+<head>
+    <meta charset="utf-8">
+    <title><?= htmlspecialchars($pageTitle ?? 'Mes documents') ?></title>
 
-        <link href="<?= BASE_URL ?>/public/assets/clients/documents/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
 
-        <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
-        <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/clients/documents/style.css" rel="stylesheet">
 
-        <link href="<?= BASE_URL ?>/public/assets/shared/burger-accueil/css/style.css" rel="stylesheet">
-    </head>
-    <body>
-        <?php 
+    <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
 
-        require __DIR__ . '/../shared/burger-accueil.php';
-        ?>
-        
-        <?php
-        $bouton = "Déconnexion";
-        $redirection = BASE_URL . "/public/index.php?page=logout";
-            require_once(__DIR__ . '/../client/header_client.php');
-        ?>
+    <link href="<?= BASE_URL ?>/public/assets/shared/burger-accueil/css/style.css" rel="stylesheet">
+</head>
 
-        <main>
-            <h1><?= htmlspecialchars($pageTitle) ?></h1>
+<body>
+    <?php
 
-            <?php if (!empty($documents)): ?>
-                <table border="1" cellpadding="7" cellspacing="0">
-                    <thead>
+    require __DIR__ . '/../shared/burger-accueil.php';
+    ?>
+
+    <?php
+    $bouton = "Déconnexion";
+    $redirection = BASE_URL . "/public/index.php?page=logout";
+    require_once(__DIR__ . '/../client/header_client.php');
+    ?>
+
+    <main>
+        <h1><?= htmlspecialchars($pageTitle) ?></h1>
+
+        <?php if (!empty($documents)): ?>
+            <table border="1" cellpadding="7" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Numéro</th>
+                        <th>Type</th>
+                        <th>Statut</th>
+                        <th>Date</th>
+                        <th>Téléchargement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($documents as $doc): ?>
                         <tr>
-                            <th>Numéro</th>
-                            <th>Type</th>
-                            <th>Statut</th>
-                            <th>Date</th>
-                            <th>Téléchargement</th>
+                            <td><?= htmlspecialchars($doc['num']) ?></td>
+                            <td><?= htmlspecialchars($doc['typeDoc']) ?></td>
+                            <td><?= htmlspecialchars($doc['statusDoc']) ?></td>
+                            <td><?= htmlspecialchars($doc['dateDoc']) ?></td>
+                            <td>
+                                <!-- Bouton pour télécharger -->
+                                <form method="POST"
+                                    action="<?= BASE_URL ?>/public/index.php?page=client/document/pdf"
+                                    target="_blank">
+                                    <input type="hidden" name="idDoc" value="<?= (int)$doc['idDoc'] ?>">
+                                    <button type="submit">PDF</button>
+                                </form>
+
+
+
+
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($documents as $doc): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($doc['num']) ?></td>
-                                <td><?= htmlspecialchars($doc['typeDoc']) ?></td>
-                                <td><?= htmlspecialchars($doc['statusDoc']) ?></td>
-                                <td><?= htmlspecialchars($doc['dateDoc']) ?></td>
-                                <td>
-                                    <!-- Bouton pour télécharger -->
-                                    <form method="post" action="<?= BASE_URL ?>/public/download.php" style="display:inline">
-                                        <input type="hidden" name="document_id" value="<?= $doc['idDoc'] ?>">
-                                        <button type="submit">PDF</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <p>Aucun document disponible pour le moment.</p>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p>Aucun document disponible pour le moment.</p>
+        <?php endif; ?>
 
-        </main>
+    </main>
 
-        <?php
-            require_once(__DIR__ . '/../shared/footer.php');
-        ?>
-    </body>
+    <?php
+    require_once(__DIR__ . '/../shared/footer.php');
+    ?>
+</body>
+
 </html>
