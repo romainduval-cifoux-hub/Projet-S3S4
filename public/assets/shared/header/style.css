@@ -5,6 +5,7 @@ header .header-container {
   justify-content: space-between; /* logo à gauche, nav au centre, boutons à droite */
   gap: 20px;
   padding: 0px 20px;
+  min-height: 15vh;
 }
 header .actions {
   display: flex;

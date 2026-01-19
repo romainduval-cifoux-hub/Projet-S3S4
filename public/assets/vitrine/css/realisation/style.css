@@ -1,23 +1,30 @@
 /* ===== SECTION REALISATIONS ===== */
 
 #main-realisation{
-  scroll-margin-top: 60px;
+  scroll-margin-top: 15vh;
+  min-height: 85vh;
 }
 
 #main-realisation {
   padding: 0px 0 40px;
-  background-color: #2f6f3a;
-  text-align: center;
   font-family: Arial, sans-serif;
   position: relative;
   width: 100%;
   overflow: hidden;
+    background-color: #2f6f3a; 
+
+  
 }
 
 #main-realisation h2 {
   color: #fff;
   margin-bottom: 30px;
   font-size: 2rem;
+  text-align: center !important;
+  background-color: #2f6f3a;
+  border: 0px; 
+
+
 }
 
 #main-realisation .highlight {
