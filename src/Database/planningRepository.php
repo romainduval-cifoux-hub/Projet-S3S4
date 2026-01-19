@@ -164,3 +164,57 @@ function getMonthCounts(PDO $pdo, string $monthStart, string $monthEnd): array
 
 
 
+/**
+ * Récupère les créneaux d'UN salarié pour UN jour.
+ */
+function getDaySlotsForSalarie(PDO $pdo, int $id_salarie, string $date_jour): array
+{
+    $sql = "
+        SELECT
+            pc.id_creneau,
+            pc.date_jour,
+            pc.heure_debut,
+            pc.heure_fin,
+            pc.type_travail,
+            pc.commentaire,
+            pp.nom_poste
+        FROM planning_creneaux pc
+        LEFT JOIN planning_postes pp ON pc.id_poste = pp.id_poste
+        WHERE pc.id_salarie = :s
+          AND pc.date_jour = :d
+        ORDER BY pc.heure_debut ASC
+    ";
+    $st = $pdo->prepare($sql);
+    $st->execute([
+        ':s' => $id_salarie,
+        ':d' => $date_jour
+    ]);
+    return $st->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Compte le nombre de créneaux par jour pour UN salarié sur un mois.
+ * Retourne: [ 'YYYY-mm-dd' => nb, ... ]
+ */
+function getMonthCountsForSalarie(PDO $pdo, int $id_salarie, string $start, string $end): array
+{
+    $sql = "
+        SELECT date_jour, COUNT(*) AS nb
+        FROM planning_creneaux
+        WHERE id_salarie = :s
+          AND date_jour BETWEEN :start AND :end
+        GROUP BY date_jour
+    ";
+    $st = $pdo->prepare($sql);
+    $st->execute([
+        ':s' => $id_salarie,
+        ':start' => $start,
+        ':end' => $end
+    ]);
+
+    $out = [];
+    foreach ($st->fetchAll(PDO::FETCH_ASSOC) as $row) {
+        $out[$row['date_jour']] = (int)$row['nb'];
+    }
+    return $out;
+}

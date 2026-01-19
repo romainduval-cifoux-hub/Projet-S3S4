@@ -1,0 +1,171 @@
+/* =========================
+   TABLE CONGÉS – GLOBAL
+   ========================= */
+
+.table-conge {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.table-conge thead {
+    background: var(--primary, #2f6f4e);
+    color: #fff;
+}
+
+.table-conge th,
+.table-conge td {
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.table-conge th {
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.table-conge tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.table-conge tbody tr:last-child {
+    border-bottom: none;
+}
+
+.table-conge tbody tr:hover {
+    background-color: #f6f9f7;
+}
+
+/* =========================
+   COLONNES SPÉCIFIQUES
+   ========================= */
+
+.table-conge td:nth-child(2) {
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.table-conge td:nth-child(3) {
+    max-width: 300px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.table-conge td:nth-child(4) {
+    white-space: nowrap;
+    font-size: 0.85rem;
+    color: #777;
+}
+
+/* =========================
+   ACTIONS (ADMIN)
+   ========================= */
+
+.table-conge td:last-child form {
+    display: flex;
+    gap: 8px;
+}
+
+.table-conge .btn_login {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Boutons différenciés */
+.table-conge button[value="accepter"] {
+    background: #2f8f5b;
+    color: #fff;
+}
+
+.table-conge button[value="accepter"]:hover {
+    background: #267a4d;
+}
+
+.table-conge button[value="refuser"] {
+    background: #c0392b;
+    color: #fff;
+}
+
+.table-conge button[value="refuser"]:hover {
+    background: #a93226;
+}
+
+/* =========================
+   STATUT (EMPLOYÉ)
+   ========================= */
+
+.conge-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.conge-status.en-attente {
+    background: #f1c40f;
+    color: #000;
+}
+
+.conge-status.accepte {
+    background: #2ecc71;
+    color: #fff;
+}
+
+.conge-status.refuse {
+    background: #e74c3c;
+    color: #fff;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 900px) {
+    .table-conge thead {
+        display: none;
+    }
+
+    .table-conge,
+    .table-conge tbody,
+    .table-conge tr,
+    .table-conge td {
+        display: block;
+        width: 100%;
+    }
+
+    .table-conge tr {
+        margin-bottom: 16px;
+        border-radius: 8px;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+        padding: 12px;
+    }
+
+    .table-conge td {
+        padding: 6px 0;
+    }
+
+    .table-conge td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        display: block;
+        margin-bottom: 2px;
+        color: #555;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+    }
+
+    .table-conge td:last-child form {
+        justify-content: flex-start;
+    }
+}

@@ -9,7 +9,7 @@
     <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
-
+    <link href="<?= BASE_URL ?>/public/assets/employe/css/position.css" rel="stylesheet">
     
     <link href="<?= BASE_URL ?>/public/assets/clients/profil/style.css" rel="stylesheet">
 
