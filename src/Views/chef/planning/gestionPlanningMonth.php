@@ -54,37 +54,44 @@
         </div>
           <div class="views month-views">
             <a class="btn-view"
-               href="<?= BASE_URL ?>/public/index.php?page=chef/planning&view=day&date=<?= htmlspecialchars($monthStart) ?>">
-              Vue Jour
+                href="<?= BASE_URL ?>/public/index.php?page=chef/planning&view=day&date=<?= htmlspecialchars($refDate) ?>">
+                Vue Jour
             </a>
+
             <a class="btn-view"
-               href="<?= BASE_URL ?>/public/index.php?page=chef/planning&view=week&date=<?= htmlspecialchars($monthStart) ?>">
-              Vue Hebdo
+                href="<?= BASE_URL ?>/public/index.php?page=chef/planning&view=week&date=<?= htmlspecialchars($refDate) ?>">
+                Vue Hebdo
             </a>
+
             <a class="btn-view active"
-               href="<?= BASE_URL ?>/public/index.php?page=chef/planning&view=month&date=<?= htmlspecialchars($monthStart) ?>">
-              Vue Mensuelle
+                href="<?= BASE_URL ?>/public/index.php?page=chef/planning&view=month&date=<?= htmlspecialchars($refDate) ?>">
+                Vue Mensuelle
             </a>
-          </div>
+            </div>
+
         </div>
 
         <?php
-          $weekdays = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+            $weekdays = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
 
-          $startTs = strtotime($monthStart);
-          $endTs   = strtotime($monthEnd);
+            $startTs = strtotime($monthStart);
+            $endTs   = strtotime($monthEnd);
 
-          // Décalage: lundi = 1, dimanche = 7
-          $dow = (int)date('N', $startTs); // 1..7
-          $padBefore = $dow - 1; // nb de cases vides avant le 1er
-          $totalDays = (int)date('t', $startTs);
+            // Décalage: lundi = 1, dimanche = 7
+            $dow = (int)date('N', $startTs); // 1..7
+            $padBefore = $dow - 1; // nb de cases vides avant le 1er
+            $totalDays = (int)date('t', $startTs);
 
-          // Total cases = on arrondit à la semaine
-          $totalCells = $padBefore + $totalDays;
-          $padAfter = (7 - ($totalCells % 7)) % 7;
-          $totalCells += $padAfter;
+            // Total cases = on arrondit à la semaine
+            $totalCells = $padBefore + $totalDays;
+            $padAfter = (7 - ($totalCells % 7)) % 7;
+            $totalCells += $padAfter;
 
-          $today = date('Y-m-d');
+            $today = date('Y-m-d');
+            
+            $refDate = $_GET['date'] ?? $today;
+            $refDate = date('Y-m-d', strtotime($refDate)); // sécurité format
+
         ?>
 
         <div class="month-grid">
@@ -98,8 +105,14 @@
             <div class="month-cell month-cell--empty"></div>
           <?php endfor; ?>
 
+          
+
           <!-- jours du mois -->
-          <?php for ($day=1; $day<=$totalDays; $day++):
+          <?php 
+            $year  = (int)date('Y', strtotime($monthStart));
+            $month = (int)date('n', strtotime($monthStart));
+
+          for ($day=1; $day<=$totalDays; $day++):
             $date = sprintf('%04d-%02d-%02d', $year, $month, $day);
             $nb = $counts[$date] ?? 0;
 

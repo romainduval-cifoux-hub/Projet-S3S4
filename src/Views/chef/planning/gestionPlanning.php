@@ -171,7 +171,7 @@
                                                         <!-- Bouton DÉTAILS -->
                                                         <button
                                                             type="button"
-                                                            class="slot-details-btn slot-menu-item js-open-creneau-modal js-no-modal"
+                                                            class="slot-details-btn slot-menu-item js-open-creneau-modal"
                                                             data-heures="<?= htmlspecialchars($hDeb . '–' . $hFin) ?>"
                                                             data-label="<?= htmlspecialchars($label) ?>"
                                                             data-info="<?= htmlspecialchars($slot['commentaire'] ?? '') ?>"

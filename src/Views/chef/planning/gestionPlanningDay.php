@@ -16,6 +16,7 @@
 <body>
 <div class="page">
   <?php require_once(__DIR__ . '/../shared/header_chef.php'); ?>
+  <?php require_once __DIR__ . '/../shared/popup_creneau.php'; ?>
 
   <div class="app">
     <?php
@@ -137,18 +138,30 @@
                       </div>
 
                       <div class="slot-menu js-slot-menu">
-                        <div class="slot-menu-panel">
-                          <a class="slot-menu-item"
-                             href="<?= BASE_URL ?>/public/index.php?page=chantier/edit&id=<?= (int)($slot['id_creneau'] ?? 0) ?>">
-                            Modifier
-                          </a>
+                        <!-- Bouton DÉTAILS -->
+                        
 
-                          <form method="post"
-                                action="<?= BASE_URL ?>/public/index.php?page=chantier/delete&date=<?= htmlspecialchars($date_jour) ?>"
-                                class="js-double-confirm">
-                            <input type="hidden" name="id_creneau" value="<?= (int)($slot['id_creneau'] ?? 0) ?>">
-                            <button type="submit" class="slot-menu-item slot-menu-danger">Supprimer</button>
-                          </form>
+                        <div class="slot-menu-panel">
+                            <button
+                                type="button"
+                                class="slot-details-btn slot-menu-item js-open-creneau-modal"
+                                data-heures="<?= htmlspecialchars($hDeb . '–' . $hFin) ?>"
+                                data-label="<?= htmlspecialchars($label) ?>"
+                                data-info="<?= htmlspecialchars($slot['commentaire'] ?? '') ?>"
+                                >
+                                Détails
+                            </button>
+                            <a class="slot-menu-item"
+                                href="<?= BASE_URL ?>/public/index.php?page=chantier/edit&id=<?= (int)($slot['id_creneau'] ?? 0) ?>">
+                                Modifier
+                            </a>
+
+                            <form method="post"
+                                    action="<?= BASE_URL ?>/public/index.php?page=chantier/delete&date=<?= htmlspecialchars($date_jour) ?>"
+                                    class="js-double-confirm">
+                                <input type="hidden" name="id_creneau" value="<?= (int)($slot['id_creneau'] ?? 0) ?>">
+                                <button type="submit" class="slot-menu-item slot-menu-danger">Supprimer</button>
+                            </form>
                         </div>
                       </div>
                     </div>
@@ -165,7 +178,9 @@
   </div>
 
   <script src="<?= BASE_URL ?>/public/assets/chef/shared/js/confirmation-suppression.js"></script>
+  <script src="<?= BASE_URL ?>/public/assets/chef/shared/js/creneau-modal.js"></script>
 
+                          
   <?php require_once __DIR__ . '/../../shared/footer.php'; ?>
 </div>
 </body>

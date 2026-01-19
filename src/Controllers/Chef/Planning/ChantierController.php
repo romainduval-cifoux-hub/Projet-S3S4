@@ -96,7 +96,28 @@ class ChantierController
             $periode     = 'am';
         }
 
-        $id_client = null; // pour l’instant on ne le stocke pas en BDD, on ne peut pas le pré-remplir
+        $id_client = null; 
+
+        $dispoMap = null;
+
+        // Disponibilités
+        if ($mode === 'create' && isset($_GET['dispo']) && $_GET['dispo'] === '1') {
+
+            $date_debut = $_GET['date_debut'] ?? $date_debut;
+            $date_fin   = $_GET['date_fin'] ?? $date_debut;
+            if ($date_fin === '') $date_fin = $date_debut;
+
+            $periode = $_GET['periode'] ?? $periode;
+            if (!in_array($periode, ['am','pm','full'], true)) $periode = 'am';
+
+            // IMPORTANT : on ne calcule que si la date_debut est valide
+            if ($date_debut !== '') {
+                $dispoMap = ch_buildDispoMap($this->pdo, $salaries, $date_debut, $date_fin, $periode);
+            }
+        }
+
+
+
     
         // Traitement du formulaire
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -117,11 +138,25 @@ class ChantierController
                 $date_jour = $date_debut;
             }
 
+            $justCheck = isset($_POST['check_dispo']) && $_POST['check_dispo'] == '1';
+
+            if ($justCheck) {
+                // on calcule la dispo et on affiche la page, SANS créer
+                $dispoMap = ch_buildDispoMap($this->pdo, $salaries, $date_debut, $date_fin, $periode);
+                require __DIR__ . '/../../../Views/chef/planning/crudcreneau.php';
+                return;
+            }
+
+
 
             $periode     = $_POST['periode'] ?? 'am';
             $id_salarie  = (int)($_POST['id_salarie'] ?? 0);
             $id_client   = !empty($_POST['id_client']) ? (int)$_POST['id_client'] : null;
             $commentaire = trim($_POST['commentaire'] ?? '');
+
+            if ($mode === 'create' && $dispoMap === null) {
+                $dispoMap = ch_buildDispoMap($this->pdo, $salaries, $date_debut, $date_fin, $periode);
+            }
 
             // Validations communes
             if (!$date_debut) {
