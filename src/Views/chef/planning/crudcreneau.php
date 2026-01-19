@@ -61,7 +61,7 @@
 
                 
                 <div class="chantier-form">
-                    <form method="get" class="form-filter-emp">
+                    <!-- <form method="get" class="form-filter-emp">
                         <input type="hidden" name="page" value="chantier/create">
 
                         <div class="form-row">
@@ -70,7 +70,7 @@
                                 id="filter_emp"
                                 name="emp"
                                 placeholder="Ex : Marie Dupont"
-                                value="<?= htmlspecialchars($searchEmp ?? '') ?>">
+                                value=" htmlspecialchars($searchEmp ?? '') ?>">
                         </div>
 
                         <div class="form-row">
@@ -79,11 +79,11 @@
                                 id="filter_client"
                                 name="cli"
                                 placeholder="Ex : Alice Durand"
-                                value="<?= htmlspecialchars($searchClient ?? '') ?>">
+                                value="htmlspecialchars($searchClient ?? '') ?>">
                         </div>
 
                         <button type="submit" class="btn_filtrer">Filtrer</button>
-                    </form>
+                    </form> -->
 
                     <form method="post" class="form-chantier" action="<?= htmlspecialchars($actionUrl ?? (BASE_URL . '/public/index.php?page=chantier/create')) ?>">
                         
@@ -179,16 +179,40 @@
 
 
                             <div class="form-row">
-                                <label for="id_client">Client (optionnel)</label>
-                                <select id="id_client" name="id_client">
-                                    <option value="">-- Aucun / interne --</option>
-                                    <?php foreach ($clients as $c): ?>
-                                        <option value="<?= (int)$c['id_client'] ?>">
-                                            <?= htmlspecialchars($c['prenom_client'] . ' ' . $c['nom_client']) ?>
-                                        </option>
+                                <label for="client_search">Client (optionnel)</label>
+
+                                <!-- valeur envoyée au POST -->
+                                <input type="hidden" name="id_client" id="id_client" value="<?= (int)($id_client ?? 0) ?>">
+
+                                <div class="combo" id="comboClient">
+                                    <input
+                                    type="text"
+                                    id="client_search"
+                                    placeholder="Rechercher un client..."
+                                    autocomplete="off"
+                                    value="<?= htmlspecialchars($client_label ?? '') ?>"
+                                    >
+
+                                    <div class="combo-panel" hidden>
+                                    <?php foreach ($clients as $c):
+                                        $cid = (int)$c['id_client'];
+                                        $nomComplet = trim(($c['prenom_client'] ?? '') . ' ' . ($c['nom_client'] ?? ''));
+                                    ?>
+                                        <a href="#"
+                                            class="combo-item"
+                                            data-id="<?= $cid ?>"
+                                            data-label="<?= htmlspecialchars($nomComplet) ?>">
+                                            <span class="combo-name"><?= htmlspecialchars($nomComplet) ?></span>
+                                        </a>
+                                        
+                                        </button>
                                     <?php endforeach; ?>
-                                </select>
+                                    </div>
+                                </div>
+
+                                <small>Laisse vide si ce chantier n’est pas lié à un client.</small>
                             </div>
+
 
                             <div class="form-row">
                                 <label for="commentaire">Commentaire (optionnel)</label>
@@ -221,5 +245,6 @@
     <?php require __DIR__ . '/../../shared/footer.php'; ?>
 </div>
 <script src="<?= BASE_URL ?>/public/assets/chef/shared/js/salariesdispo.js"></script>
+<script src="<?= BASE_URL ?>/public/assets/chef/shared/js/listeclients.js"></script>
 </body>
 </html>

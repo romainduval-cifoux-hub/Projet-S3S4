@@ -65,7 +65,7 @@ button:hover {
 #salarie_search{
   width: 100%;
   padding: 10px 12px;
-  border: 2px solid var(--vert-fonce);
+  
   border-radius: 10px;
   outline: none;
   background: #fff;
@@ -91,7 +91,7 @@ button:hover {
 
 /* Items */
 .combo-item{
-    width: 100%;
+    width: 96%;
     text-align: left;
     border: 0;
     text-decoration: none;

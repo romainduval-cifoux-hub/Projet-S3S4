@@ -454,3 +454,11 @@ function ch_buildDispoMap(PDO $pdo, array $salaries, string $date_debut, string 
     return $map;
 }
 
+
+
+function ch_getClientById(PDO $pdo, int $id): ?array {
+  $st = $pdo->prepare("SELECT id_client, nom_client, prenom_client FROM clients WHERE id_client=?");
+  $st->execute([$id]);
+  $row = $st->fetch(PDO::FETCH_ASSOC);
+  return $row ?: null;
+}
