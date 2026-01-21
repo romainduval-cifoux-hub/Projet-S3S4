@@ -1,0 +1,72 @@
+/* ===== PAGE LISTE EMPLOYÉS ===== */
+
+.board {
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+}
+
+/* Titre */
+.board h1 {
+    margin-bottom: 16px;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+/* Bouton ajouter */
+.board .btn_login {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+/* ===== TABLE ===== */
+
+.tableau {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 0.95rem;
+}
+
+/* En-tête */
+.tableau thead {
+    background: #f3f4f6;
+}
+
+.tableau th {
+    text-align: left;
+    padding: 12px;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Lignes */
+.tableau td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #444;
+}
+
+/* Effet hover léger */
+.tableau tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* Alignement ID */
+.tableau td:first-child {
+    font-weight: 600;
+    color: #666;
+}
+
+/* Responsive simple */
+@media (max-width: 768px) {
+    .tableau {
+        font-size: 0.9rem;
+    }
+
+    .tableau th,
+    .tableau td {
+        padding: 8px;
+    }
+}

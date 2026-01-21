@@ -9,6 +9,7 @@
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/aside/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/chef/css/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/chef/listemploye/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -29,7 +30,7 @@
             ];
             $menu2 = [
               ['label'=>'Ajouter employé', 'href'=> BASE_URL.'/public/index.php?page=employe/create'],
-              ['label' => 'Éditer employé',  'href' => BASE_URL . '/public/index.php?page=employe/list'],
+              ['label' => 'Liste des employés',  'href' => BASE_URL . '/public/index.php?page=employe/list'],
             ];
             require_once(__DIR__ . '/../../shared/aside.php');
         
