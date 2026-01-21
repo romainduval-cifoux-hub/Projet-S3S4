@@ -28,7 +28,7 @@
             ];
             $menu2 = [
               ['label'=>'Ajouter employé', 'href'=> BASE_URL.'/public/index.php?page=employe/create'],
-              ['label' => 'Éditer employé',  'href' => BASE_URL . '/public/index.php?page=employe/list'],
+              ['label' => 'Liste des employés',  'href' => BASE_URL . '/public/index.php?page=employe/list'],
             ];
             require_once(__DIR__ . '/../../shared/aside.php');
             
