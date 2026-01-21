@@ -7,6 +7,8 @@ require_once __DIR__ . '/Controllers/Shared/HomeController.php';
 require_once __DIR__ . '/Controllers/Shared/LoginController.php';
 require_once __DIR__ . '/Controllers/Shared/RegisterController.php';
 require_once __DIR__ . '/Controllers/Shared/LogoutController.php';
+require_once __DIR__ . '/Controllers/Shared/ForgotPasswordController.php';
+require_once __DIR__ . '/Controllers/Shared/ResetPasswordController.php';
 //Vitrine
 require_once __DIR__ . '/Controllers/Vitrine/AvisController.php';
 require_once __DIR__ . '/Controllers/Vitrine/RealisationController.php';
