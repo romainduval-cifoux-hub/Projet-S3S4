@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../../src/config.php';
 <html lang="fr">
 
 <head>
+<link rel="icon" type="image/png" href="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardinFavicon.png">
     <meta charset="utf-8">
     <title>Login - Team Jardin</title>
     <link href="<?= BASE_URL ?>/public/assets/shared/login/style.css" rel="stylesheet">
