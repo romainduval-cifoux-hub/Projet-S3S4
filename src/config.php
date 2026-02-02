@@ -49,19 +49,14 @@ define('MAILGUN_API_KEY', (string) env('MAILGUN_API_KEY', ''));
 
 define(
     'MAILGUN_DOMAIN',
-    (string) env(
-        'MAILGUN_DOMAIN',
-        $config['mailgun']['domain'] ?? 'sandboxc2bf159c8d384bfd98a19f3948da7db1.mailgun.org'
-    )
+    (string) ($config['mailgun']['domain'] ?? 'mg.saeteamjardin.fr')
 );
 
 define(
     'MAIL_FROM',
-    (string) env(
-        'MAIL_FROM',
-        $config['mailgun']['from'] ?? 'Team Jardin <postmaster@sandboxc2bf159c8d384bfd98a19f3948da7db1.mailgun.org>'
-    )
+    (string) ($config['mailgun']['from'] ?? 'Team Jardin <no-reply@mg.saeteamjardin.fr>')
 );
+
 
 $envBaseUrl  = (string) env('BASE_URL', '');
 $fileBaseUrl = (string) ($config['app']['base_url'] ?? '');
