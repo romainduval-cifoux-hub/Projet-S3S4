@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<link rel="icon" type="image/png" href="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardinFavicon.png">
     <meta charset="utf-8">
     <title><?= htmlspecialchars($pageTitle ?? 'Ajouter un employé') ?></title>
 

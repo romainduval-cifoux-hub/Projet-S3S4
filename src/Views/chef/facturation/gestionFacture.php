@@ -13,6 +13,7 @@ $filtreEnAttente = $_POST['en_attente'] ?? '1'; // coché par défaut
 <html lang="fr">
 
 <head>
+<link rel="icon" type="image/png" href="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardinFavicon.png">
     <meta charset="utf-8">
     <title>Team jardin (Chef d'entreprise)</title>
 
