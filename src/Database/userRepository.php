@@ -1,22 +1,33 @@
 <?php
 
 function login(PDO $pdo, string $username, string $password): ?array {
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
-    $stmt->execute([
-        'username' => $username,
-        'password' => md5($password)
-    ]);
-    return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
+    $stmt->execute(['username' => $username]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$user) return null;
+
+    if ($user['password'] !== md5($password)) return null;
+
+    return $user;
 }
 
-function CreerUtilisateur(PDO $pdo, string $username, string $password, string $role): bool {
-    $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (:username, :password, :role)");
-    return $stmt->execute([
+
+function CreerUtilisateur(PDO $pdo, string $username, string $password, string $role): ?int {
+    $stmt = $pdo->prepare("
+        INSERT INTO users (username, password, role, is_active)
+        VALUES (:username, :password, :role, 0)
+    ");
+    $ok = $stmt->execute([
         'username' => $username,
         'password' => md5($password),
         'role'     => $role
     ]);
+
+    if (!$ok) return null;
+    return (int)$pdo->lastInsertId();
 }
+
 
 function getRoles(PDO $pdo): array {
     $stmt = $pdo->query("SELECT DISTINCT role FROM users"); 
