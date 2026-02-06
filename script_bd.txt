@@ -6,6 +6,8 @@ CREATE TABLE users (
   username VARCHAR(50) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   role ENUM('admin','client','salarie') NOT NULL DEFAULT 'client'
+  ADD COLUMN is_active TINYINT(1) NOT NULL DEFAULT 0,
+  ADD COLUMN activated_at DATETIME NULL
 );
 
 
@@ -226,6 +228,19 @@ CREATE TABLE password_resets (
     ON DELETE CASCADE
 );
 
+CREATE TABLE account_activations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  token_hash VARCHAR(64) NOT NULL,
+  expires_at DATETIME NOT NULL,
+  used_at DATETIME DEFAULT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX (user_id),
+  INDEX (token_hash),
+  CONSTRAINT fk_account_activations_user
+    FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+);
 
 
 INSERT INTO entreprise (nom, description, telephone, adresse, siret, iban, bic)
