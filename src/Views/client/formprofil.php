@@ -97,6 +97,27 @@
                 <?= $isNew ? "Créer mon profil" : "Mettre à jour mes informations" ?>
             </button>
         </form>
+
+        
+
+        <?php
+            $avatarUrl = BASE_URL . ($client['photo'] ?? '/public/assets/clients/img/default.png');
+        ?>
+
+        <img class="avatar" src="<?= htmlspecialchars($avatarUrl) ?>" alt="Photo de profil">
+
+        <form method="post"
+            action="<?= BASE_URL ?>/public/index.php?page=avatar/upload"
+            enctype="multipart/form-data">
+
+            <input type="hidden" name="redirect"
+                value="<?= htmlspecialchars(BASE_URL . '/public/index.php?page=client/profil') ?>">
+
+            <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp" required>
+            <button class="btn_login" type="submit">Mettre à jour la photo</button>
+        </form>
+
+
     </main>
 
     <?php require __DIR__ . '/../shared/footer.php'; ?>
