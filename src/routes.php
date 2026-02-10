@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../src/config.php';
-                                            // on tente de régler un soucis
+// on tente de régler un soucis
 
 //Shared
 require_once __DIR__ . '/Controllers/Shared/HomeController.php';
@@ -11,6 +11,9 @@ require_once __DIR__ . '/Controllers/Shared/ForgotPasswordController.php';
 require_once __DIR__ . '/Controllers/Shared/ResetPasswordController.php';
     //Avatar
 require_once __DIR__ . '/Controllers/Shared/AvatarController.php';
+
+require_once __DIR__ . '/Controllers/auth/ActivateController.php';
+
 //Vitrine
 require_once __DIR__ . '/Controllers/Vitrine/AvisController.php';
 require_once __DIR__ . '/Controllers/Vitrine/RealisationController.php';
@@ -64,7 +67,7 @@ require_once __DIR__ . '/Controllers/Client/ClientController.php';
 
 $page = $_GET['page'] ?? 'home';
 
-$pagesPubliques = ['login', 'register', 'logout', 'home', 'realisation', 'forgot_password', 'reset_password', 'contact_submit'];
+$pagesPubliques = ['login', 'register', 'activate', 'logout', 'home', 'realisation', 'forgot_password', 'reset_password', 'contact_submit'];
 
 if (!in_array($page, $pagesPubliques) && empty($_SESSION['user'])) {
 
@@ -155,7 +158,7 @@ switch ($page) {
         $controller->toggleMasque();
         break;
 
-        // Catégories admin
+    // Catégories admin
     case 'chef/categories':
         $controller = new AdminCategoryController();
         $controller->index();
@@ -276,9 +279,9 @@ switch ($page) {
 
     //Client
     case 'client/document/pdf':
-    $controller = new ClientDocumentController();
-    $controller->pdf();
-    break;
+        $controller = new ClientDocumentController();
+        $controller->pdf();
+        break;
 
     case 'client/profil':
         $controller = new ClientController();
@@ -303,6 +306,11 @@ switch ($page) {
     case 'client/supprimer_commentaire':
         $controller = new ClientController();
         $controller->supprimer_commentaire();
+        break;
+
+    case 'activate':
+        $controller = new ActivateController();
+        $controller->handleRequest();
         break;
 
     //Employe
@@ -341,16 +349,16 @@ switch ($page) {
         break;
 
     //profil
-    
+
 
     case 'employe/profil':
-        
+
         $controller = new EmployeProfilController();
         $controller->handleRequest('profil');
         break;
 
     case 'employe/profil/save':
-        
+
         $controller = new EmployeProfilController();
         $controller->handleRequest('save');
         break;

@@ -78,6 +78,11 @@ class LoginController
                 }
 
                 exit;
+            }
+            if ((int)($user['is_active'] ?? 0) !== 1) {
+                $erreur = "Votre compte n'est pas activé. Vérifiez votre email.";
+                require __DIR__ . '/../../Views/shared/login.php';
+                return;
             } else {
                 $erreur = 'Identifiant ou mot de passe incorrect';
             }
