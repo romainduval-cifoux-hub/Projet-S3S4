@@ -16,6 +16,7 @@
 
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 </head>
 
 <body>
@@ -77,23 +78,44 @@
         </button>
     </form>
     <?php
-        $avatarUrl = BASE_URL . ($client['photo'] ?? '/public/assets/clients/img/default.png');
-    ?>
+        $avatarUrl = !empty($salarie['photo'])
+            ? BASE_URL . $salarie['photo']
+            : BASE_URL . '/public/assets/clients/img/default.png';
+        ?>
 
-    <img class="avatar" src="<?= htmlspecialchars($avatarUrl) ?>" alt="Photo de profil">
 
-    <form method="post"
-        action="<?= BASE_URL ?>/public/index.php?page=avatar/upload"
-        enctype="multipart/form-data">
+        <form method="post"
+            action="<?= BASE_URL ?>/public/index.php?page=avatar/upload"
+            class="avatar-form">
 
-        <input type="hidden" name="redirect"
-            value="<?= htmlspecialchars(BASE_URL . '/public/index.php?page=client/profil') ?>">
+            <input type="hidden" name="redirect"
+                value="<?= BASE_URL ?>/public/index.php?page=employe/profil">
 
-        <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp" required>
-        <button class="btn_login" type="submit">Mettre à jour la photo</button>
-    </form>
+            <label class="avatar-upload">
+                <input type="file" id="avatarInput" accept="image/*">
+                Changer la photo
+            </label>
+
+            <div class="crop-container">
+                <img id="avatarPreview" alt="">
+            </div>
+
+            <div>
+                <img class="avatar-current" src="<?= htmlspecialchars($avatarUrl) ?>"
+                    alt="Photo de profil actuelle"
+                    class="avatar-round">
+            </div>
+
+
+            <input type="hidden" name="croppedImage" id="croppedImage">
+
+            <button type="submit" class="btn_login">Enregistrer</button>
+        </form>
 </main>
 
 <?php require __DIR__ . '/../shared/footer.php'; ?>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/shared/avatar/avatar-cropper.js"></script>
 </body>
 </html>

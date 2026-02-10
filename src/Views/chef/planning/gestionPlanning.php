@@ -125,14 +125,19 @@
                                     <?php
                                         
                                         $photo = $emp['photo'] ?? '';
-                                        $src = $photo ? (BASE_URL . $photo) : (BASE_URL . '/public/assets/shared/img/default.png');
+
+                                        
+                                        $src = $photo
+                                            ? BASE_URL . $photo
+                                            : BASE_URL . '/public/assets/shared/img/default.png';
                                     ?>
                                     <img
                                         class="avatar"
                                         src="<?= htmlspecialchars($src) ?>"
-                                        onerror="this.src='<?= BASE_URL ?>/public/assets/shared/img/default-pp.png';"
-                                        alt="photo de profil">
-                                    
+                                        alt="Photo de profil"
+                                        onerror="this.src='<?= BASE_URL ?>/public/assets/shared/img/default.png';"
+                                    />
+
                                     <div class="emp-name">
                                         <?= htmlspecialchars($emp['prenom_salarie'] . ' ' . $emp['nom_salarie']) ?>
                                     </div>

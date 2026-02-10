@@ -37,7 +37,8 @@ class AvatarController
         }
 
         try {
-            $publicPath = $this->handleAvatarUpload($userId, $role);
+            $publicPath = $this->handleAvatarBase64($userId, $role);
+
 
             
             $ok = false;
@@ -60,53 +61,44 @@ class AvatarController
         exit;
     }
 
-    private function handleAvatarUpload(int $userId, string $prefix): string
+    private function handleAvatarBase64(int $userId, string $prefix): string
     {
-        if (empty($_FILES['avatar']) || $_FILES['avatar']['error'] === UPLOAD_ERR_NO_FILE) {
-            throw new RuntimeException("Aucun fichier sélectionné.");
-        }
-        if ($_FILES['avatar']['error'] !== UPLOAD_ERR_OK) {
-            throw new RuntimeException("Erreur upload.");
-        }
-        if ($_FILES['avatar']['size'] > 2 * 1024 * 1024) {
-            throw new RuntimeException("Fichier trop volumineux (max 2 Mo).");
+        if (empty($_POST['croppedImage'])) {
+            throw new RuntimeException("Image non fournie.");
         }
 
-        $tmp = $_FILES['avatar']['tmp_name'];
+        $data = $_POST['croppedImage'];
 
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $mime  = $finfo->file($tmp);
-
-        $allowed = [
-            'image/jpeg' => 'jpg',
-            'image/png'  => 'png',
-            'image/webp' => 'webp',
-        ];
-        if (!isset($allowed[$mime])) {
-            throw new RuntimeException("Format non autorisé (jpg, png, webp).");
+        if (!preg_match('#^data:image/(png|jpeg|webp);base64,#', $data, $m)) {
+            throw new RuntimeException("Format image invalide.");
         }
-        $ext = $allowed[$mime];
 
-        
-        $dirAbs = __DIR__ . '/../../../public/uploads/avatars';
+        $ext = $m[1] === 'jpeg' ? 'jpg' : $m[1];
+
+        $data = substr($data, strpos($data, ',') + 1);
+        $binary = base64_decode($data);
+
+        if ($binary === false) {
+            throw new RuntimeException("Décodage image impossible.");
+        }
+
+        $dirAbs = __DIR__ . '/../../../public/assets/uploads/avatars';
         if (!is_dir($dirAbs)) {
             mkdir($dirAbs, 0775, true);
         }
 
-        $filename = $prefix . '_' . $userId . '.' . $ext; 
+        $filename = $prefix . '_' . $userId . '.' . $ext;
         $destAbs  = $dirAbs . '/' . $filename;
 
-       
+        
         foreach (['jpg','png','webp'] as $e) {
             $old = $dirAbs . '/' . $prefix . '_' . $userId . '.' . $e;
             if ($old !== $destAbs && file_exists($old)) unlink($old);
         }
 
-        if (!move_uploaded_file($tmp, $destAbs)) {
-            throw new RuntimeException("Impossible d'enregistrer le fichier.");
-        }
+        file_put_contents($destAbs, $binary);
 
-        
-        return '/public/uploads/avatars/' . $filename;
+        return '/public/assets/uploads/avatars/' . $filename;
     }
+
 }
