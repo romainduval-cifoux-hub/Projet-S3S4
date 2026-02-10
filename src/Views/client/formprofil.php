@@ -12,6 +12,8 @@
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
 
     <link href="<?= BASE_URL ?>/public/assets/clients/profil/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/clients/avatar/style.css" rel="stylesheet">
+
 
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
