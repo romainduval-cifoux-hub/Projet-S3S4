@@ -92,6 +92,86 @@ form {
 
 
 
+/* On cible uniquement le form avatar pour ne pas impacter les autres forms */
+.avatar-form{
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  gap: 18px; 
+}
+
+/* Zone photo actuelle */
+.avatar-current{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 10px;
+  background: #fff;
+  border: 2px solid rgba(54,112,72,0.25);
+  
+}
+
+/* Bouton "Changer la photo" */
+.avatar-upload{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--vert-fonce);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.avatar-upload:hover{
+  filter: brightness(0.95);
+}
+
+.avatar-upload input[type="file"]{
+  display: none;
+}
+
+.crop-container{
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.crop-container img{
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  display: block;
+}
+
+
+.avatar-form .btn_login,
+.avatar-form button{
+  width: 100%;
+  border-radius: 12px;
+}
+
+
+.avatar-form{
+  align-items: center;
+}
+
+.avatar-form > div{
+  width: 100%;
+}
+
+
+
+
 @media (max-width: 768px) {
     main {
         margin: 100px 15px 50px;
@@ -100,5 +180,10 @@ form {
 
     main h1 {
         font-size: 1.8rem;
+    }
+
+    .avatar-current{
+        width: 96px;
+        height: 96px;
     }
 }
