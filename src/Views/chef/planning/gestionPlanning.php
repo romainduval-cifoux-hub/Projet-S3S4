@@ -125,14 +125,19 @@
                                     <?php
                                         
                                         $photo = $emp['photo'] ?? '';
-                                        $src = $photo ? (BASE_URL . $photo) : (BASE_URL . '/public/assets/shared/img/default.png');
+
+                                        
+                                        $src = $photo
+                                            ? BASE_URL . $photo
+                                            : BASE_URL . '/public/assets/shared/img/default.png';
                                     ?>
                                     <img
                                         class="avatar"
                                         src="<?= htmlspecialchars($src) ?>"
-                                        onerror="this.src='<?= BASE_URL ?>/public/assets/shared/img/default-pp.png';"
-                                        alt="photo de profil">
-                                    
+                                        alt="Photo de profil"
+                                        onerror="this.src='<?= BASE_URL ?>/public/assets/shared/img/default.png';"
+                                    />
+
                                     <div class="emp-name">
                                         <?= htmlspecialchars($emp['prenom_salarie'] . ' ' . $emp['nom_salarie']) ?>
                                     </div>
@@ -158,11 +163,23 @@
                                         ?>
 
 
-                                            <div class="slot js-slot-open"
-                                                data-heures="<?= htmlspecialchars($hDeb . '–' . $hFin) ?>"
-                                                data-label="<?= htmlspecialchars($label) ?>"
-                                                data-info="<?= htmlspecialchars($slot['commentaire'] ?? '') ?>"
-                                            >
+                                            <?php
+                                                $slotClass = 'slot';
+
+                                                if (($slot['heure_debut'] ?? '') === '08:00:00') $slotClass .= ' slot--am';
+                                                if (($slot['heure_debut'] ?? '') === '13:00:00') $slotClass .= ' slot--pm';
+
+                                                
+                                                if (($slot['type_travail'] ?? '') === 'conge') $slotClass .= ' slot--conge';
+
+                                                
+                                                if (stripos($label, 'congé') !== false) $slotClass .= ' slot--conge';
+                                            ?>
+                                                <div class="<?= htmlspecialchars($slotClass) ?> js-slot-open"
+                                                    data-heures="<?= htmlspecialchars($hDeb . '–' . $hFin) ?>"
+                                                    data-label="<?= htmlspecialchars($label) ?>"
+                                                    data-info="<?= htmlspecialchars($slot['commentaire'] ?? '') ?>"
+                                                >
                                                 <div class="slot-main">
                                                     <strong><?= htmlspecialchars($hDeb . '–' . $hFin) ?></strong>
                                                     <small><?= htmlspecialchars($label) ?></small>

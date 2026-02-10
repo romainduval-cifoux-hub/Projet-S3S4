@@ -9,6 +9,9 @@ require_once __DIR__ . '/Controllers/Shared/RegisterController.php';
 require_once __DIR__ . '/Controllers/Shared/LogoutController.php';
 require_once __DIR__ . '/Controllers/Shared/ForgotPasswordController.php';
 require_once __DIR__ . '/Controllers/Shared/ResetPasswordController.php';
+    //Avatar
+require_once __DIR__ . '/Controllers/Shared/AvatarController.php';
+
 require_once __DIR__ . '/Controllers/auth/ActivateController.php';
 
 //Vitrine
@@ -57,6 +60,8 @@ require_once __DIR__ . '/Controllers/Employe/EmployeProfilController.php';
 
 //Client
 require_once __DIR__ . '/Controllers/Client/ClientController.php';
+
+
 
 
 
@@ -111,6 +116,13 @@ switch ($page) {
 
         require_once __DIR__ . '/Views/shared/footer.php';
         break;
+
+    case 'avatar/upload':
+        
+        $controller = new AvatarController();
+        $controller->upload();
+        break;
+
 
 
     //Chef

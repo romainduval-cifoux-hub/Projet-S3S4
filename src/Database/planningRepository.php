@@ -9,14 +9,11 @@ function getSalaries(PDO $pdo, ?string $search = null): array
         $search = trim($search);
         $parts  = preg_split('/\s+/', $search);
 
-        // Si il y a le prenom et le nom dans la recherche ou inversement
-
         if (count($parts) >= 2) {
-            
             $p1 = '%' . $parts[0] . '%';
             $p2 = '%' . $parts[1] . '%';
 
-            $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
+            $sql = "SELECT id_salarie, nom_salarie, prenom_salarie, photo
                     FROM salaries
                     WHERE (prenom_salarie LIKE :p1 AND nom_salarie LIKE :p2)
                        OR (prenom_salarie LIKE :p2 AND nom_salarie LIKE :p1)
@@ -26,12 +23,9 @@ function getSalaries(PDO $pdo, ?string $search = null): array
                 ':p1' => $p1,
                 ':p2' => $p2,
             ]);
-
-        // Si il y a juste le prenom ou juste le nom dans la recherche
         } else {
-            
             $like = '%' . $search . '%';
-            $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
+            $sql = "SELECT id_salarie, nom_salarie, prenom_salarie, photo
                     FROM salaries
                     WHERE nom_salarie LIKE :q
                        OR prenom_salarie LIKE :q
@@ -39,10 +33,8 @@ function getSalaries(PDO $pdo, ?string $search = null): array
             $stmt = $pdo->prepare($sql);
             $stmt->execute([':q' => $like]);
         }
-
     } else {
-        //si il n'ya pas de recherche on affiche tous les salaries
-        $sql = "SELECT id_salarie, nom_salarie, prenom_salarie
+        $sql = "SELECT id_salarie, nom_salarie, prenom_salarie, photo
                 FROM salaries
                 ORDER BY nom_salarie, prenom_salarie";
         $stmt = $pdo->query($sql);
@@ -50,6 +42,7 @@ function getSalaries(PDO $pdo, ?string $search = null): array
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 
 /**

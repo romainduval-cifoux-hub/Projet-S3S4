@@ -52,7 +52,7 @@ class ClientController {
         if (!empty($errors)) {
             $client = [];
             $pageTitle = "Mon profil client";
-            require __DIR__ . '/../../Views/client/profil.php';
+            require __DIR__ . '/../../Views/client/formprofil.php';
             return;
         }
 
@@ -86,6 +86,10 @@ class ClientController {
                 $siret
             );
         }
+
+        
+
+
 
         header("Location: " . BASE_URL . "/public/index.php?page=home&profil=ok");
         exit;
@@ -135,4 +139,7 @@ class ClientController {
             header("Location: " . BASE_URL . "/public/index.php?page=client/commentaires");
             exit;
     }
+
+    
+
 }

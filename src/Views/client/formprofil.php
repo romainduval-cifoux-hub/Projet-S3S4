@@ -12,11 +12,16 @@
     <link href="<?= BASE_URL ?>/public/assets/shared/header/position.css" rel="stylesheet">
 
     <link href="<?= BASE_URL ?>/public/assets/clients/profil/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/public/assets/clients/avatar/style.css" rel="stylesheet">
+
 
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
 
     <link href="<?= BASE_URL ?>/public/assets/shared/burger-accueil/css/style.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+
 </head>
 <body>
     <?php
@@ -97,8 +102,64 @@
                 <?= $isNew ? "Créer mon profil" : "Mettre à jour mes informations" ?>
             </button>
         </form>
+
+        
+
+        <?php
+            $avatarUrl = BASE_URL . ($client['photo'] ?? '/public/assets/clients/img/default.png');
+        ?>
+
+        <?php
+        $defaultPhoto = '/public/assets/clients/img/default.png';
+
+        $photo = $client['photo'] ?? '';
+
+        $avatarUrl = (
+            $photo !== '' &&
+            $photo !== $defaultPhoto
+        )
+            ? rtrim(BASE_URL, '/') . '/' . ltrim($photo, '/')
+            : rtrim(BASE_URL, '/') . $defaultPhoto;
+        ?>
+
+
+
+        <form method="post"
+            action="<?= BASE_URL ?>/public/index.php?page=avatar/upload"
+            class="avatar-form">
+
+            <input type="hidden" name="redirect"
+                value="<?= BASE_URL ?>/public/index.php?page=client/profil">
+
+            <label class="avatar-upload">
+                <input type="file" id="avatarInput" accept="image/*">
+                Changer la photo
+            </label>
+
+            <div class="crop-container">
+                <img id="avatarPreview" alt="">
+            </div>
+
+            <div>
+                <img class="avatar-current" src="<?= htmlspecialchars($avatarUrl) ?>"
+                    alt="Photo de profil actuelle"
+                    class="avatar-round">
+            </div>
+
+
+            <input type="hidden" name="croppedImage" id="croppedImage">
+
+            <button type="submit" class="btn_login">Enregistrer</button>
+        </form>
+
+
+
     </main>
 
     <?php require __DIR__ . '/../shared/footer.php'; ?>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/shared/avatar/avatar-cropper.js"></script>
+
 </body>
 </html>
