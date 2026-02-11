@@ -117,7 +117,7 @@ class ClientController {
 
         $client = client_getByUserId($this->pdo, $_SESSION['user_id']);
 
-        $commentaires = client_getCommentaires($this->pdo, $client['id_client']);
+        $commentaires = client_getCommentaires($this->pdo, $client['user_id']);
 
         $pageTitle = "Mes commentaires";
         require __DIR__ . '/../../Views/client/commentaires.php';
