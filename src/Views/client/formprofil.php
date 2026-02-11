@@ -141,9 +141,14 @@
             </div>
 
             <div>
-                <img class="avatar-current" src="<?= htmlspecialchars($avatarUrl) ?>"
-                    alt="Photo de profil actuelle"
-                    class="avatar-round">
+                
+                <img
+                    class="avatar-current"
+                    src="<?= htmlspecialchars($avatarUrl) ?>"
+                    alt=""
+                    onerror="this.onerror=null; this.src='<?= rtrim(BASE_URL,'/') ?>/public/assets/clients/img/default.png';"
+                />
+            
             </div>
 
 

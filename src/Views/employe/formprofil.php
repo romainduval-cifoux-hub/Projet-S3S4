@@ -16,7 +16,6 @@
 
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 </head>
 
 <body>
@@ -78,10 +77,19 @@
         </button>
     </form>
     <?php
-        $avatarUrl = !empty($salarie['photo'])
-            ? BASE_URL . $salarie['photo']
-            : BASE_URL . '/public/assets/clients/img/default.png';
-        ?>
+        $photo = $client['photo'] ?? '';
+        $base = rtrim(BASE_URL, '/');
+
+        if ($photo !== '') {
+        $photo = '/' . ltrim($photo, '/'); // évite // et chemins relatifs
+        $avatarUrl = $base . $photo;
+        } else {
+        $avatarUrl = $base . '/public/assets/clients/img/default.png';
+        }
+    ?>
+
+        
+
 
 
         <form method="post"
@@ -89,7 +97,7 @@
             class="avatar-form">
 
             <input type="hidden" name="redirect"
-                value="<?= BASE_URL ?>/public/index.php?page=employe/profil">
+                value="<?= BASE_URL ?>/public/index.php?page=client/profil">
 
             <label class="avatar-upload">
                 <input type="file" id="avatarInput" accept="image/*">
@@ -101,9 +109,12 @@
             </div>
 
             <div>
-                <img class="avatar-current" src="<?= htmlspecialchars($avatarUrl) ?>"
-                    alt="Photo de profil actuelle"
-                    class="avatar-round">
+                <img
+                class="avatar-current"
+                src="<?= htmlspecialchars($avatarUrl) ?>"
+                alt=""
+                onerror="this.onerror=null; this.src='<?= rtrim(BASE_URL,'/') ?>/public/assets/clients/img/default.png';"
+                />
             </div>
 
 
