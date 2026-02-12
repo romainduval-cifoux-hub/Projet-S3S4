@@ -16,6 +16,8 @@
 
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/style.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/public/assets/shared/footer/position.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 </head>
 
 <body>
