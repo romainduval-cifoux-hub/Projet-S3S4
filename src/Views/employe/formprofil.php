@@ -97,7 +97,7 @@
             class="avatar-form">
 
             <input type="hidden" name="redirect"
-                value="<?= BASE_URL ?>/public/index.php?page=client/profil">
+                value="<?= BASE_URL ?>/public/index.php?page=employe/profil">
 
             <label class="avatar-upload">
                 <input type="file" id="avatarInput" accept="image/*">
