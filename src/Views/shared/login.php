@@ -12,7 +12,7 @@ unset($_SESSION['success']);
 <html lang="fr">
 
 <head>
-<link rel="icon" type="image/png" href="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardinFavicon.png">
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardinFavicon.png">
     <meta charset="utf-8">
     <title>Login - Team Jardin</title>
     <link href="<?= BASE_URL ?>/public/assets/shared/login/style.css" rel="stylesheet">
@@ -32,6 +32,9 @@ unset($_SESSION['success']);
             <div class="alert-success">
                 <?= htmlspecialchars($successMessage) ?>
             </div>
+        <?php endif; ?>
+        <?php if (!empty($erreur)) : ?>
+            <div class="alert-error"><?= htmlspecialchars($erreur) ?></div>
         <?php endif; ?>
 
         <form method="POST" action="">
