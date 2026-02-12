@@ -79,15 +79,16 @@
         </button>
     </form>
     <?php
-        $photo = $client['photo'] ?? '';
-        $base = rtrim(BASE_URL, '/');
+        $defaultPhoto = '/public/assets/clients/img/default.png';
 
-        if ($photo !== '') {
-        $photo = '/' . ltrim($photo, '/'); // évite // et chemins relatifs
-        $avatarUrl = $base . $photo;
-        } else {
-        $avatarUrl = $base . '/public/assets/clients/img/default.png';
-        }
+        $photo = $salarie['photo'] ?? '';
+
+        $avatarUrl = (
+            $photo !== '' &&
+            $photo !== $defaultPhoto
+        )
+            ? rtrim(BASE_URL, '/') . '/' . ltrim($photo, '/')
+            : rtrim(BASE_URL, '/') . $defaultPhoto;
     ?>
 
         
@@ -112,10 +113,10 @@
 
             <div>
                 <img
-                class="avatar-current"
-                src="<?= htmlspecialchars($avatarUrl) ?>"
-                alt=""
-                onerror="this.onerror=null; this.src='<?= rtrim(BASE_URL,'/') ?>/public/assets/clients/img/default.png';"
+                    class="avatar-current"
+                    src="<?= htmlspecialchars($avatarUrl) ?>"
+                    alt=""
+                    onerror="this.onerror=null; this.src='<?= rtrim(BASE_URL,'/') ?>/public/assets/clients/img/default.png';"
                 />
             </div>
 
