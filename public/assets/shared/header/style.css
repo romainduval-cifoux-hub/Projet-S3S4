@@ -90,8 +90,51 @@ nav a:hover {
     transition: background-color 0.3s; 
 }
 
+/* Burger */
+.burger{
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
 
+.burger span{
+  width: 25px;
+  height: 3px;
+  background: #333;
+  border-radius: 3px;
+}
 
+/* Responsive */
+@media (max-width: 900px){
 
+  nav{
+    position: absolute;
+    top: 90px;
+    right: 0;
+    background: white;
+    width: 100%;
+    transform: translateY(-200%);
+    transition: transform 0.3s ease;
+  }
 
+  nav ul{
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+  }
 
+  nav.active{
+    transform: translateY(0);
+  }
+
+  .burger{
+    display: flex;
+  }
+
+  .btn_login{
+    display: none; /* optionnel */
+  }
+
+}

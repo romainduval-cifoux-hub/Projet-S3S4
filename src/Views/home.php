@@ -7,9 +7,13 @@ $pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
 <html lang="fr">
 
 <head>
-    <link rel="icon" type="image/png" href="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardinFavicon.png" alt="Logo Team Jardin">
+
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title><?= htmlspecialchars($pageTitle ?? 'Team Jardin') ?></title>
+
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>/public/assets/shared/img/logoTeamJardinFavicon.png">
 
     <link href="<?= BASE_URL ?>/public/assets/shared/charte-graphique.css" rel="stylesheet">
 
@@ -57,6 +61,10 @@ $pdo = getPDO(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
     require_once __DIR__ . '/vitrine/contact.php';
     require_once __DIR__ . '/shared/footer.php';
     ?>
+
+<script src="<?= BASE_URL ?>/public/assets/shared/header/script.js"></script>
+
+
 </body>
 
 </html>
