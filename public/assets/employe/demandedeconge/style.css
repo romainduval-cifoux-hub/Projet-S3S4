@@ -1,0 +1,148 @@
+:root {
+    --green-700: #1f6a3b;
+    --green-600: #2f8a53;
+    --green-100: #e9f6ec;
+    --green-050: #f6fbf6;
+    --bg-cream: #fbfde9;
+    --border: #e6e9e6;
+    --text: #2b2b2b;
+    --muted: #7b7b7b;
+
+    --card: #ffffff;
+    --slot-blue: #bcdafc;
+    --slot-yellow: #ffe7a3;
+    --slot-green: #bff0bf;
+    --slot-red: #ffc7c7;
+    --radius: 16px;
+    --shadow: 0 4px 14px rgba(0,0,0,.06);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1, h2, h3 {
+    margin: 0 0 12px 0;
+    font-weight: 700;
+}
+
+/* Formulaire Demande de congés */
+.form-conge {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+}
+
+.form-conge .form-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-conge label {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.form-conge input[type="date"],
+.form-conge textarea {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    resize: vertical;
+}
+
+.form-conge button.btn_login {
+    background: var(--green-700);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 12px 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: all 0.2s;
+}
+
+.form-conge button.btn_login:hover {
+    filter: brightness(0.95);
+}
+
+/* Alertes */
+.alert {
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+}
+
+.alert-error {
+    background-color: #ffc7c7;
+    color: #721c24;
+    border: 1px solid #f5c2c2;
+}
+
+.alert-success {
+    background-color: #bff0bf;
+    color: #155724;
+    border: 1px solid #a3dca3;
+}
+
+/* Tableau demandes */
+.table-conge {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.table-conge th, .table-conge td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 14px;
+}
+
+.table-conge th {
+    background: var(--green-050);
+    font-weight: 700;
+    color: var(--green-700);
+}
+
+.table-conge tr:last-child td {
+    border-bottom: none;
+}
+
+/* Mise en forme du main content et board */
+.main-content {
+    padding: 20px;
+}
+
+.board {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .app {
+        flex-direction: column;
+    }
+    
+    aside {
+        width: 100%;
+    }
+    
+    .table-conge th, .table-conge td {
+        font-size: 13px;
+        padding: 8px 6px;
+    }
+}
