@@ -13,9 +13,7 @@
     <title>Team Jardin</title>
 </head>
 <body>
-
-<script src="<?= BASE_URL ?>/public/assets/shared/header/script.js"></script>
-
+    
 </body>
 </html>
 
